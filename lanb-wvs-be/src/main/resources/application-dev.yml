@@ -34,7 +34,7 @@ spring.datasource:
 
 # 代码生成相关
 creater:
-  src-path: E:\dev\java\lanb-wvs
+  src-path: E:\dev\project\lanb-wvs\lanb-wvs-be
   table-schema: ${database.name}
   url: ${spring.datasource.url}
 
