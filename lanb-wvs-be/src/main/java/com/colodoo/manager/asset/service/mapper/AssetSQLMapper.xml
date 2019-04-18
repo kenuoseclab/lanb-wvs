@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.asset.service.mapper.AssetSQLMapper">
+
+	<select id="getAssetList" resultType="com.colodoo.manager.asset.model.Asset" parameterType="com.colodoo.manager.asset.model.AssetVO">
+		select
+			a.`asset_id` as `assetId`,
+			a.`asset_name` as `assetName`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`update_time` as `updateTime`,
+			a.`update_user_id` as `updateUserId`,
+			a.`remark` as `remark`
+		from
+		    asset a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="assetId != null and assetId !=''">
+				     a.`asset_id` = #{assetId} and
+				</if>
+				<if test="assetName != null and assetName !=''">
+				     a.`asset_name` = #{assetName} and
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+				     a.`create_user_id` = #{createUserId} and
+				</if>
+				<if test="updateTime != null and updateTime !=''">
+				     a.`update_time` = #{updateTime} and
+				</if>
+				<if test="updateUserId != null and updateUserId !=''">
+				     a.`update_user_id` = #{updateUserId} and
+				</if>
+				<if test="remark != null and remark !=''">
+				     a.`remark` = #{remark} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

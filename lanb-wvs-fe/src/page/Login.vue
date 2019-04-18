@@ -6,12 +6,12 @@
       <div class="login__inner">
         <div class="form__block">
           <label class="input-label" for="userId">用户名:</label>
-          <input v-model="user.userName" class="input" placeholder="用户名">
+          <input type="text" v-model="user.userName" class="input" placeholder="用户名">
         </div>
 
         <div class="form__block">
           <label class="input-label" for="password">密码:</label>
-          <input v-model="user.password" class="input" placeholder="密码">
+          <input type="password" v-model="user.password" class="input" placeholder="密码">
         </div>
 
         <div class="btn-group"></div>

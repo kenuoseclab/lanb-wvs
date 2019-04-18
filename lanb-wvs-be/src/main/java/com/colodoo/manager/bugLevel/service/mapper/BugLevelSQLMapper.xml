@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.bugLevel.service.mapper.BugLevelSQLMapper">
+
+	<select id="getBugLevelList" resultType="com.colodoo.manager.bugLevel.model.BugLevel" parameterType="com.colodoo.manager.bugLevel.model.BugLevelVO">
+		select
+			a.`bug_level_id` as `bugLevelId`,
+			a.`bug_level_name` as `bugLevelName`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`update_time` as `updateTime`,
+			a.`update_user_id` as `updateUserId`,
+			a.`remark` as `remark`
+		from
+		    bug_level a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="bugLevelId != null and bugLevelId !=''">
+				     a.`bug_level_id` = #{bugLevelId} and
+				</if>
+				<if test="bugLevelName != null and bugLevelName !=''">
+				     a.`bug_level_name` = #{bugLevelName} and
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+				     a.`create_user_id` = #{createUserId} and
+				</if>
+				<if test="updateTime != null and updateTime !=''">
+				     a.`update_time` = #{updateTime} and
+				</if>
+				<if test="updateUserId != null and updateUserId !=''">
+				     a.`update_user_id` = #{updateUserId} and
+				</if>
+				<if test="remark != null and remark !=''">
+				     a.`remark` = #{remark} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>
