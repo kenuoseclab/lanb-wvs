@@ -1,0 +1,14 @@
+.menu-bar {
+  float: right;
+  margin-right: 16px;
+}
+
+.menu-bar__item {
+  float: right;
+  height: 100%;
+  padding: 0 12px;
+}
+
+.menu-bar__item:hover {
+  background-color: #f7f8fa;
+}

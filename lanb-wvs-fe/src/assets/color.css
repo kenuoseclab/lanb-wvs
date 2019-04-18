@@ -1,0 +1,19 @@
+.color--green {
+  background: rgb(88, 202, 154);
+  color: rgb(255, 255, 255);
+}
+
+.color--red {
+  background: rgb(238, 112, 109);
+  color: rgb(255, 255, 255);
+}
+
+.color--yellow {
+  background: rgb(247, 218, 71);
+  color: rgb(255, 255, 255);
+}
+
+.color--blue {
+  background: rgb(68, 126, 255);
+  color: rgb(255, 255, 255);
+}

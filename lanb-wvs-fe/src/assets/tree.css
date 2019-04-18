@@ -1,0 +1,8 @@
+ul {
+  list-style: none;
+}
+
+li:hover {
+  background-color: #333333;
+  color: #ffffff;
+}

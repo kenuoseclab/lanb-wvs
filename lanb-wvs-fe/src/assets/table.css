@@ -1,0 +1,22 @@
+.table tr th,
+.table tr td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #dcdee2;
+}
+
+.table thead tr {
+  background-color: #f7f8fa;
+}
+
+.table tbody tr:hover {
+  background-color: #f7f8fa;
+}
+
+.table {
+  width: 100%;
+  min-height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}

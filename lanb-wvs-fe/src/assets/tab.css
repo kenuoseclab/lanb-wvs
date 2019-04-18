@@ -1,0 +1,26 @@
+.tab {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #dcdee2;
+  padding-left: 8px;
+  overflow-y: auto;
+}
+
+.tab__item {
+  height: 30px;
+  line-height: 30px;
+  width: 100px;
+  display: inline-block;
+  border: 1px solid #dcdee2;
+  text-align: center;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.tab__item--selected {
+  background-color: #f7f8fa;
+}
+
+.tab__item:hover {
+  background-color: #f7f8fa;
+}

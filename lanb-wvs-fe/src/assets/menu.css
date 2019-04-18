@@ -1,0 +1,35 @@
+.menu {
+  width: 200px;
+  list-style: none;
+  height: 100%;
+  border-right: 1px solid #dcdee2;
+}
+
+.menu .menu__item {
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu .menu__item:hover {
+  background-color: #f2f3f7;
+  color: blue;
+}
+
+.menu .menu__item--selected {
+  background-color: #f2f3f7;
+  color: blue;
+}
+
+.sub-menu {
+  list-style: none;
+  -webkit-padding-start: 8px;
+}
+
+.sub-menu .sub-menu__item {
+  font-size: 14px;
+}

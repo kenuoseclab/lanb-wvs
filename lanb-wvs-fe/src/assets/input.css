@@ -1,0 +1,26 @@
+input {
+  outline: none;
+}
+
+.input-label {
+  display: inline-block;
+  font-weight: bold;
+  width: 80px;
+  max-width: 120px
+}
+
+.input {
+  border: 1px solid #c4c6cf;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 12px;
+  border-radius: 3px;
+}
+
+.input:hover {
+  border-color: #a0a2ad;
+}
+
+.input:focus {
+  border-color: #3080fe;
+}

@@ -1,0 +1,33 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+html,
+body {
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
+  min-width: 1200px;
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.center {
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 8px;
+}
+
+.tool-bar {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
