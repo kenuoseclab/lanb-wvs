@@ -15,6 +15,7 @@
   text-align: center;
   margin-right: 5px;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 .tab__item--selected {

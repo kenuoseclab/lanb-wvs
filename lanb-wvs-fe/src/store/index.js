@@ -1,7 +1,6 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -14,49 +13,46 @@ export default new Vuex.Store({
     },
     cache: {
       tabs: [],
-      menus: []
+      menus: [],
+      codeInfo: []
     }
   },
 
   mutations: {
-    setIsLogin (state, isLogin) {
+    SET_IS_LOGIN (state, isLogin) {
       state.user.isLogin = isLogin
     },
 
-    setTabs (state, tabs) {
+    SET_TABS (state, tabs) {
       state.cache.tabs = tabs
     },
 
-    pushTab (state, tab) {
+    PUSH_TAB (state, tab) {
       state.cache.tabs.push(tab)
     },
 
-    setMenus (state, menus) {
+    SET_MENUS (state, menus) {
       state.cache.menus = menus
     },
 
-    pushMenu (state, menu) {
+    PUSH_MENU (state, menu) {
       state.cache.menus.push(menu)
     },
 
-    changeTabStatus (state, opts) {
+    CHANGE_TAB_STATUS (state, opts) {
       const index = opts.index
       const status = opts.status
       state.cache.tabs[index].selected = status
     },
 
-    changeMenuStatus (state, opts) {
+    CHANGE_MENU_STATUS (state, opts) {
       const index = opts.index
       const status = opts.status
       state.cache.menus[index].selected = status
     }
   },
 
-  actions: {
-    initMenus () {
-      axios.post()
-    }
-  },
+  actions: {},
 
   strict: debug
 })

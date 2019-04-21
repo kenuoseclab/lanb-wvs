@@ -4,6 +4,7 @@
 }
 
 .menu-bar__item {
+  cursor: pointer;
   float: right;
   height: 100%;
   padding: 0 12px;

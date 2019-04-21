@@ -15,8 +15,8 @@
           </div>
 
           <div class="button-group">
-            <a href="#" @click="postForm" class="button">确定</a>
-            <a href="#" @click="isModal = false" class="button">取消</a>
+            <a @click="postForm" class="button">确定</a>
+            <a @click="isModal = false" class="button">取消</a>
           </div>
         </form>
       </div>
@@ -26,16 +26,16 @@
     <div class="panel">
       <form class="form">
         <input class="input" v-model="form.testName" placeholder="测试名">
-        <a href="#" @click="search" class="button">查询</a>
-        <a href="#" @click="formReset" class="button">重置</a>
+        <a @click="search" class="button">查询</a>
+        <a @click="formReset" class="button">重置</a>
       </form>
     </div>
 
     <div class="panel">
       <div class="tool-bar">
-        <a href="#" @click="saveHandle" class="button">新增</a>
-        <a href="#" @click="deleteHandle" class="button">删除</a>
-        <a href="#" @click="updateHandle" class="button">修改</a>
+        <a @click="saveHandle" class="button">新增</a>
+        <a @click="deleteHandle" class="button">删除</a>
+        <a @click="updateHandle" class="button">修改</a>
       </div>
 
       <table id="table" class="table">
@@ -66,9 +66,9 @@
       </table>
 
       <div class="pagination">
-        <a href="#" @click="pageChange(-1)" class="button">上一页</a>
+        <a @click="pageChange(-1)" class="button">上一页</a>
         <input type="text" v-model="pageInfo.page" class="input" value="1">
-        <a href="#" @click="pageChange(1)" class="button">下一页</a>
+        <a @click="pageChange(1)" class="button">下一页</a>
       </div>
     </div>
   </div>

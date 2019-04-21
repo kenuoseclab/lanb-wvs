@@ -10,7 +10,7 @@
       :class="{'menu__item': true, 'menu__item--selected': menu.selected}"
       @click="changeMenu(menu, index)"
     >{{menu.title}}</li>
-    <!-- <a style="margin: 16px;" href="#" class="button">添加标签</a> -->
+    <!-- <a style="margin: 16px;" class="button">添加标签</a> -->
   </ul>
 </template>
 

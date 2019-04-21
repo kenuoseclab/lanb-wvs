@@ -1,28 +1,25 @@
 import axios from 'axios'
+import router from '../router'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = ''
 
-// http request 拦截器
-axios.interceptors.request.use(
-  error => {
-    return Promise.reject(error)
-  }
-)
-
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    if (response.data.errCode === 401) {
-      // router.push({
-      //   path: '/login',
-      //   querry: { redirect: router.currentRoute.fullPath }// 从哪个页面跳转
-      // })
-      console.log('error')
+    if (response.data.errCode === 2) {
+      router.push({
+        path: '/login'
+      })
     }
     return response
   },
   error => {
+    if (error.response.status === 401) {
+      router.push({
+        path: '/login'
+      })
+    }
     return Promise.reject(error)
   }
 )

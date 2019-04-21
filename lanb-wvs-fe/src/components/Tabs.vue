@@ -3,7 +3,6 @@
     <a
       :key="index"
       v-for="(tab, index) in tabs"
-      href="#"
       :class="{'tab__item': true, 'tab__item--selected': tab.selected}"
       @click="changeTab(tab, index)"
       @contextmenu.prevent="contextmenu($event, tab)"
@@ -109,6 +108,12 @@ export default {
     },
 
     closeAll () {
+      this.$emit('update:tabs', [{
+        title: '首页',
+        selected: true,
+        isIndex: true,
+        component: 'dashboard'
+      }])
       this.isContextmenu = false
     },
 

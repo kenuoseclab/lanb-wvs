@@ -1,15 +1,13 @@
 <template>
   <div class="app__inner">
-    <!-- <div class="modal panel"></div>
-    <div class="mask"></div>-->
 
     <!-- 头部 -->
     <header>
       <div class="header__logo">{{systemName}}</div>
       <div class="menu-bar">
-        <a href="#" class="menu-bar__item">会员</a>
-        <a href="#" class="menu-bar__item">帮助</a>
-        <a href="#" class="menu-bar__item">反馈</a>
+        <a class="menu-bar__item">会员</a>
+        <a class="menu-bar__item">帮助</a>
+        <a class="menu-bar__item">反馈</a>
       </div>
     </header>
 
@@ -54,8 +52,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 const tabs = [{
   title: '首页',
   selected: true,
@@ -137,7 +133,18 @@ export default {
       },
 
       // 选项卡点击回调
-      tabCallback: (tab, index) => { }
+      tabCallback: (tab, index) => {
+        // 菜单中和该选项卡匹配的项要选中
+        const component = tab.component
+        for (let i = 0; i < this.menus.length; i++) {
+          const menu = this.menus[i]
+          if (menu.component === component) {
+            menu.selected = true
+          } else {
+            menu.selected = false
+          }
+        }
+      }
     }
   },
 
@@ -178,8 +185,8 @@ export default {
 
   created () {
     if (this.menus.length === 0) {
-      axios.post('/api/menu/query', {}).then(response => {
-        const rows = response.data
+      this.$post('/api/menu/query', {}).then(data => {
+        const rows = data
         const tmpMenus = []
         for (let i = 0; i < rows.length; i++) {
           const row = rows[i]
@@ -194,6 +201,8 @@ export default {
           })
         }
         this.menus = tmpMenus
+      }).catch(error => {
+        console.log(error)
       })
     }
   }

@@ -16,11 +16,11 @@ export default {
           name: '资产ID'
         },
         {
-          field: 'bugName',
+          field: 'assetName',
           name: '资产名称'
         },
         {
-          field: 'createTime',
+          field: 'updateTime',
           name: '创建时间'
         },
         {

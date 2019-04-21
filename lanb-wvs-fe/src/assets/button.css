@@ -8,6 +8,7 @@
   background-color: #3080fe;
   color: #ffffff;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 .button:hover {

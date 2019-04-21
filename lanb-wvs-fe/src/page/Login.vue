@@ -15,15 +15,14 @@
         </div>
 
         <div class="btn-group"></div>
-        <a href="#" class="button" @click="login">登录</a>
-        <a href="#" class="button" @click="reset">重置</a>
+        <a class="button" @click="login">登录</a>
+        <a class="button" @click="reset">重置</a>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import md5 from 'md5'
 
 export default {
@@ -42,14 +41,15 @@ export default {
         userName: this.user.userName,
         password: md5(this.user.password)
       }
-      axios.post('/api/user/loginCheck', param).then(response => {
-        const data = response.data
+      this.$post('/api/user/loginCheck', param).then(data => {
         if (data.success) {
-          this.$store.commit('setIsLogin', true)
+          this.$store.commit('SET_IS_LOGIN', true)
           this.$router.push({ path: '/' })
         } else {
           alert(data.info)
         }
+      }).catch(error => {
+        console.log(error)
       })
     },
 
@@ -62,11 +62,10 @@ export default {
   },
 
   created () {
-    this.$store.commit('setIsLogin', false)
+    this.$store.commit('SET_IS_LOGIN', false)
     const state = this.$store.state
     console.log(state)
-    axios.post('/api/user/logout').then(response => {
-      const data = response.data
+    this.$post('/api/user/logout').then(data => {
       console.log(data)
     })
   }

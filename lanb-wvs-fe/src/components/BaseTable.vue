@@ -12,8 +12,8 @@
           </template>
 
           <div class="button-group">
-            <a href="#" @click="postForm" class="button">确定</a>
-            <a href="#" @click="isModal = false" class="button">取消</a>
+            <a @click="postForm" class="button">确定</a>
+            <a @click="isModal = false" class="button">取消</a>
           </div>
         </form>
       </div>
@@ -31,16 +31,16 @@
             :placeholder="field.name"
           >
         </template>
-        <a href="#" @click="search" class="button">查询</a>
-        <a href="#" @click="formReset" class="button">重置</a>
+        <a @click="search" class="button">查询</a>
+        <a @click="formReset" class="button">重置</a>
       </form>
     </div>
 
     <div class="panel">
       <div class="tool-bar">
-        <a href="#" @click="saveHandle" class="button">新增</a>
-        <a href="#" @click="deleteHandle" class="button">删除</a>
-        <a href="#" @click="updateHandle" class="button">修改</a>
+        <a @click="saveHandle" class="button">新增</a>
+        <a @click="deleteHandle" class="button">删除</a>
+        <a @click="updateHandle" class="button">修改</a>
       </div>
 
       <table class="table">
@@ -73,9 +73,9 @@
       </table>
 
       <div class="pagination">
-        <a href="#" @click="pageChange(-1)" class="button">上一页</a>
+        <a @click="pageChange(-1)" class="button">上一页</a>
         <input type="text" v-model="pageInfo.page" class="input" value="1">
-        <a href="#" @click="pageChange(1)" class="button">下一页</a>
+        <a @click="pageChange(1)" class="button">下一页</a>
 
         <div class="rows">
           <label for="rows">每页</label>
@@ -87,8 +87,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
 
   name: 'baseTable',
@@ -156,15 +154,14 @@ export default {
       const tmpParam = this.editForm
       delete tmpParam.checked
       if (this.action === 'save') {
-        axios
-          .post(this.baseURL + this.api.save, tmpParam)
-          .then(response => {
-            const data = response.data
+        this
+          .$post(this.baseURL + this.api.save, tmpParam)
+          .then(data => {
             if (data.success) {
               this.isModal = false
               this.getList()
             } else {
-              alert(response.data.msg)
+              alert(data.msg)
             }
           })
           .catch(() => {
@@ -173,15 +170,14 @@ export default {
             })
           })
       } else if (this.action === 'update') {
-        axios
-          .post(this.baseURL + this.api.update, tmpParam)
-          .then(response => {
-            const data = response.data
+        this
+          .$post(this.baseURL + this.api.update, tmpParam)
+          .then(data => {
             if (data.success) {
               this.isModal = false
               this.getList()
             } else {
-              alert(response.data.msg)
+              alert(data.msg)
             }
           })
           .catch(() => {
@@ -230,14 +226,13 @@ export default {
       }
       const row = rows[0]
       delete row.checked
-      axios
-        .post(this.baseURL + this.api.delete, row)
-        .then(response => {
-          const data = response.data
+      this
+        .$post(this.baseURL + this.api.delete, row)
+        .then(data => {
           if (data.success) {
             this.getList()
           } else {
-            alert(response.data.msg)
+            alert(data.msg)
           }
         })
         .catch(() => {
@@ -245,7 +240,6 @@ export default {
             path: '/login'
           })
         })
-      console.log(rows)
     },
 
     updateHandle () {
@@ -276,11 +270,11 @@ export default {
       const tmpParam = this.form
       tmpParam.page = this.pageInfo
 
-      axios
-        .post(this.baseURL + this.api.query, tmpParam)
-        .then(response => {
-          this.rows = response.data.rows
-          this.total = response.data.total
+      this
+        .$post(this.baseURL + this.api.query, tmpParam)
+        .then(data => {
+          this.rows = data.rows
+          this.total = data.total
           this.initCheckbox()
         })
         .catch(() => {
@@ -346,6 +340,11 @@ export default {
   position: absolute;
   right: 8px;
   bottom: 8px;
+}
+
+.form .button {
+  margin-top: 8px;
+  margin-right: 8px;
 }
 
 .pagination .rows {
