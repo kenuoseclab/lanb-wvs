@@ -17,8 +17,7 @@
     <main>
       <!-- 左侧菜单 -->
       <div class="main__left sider">
-
-        <menus :menus="menus" :callback="menuCallback"></menus>
+        <menus :menus.sync="menus" :callback="menuCallback"></menus>
 
         <!-- <ul class="menu">
         <li class="menu__item">
@@ -39,7 +38,7 @@
 
       <div class="main__right">
         <!-- 选项卡 -->
-        <tabs :tabs="tabs" :callback="tabCallback"></tabs>
+        <tabs :tabs.sync="tabs" :callback="tabCallback"></tabs>
 
         <!-- 内容主体 -->
         <div class="content">
@@ -118,7 +117,7 @@ export default {
       menus: menus,
 
       // 菜单点击回调
-      menuCallback: (menu) => {
+      menuCallback: (menu, index) => {
         const component = menu.component
         const tabComponents = this.getTabComponents()
 
@@ -138,18 +137,7 @@ export default {
       },
 
       // 选项卡点击回调
-      tabCallback: (tab) => {
-        // 菜单中和该选项卡匹配的项要选中
-        const component = tab.component
-        for (let i = 0; i < this.menus.length; i++) {
-          const menu = this.menus[i]
-          if (menu.component === component) {
-            menu.selected = true
-          } else {
-            menu.selected = false
-          }
-        }
-      }
+      tabCallback: (tab, index) => { }
     }
   },
 
@@ -189,23 +177,25 @@ export default {
   },
 
   created () {
-    axios.post('/api/menu/getRootMenuList').then(response => {
-      const rows = response.data.rows
-      const tmpMenus = []
-      for (let i = 0; i < rows.length; i++) {
-        const row = rows[i]
-        let selected = false
-        if (row.visible === 1) {
-          selected = true
+    if (this.menus.length === 0) {
+      axios.post('/api/menu/query', {}).then(response => {
+        const rows = response.data
+        const tmpMenus = []
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i]
+          let selected = false
+          if (row.visible === 1) {
+            selected = true
+          }
+          tmpMenus.push({
+            title: row.menuName,
+            selected: selected,
+            component: row.menuUrl
+          })
         }
-        tmpMenus.push({
-          title: row.menuName,
-          selected: selected,
-          component: row.menuUrl
-        })
-      }
-      this.menus = this.menus.concat(tmpMenus)
-    })
+        this.menus = tmpMenus
+      })
+    }
   }
 }
 </script>

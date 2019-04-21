@@ -23,7 +23,13 @@
     <div class="panel">
       <form class="form">
         <template v-for="(field, index) in fields">
-          <input v-if="!field.hidden" :key="index" class="input" v-model="form[field.field]" :placeholder="field.name">
+          <input
+            v-if="!field.hidden"
+            :key="index"
+            class="input"
+            v-model="form[field.field]"
+            :placeholder="field.name"
+          >
         </template>
         <a href="#" @click="search" class="button">查询</a>
         <a href="#" @click="formReset" class="button">重置</a>
@@ -105,6 +111,17 @@ export default {
     baseURL: {
       type: String,
       default: '/api/test'
+    },
+    api: {
+      type: Object,
+      default: () => {
+        return {
+          'save': '/save',
+          'delete': '/delete',
+          'update': '/update',
+          'query': '/queryPage'
+        }
+      }
     }
   },
 
@@ -136,21 +153,43 @@ export default {
   methods: {
 
     postForm () {
-      console.log('postForm')
       const tmpParam = this.editForm
       delete tmpParam.checked
-      axios
-        .post(this.baseURL + '/' + this.action, tmpParam)
-        .then(response => {
-          const data = response.data
-          if (data.success) {
-            this.isModal = false
-            this.getList()
-          } else {
-            alert(response.data.msg)
-          }
-        })
-        .catch(error => alert(error))
+      if (this.action === 'save') {
+        axios
+          .post(this.baseURL + this.api.save, tmpParam)
+          .then(response => {
+            const data = response.data
+            if (data.success) {
+              this.isModal = false
+              this.getList()
+            } else {
+              alert(response.data.msg)
+            }
+          })
+          .catch(() => {
+            this.$router.push({
+              path: '/login'
+            })
+          })
+      } else if (this.action === 'update') {
+        axios
+          .post(this.baseURL + this.api.update, tmpParam)
+          .then(response => {
+            const data = response.data
+            if (data.success) {
+              this.isModal = false
+              this.getList()
+            } else {
+              alert(response.data.msg)
+            }
+          })
+          .catch(() => {
+            this.$router.push({
+              path: '/login'
+            })
+          })
+      }
     },
 
     formReset () {
@@ -192,7 +231,7 @@ export default {
       const row = rows[0]
       delete row.checked
       axios
-        .post(this.baseURL + '/delete', row)
+        .post(this.baseURL + this.api.delete, row)
         .then(response => {
           const data = response.data
           if (data.success) {
@@ -201,7 +240,11 @@ export default {
             alert(response.data.msg)
           }
         })
-        .catch(error => alert(error))
+        .catch(() => {
+          this.$router.push({
+            path: '/login'
+          })
+        })
       console.log(rows)
     },
 
@@ -234,13 +277,17 @@ export default {
       tmpParam.page = this.pageInfo
 
       axios
-        .post(this.baseURL + '/queryPage', tmpParam)
+        .post(this.baseURL + this.api.query, tmpParam)
         .then(response => {
           this.rows = response.data.rows
           this.total = response.data.total
           this.initCheckbox()
         })
-        .catch(error => alert(error))
+        .catch(() => {
+          this.$router.push({
+            path: '/login'
+          })
+        })
     },
     pageChange (num) {
       if (this.pageInfo.page + num > this.maxPage) {
@@ -261,8 +308,6 @@ export default {
         tmpForm[field.field] = ''
       }
       this.editForm = tmpForm
-
-      console.log(this.editForm)
     },
 
     initSearchForm () {

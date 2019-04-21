@@ -5,7 +5,7 @@
       v-for="(tab, index) in tabs"
       href="#"
       :class="{'tab__item': true, 'tab__item--selected': tab.selected}"
-      @click="changeTab(tab)"
+      @click="changeTab(tab, index)"
       @contextmenu.prevent="contextmenu($event, tab)"
     >{{tab.title}}</a>
 
@@ -69,17 +69,14 @@ export default {
       this.contextmenuPostion.y = y + 'px'
 
       this.isContextmenu = true
-
-      console.log(event)
-      console.log(tab)
     },
 
-    changeTab (tab) {
+    changeTab (tab, index) {
       for (let i = 0; i < this.tabs.length; i++) {
         this.tabs[i].selected = false
       }
       tab.selected = true
-      this.callback(tab)
+      this.callback(tab, index)
     },
 
     refresh (event) {

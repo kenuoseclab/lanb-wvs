@@ -8,7 +8,7 @@
       :key="index"
       v-for="(menu, index) in menus"
       :class="{'menu__item': true, 'menu__item--selected': menu.selected}"
-      @click="changeMenu(menu)"
+      @click="changeMenu(menu, index)"
     >{{menu.title}}</li>
     <!-- <a style="margin: 16px;" href="#" class="button">添加标签</a> -->
   </ul>
@@ -37,12 +37,12 @@ export default {
   },
 
   methods: {
-    changeMenu (menu) {
+    changeMenu (menu, index) {
       for (let i = 0; i < this.menus.length; i++) {
         this.menus[i].selected = false
       }
       menu.selected = true
-      this.callback(menu)
+      this.callback(menu, index)
     }
   }
 }
