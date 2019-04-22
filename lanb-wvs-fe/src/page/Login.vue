@@ -26,6 +26,9 @@
 import md5 from 'md5'
 
 export default {
+
+  name: 'login',
+
   data () {
     return {
       user: {

@@ -5,7 +5,7 @@
 <script>
 export default {
 
-  name: 'bugTable',
+  name: 'bugLevelTable',
 
   data () {
     return {
