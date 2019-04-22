@@ -1,6 +1,5 @@
 <template>
   <div class="app__inner">
-
     <!-- 头部 -->
     <header>
       <div class="header__logo">{{systemName}}</div>
@@ -41,10 +40,14 @@
         <!-- 内容主体 -->
         <div class="content">
           <!-- <button @click="refresh">刷新</button> -->
-          <keep-alive>
+          <!-- <keep-alive>
             <component ref="currentPage" v-if="keepAlive" :is="currentPage"></component>
           </keep-alive>
-          <component ref="currentPage" v-if="!keepAlive" :is="currentPage"></component>
+          <component ref="currentPage" v-if="!keepAlive" :is="currentPage"></component>-->
+          <keep-alive>
+            <router-view v-if="keepAlive" name="content"></router-view>
+          </keep-alive>
+          <router-view v-if="!keepAlive" name="content"></router-view>
         </div>
       </div>
     </main>
@@ -130,6 +133,7 @@ export default {
           return
         }
         this.tabs.push(menu)
+        this.$router.push({ path: this.currentPage })
       },
 
       // 选项卡点击回调
@@ -144,6 +148,7 @@ export default {
             menu.selected = false
           }
         }
+        this.$router.push({ path: this.currentPage })
       }
     }
   },

@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/page/Index'
-import Login from '@/page/Login'
 
 Vue.use(Router)
 
@@ -10,12 +8,63 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      redirect: '/dashboard',
+      component: require('@/page/Index').default,
+      children: [
+        {
+          path: 'dashboard',
+          components: {
+            content: require('@/page/Dashboard').default
+          }
+        },
+        {
+          path: 'menu-table',
+          components: {
+            content: require('@/page/MenuTable').default
+          }
+        },
+        {
+          path: 'code-type-table',
+          components: {
+            content: require('@/page/CodeTypeTable').default
+          }
+        },
+        {
+          path: 'bug-table',
+          components: {
+            content: require('@/page/BugTable').default
+          }
+        },
+        {
+          path: 'bug-level-table',
+          components: {
+            content: require('@/page/BugLevelTable').default
+          }
+        },
+        {
+          path: 'asset-table',
+          components: {
+            content: require('@/page/AssetTable').default
+          }
+        },
+        {
+          path: 'task-table',
+          components: {
+            content: require('@/page/TaskTable').default
+          }
+        },
+        {
+          path: 'task-create',
+          components: {
+            content: require('@/page/TaskCreate').default
+          }
+        }
+      ]
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: require('@/page/Login').default
     }
   ]
 })
