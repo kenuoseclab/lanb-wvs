@@ -8,7 +8,6 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      redirect: '/dashboard',
       component: require('@/page/Index').default,
       children: [
         {

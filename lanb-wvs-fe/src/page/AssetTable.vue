@@ -13,7 +13,8 @@ export default {
       fields: [
         {
           field: 'assetId',
-          name: '资产ID'
+          name: '资产ID',
+          hidden: true
         },
         {
           field: 'assetName',

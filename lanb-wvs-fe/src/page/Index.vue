@@ -183,11 +183,9 @@ export default {
         tmpList.push(this.menus[i].component)
       }
       return tmpList
-    }
-  },
+    },
 
-  created () {
-    if (this.menus.length === 0) {
+    initMenus () {
       this.$post('/api/menu/query', {}).then(data => {
         const rows = data
         const tmpMenus = []
@@ -207,6 +205,12 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    }
+  },
+
+  created () {
+    if (this.menus.length === 0) {
+      this.initMenus()
     }
   }
 }
