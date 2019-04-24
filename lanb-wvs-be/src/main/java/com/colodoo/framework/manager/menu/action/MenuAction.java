@@ -1,5 +1,6 @@
 package com.colodoo.framework.manager.menu.action;
 
+import com.colodoo.framework.easyui.Tree;
 import com.colodoo.framework.manager.menu.model.Menu;
 import com.colodoo.framework.manager.menu.model.MenuVO;
 import com.colodoo.framework.manager.menu.service.MenuService;
@@ -17,7 +18,7 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-18 23:21:02
+* @date 2019-4-24 22:32:53
 * @description
 */
 @Controller
@@ -125,5 +126,17 @@ public class MenuAction {
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
+    }
+    
+    /**
+	 * 查找列表
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/getTreeMenu")
+    @ResponseBody
+    public List<Tree> getTreeMenu(@RequestBody MenuVO model) {
+        return menuService.getTreeMenu(model.getParentMenuId());
     }
 }

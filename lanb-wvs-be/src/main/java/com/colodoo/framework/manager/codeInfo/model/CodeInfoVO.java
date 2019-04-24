@@ -7,7 +7,7 @@ import com.colodoo.framework.easyui.Page;
 
 /**
 * @author colodoo
-* @date 2019-4-22 15:08:23
+* @date 2019-4-24 22:40:31
 * @description 
 */
 public class CodeInfoVO extends CodeInfo implements Serializable {
@@ -17,17 +17,7 @@ public class CodeInfoVO extends CodeInfo implements Serializable {
 	private Date dateFrom;
     private Date dateTo;
     
-    private String codeTypeName;// 代码类型名
-    
-    public String getCodeTypeName() {
-		return codeTypeName;
-	}
-
-	public void setCodeTypeName(String codeTypeName) {
-		this.codeTypeName = codeTypeName;
-	}
-
-	private Page page;
+    private Page page;
 
     public Page getPage() {
 		return page;

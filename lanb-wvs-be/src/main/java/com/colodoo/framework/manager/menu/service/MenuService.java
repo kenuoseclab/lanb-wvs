@@ -4,8 +4,10 @@ import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.menu.model.Menu;
+import com.colodoo.framework.manager.menu.model.MenuExample;
 import com.colodoo.framework.manager.menu.model.MenuVO;
 import com.colodoo.framework.easyui.Page;
+import com.colodoo.framework.easyui.Tree;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 import com.colodoo.framework.manager.menu.service.mapper.MenuSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-18 23:21:02
+* @date 2019-4-24 22:32:52
 * @description 
 */
 @Service
@@ -26,6 +30,8 @@ public class MenuService extends BaseService<Menu> {
 
 	@Autowired
 	MenuSQLMapper sqlMapper;
+	@Autowired
+    MenuMapper menuMapper;
 
     /**
     * 新增数据
@@ -126,5 +132,32 @@ public class MenuService extends BaseService<Menu> {
         }
         pageInfo = new PageInfo<Menu>(list);
         return pageInfo;
+    }
+    
+    public List<Tree> getTreeMenu(String parentMenuId) {
+        if (parentMenuId == null) {
+            parentMenuId = "";
+        }
+        List<Tree> list = new ArrayList<Tree>();
+        MenuExample example = new MenuExample();
+        example.setOrderByClause("sort");
+        example.createCriteria().andParentMenuIdEqualTo(parentMenuId);
+        List<Menu> menus = menuMapper.selectByExample(example);
+        for (Menu menu : menus) {
+            Tree tree = new Tree();
+            tree.setText(menu.getMenuName());
+            tree.setId(menu.getMenuId());
+            tree.setChecked(false);
+            tree.setState("close");
+            HashMap<String, String> attr = new HashMap<String, String>();
+            attr.put("menuUrl", menu.getMenuUrl());
+            tree.setAttributes(attr);
+            List tempList = getTreeMenu(tree.getId());
+            if(tempList.size() != 0) {
+                tree.setChildren(tempList);
+            }
+            list.add(tree);
+        }
+        return list;
     }
 }

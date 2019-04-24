@@ -34,8 +34,6 @@
 				</if>
 			</trim>
 		</where>
-		
-		order by a.`sort` asc
 
 	</select>
 

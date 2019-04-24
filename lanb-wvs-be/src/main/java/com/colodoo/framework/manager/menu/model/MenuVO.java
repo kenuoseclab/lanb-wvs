@@ -7,7 +7,7 @@ import com.colodoo.framework.easyui.Page;
 
 /**
 * @author colodoo
-* @date 2019-4-18 23:21:02
+* @date 2019-4-24 22:32:52
 * @description 
 */
 public class MenuVO extends Menu implements Serializable {

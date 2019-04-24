@@ -21,7 +21,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public MenuExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -29,7 +29,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -37,7 +37,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -45,7 +45,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -53,7 +53,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public boolean isDistinct() {
         return distinct;
@@ -61,7 +61,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -69,7 +69,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -77,7 +77,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -87,7 +87,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -99,7 +99,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -108,7 +108,7 @@ public class MenuExample {
 
     /**
      *
-     * @mbg.generated 2019-04-18
+     * @mbg.generated 2019-04-24
      */
     public void clear() {
         oredCriteria.clear();
@@ -117,7 +117,7 @@ public class MenuExample {
     }
 
     /**
-     * menu 2019-04-18
+     * menu 2019-04-24
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -572,7 +572,7 @@ public class MenuExample {
     }
 
     /**
-     * menu 2019-04-18
+     * menu 2019-04-24
      */
     public static class Criterion {
         private String condition;

@@ -8,7 +8,7 @@ import com.colodoo.framework.manager.codeInfo.model.CodeInfo;
 
 /**
  * @author colodoo
- * @date 2019-4-22 15:08:23
+ * @date 2019-4-24 22:40:31
  * @description 
  */
 public interface CodeInfoSQLMapper {
