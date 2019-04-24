@@ -43,34 +43,37 @@
         <a @click="updateHandle" class="button">修改</a>
       </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th v-if="checkbox.show">
-              <input
-                v-model="checkbox.checked"
-                @click="selectToggle"
-                class="checkbox"
-                type="checkbox"
-              >
-            </th>
-            <template v-for="(field, index) in fields">
-              <th v-if="!field.hidden" :key="index">{{field.name}}</th>
-            </template>
-          </tr>
-        </thead>
+      <transition name="component-fade" mode="out-in">
+        <table class="table" key="table">
+          <thead>
+            <tr>
+              <th v-if="checkbox.show">
+                <input
+                  v-model="checkbox.checked"
+                  @click="selectToggle"
+                  class="checkbox"
+                  type="checkbox"
+                >
+              </th>
 
-        <tbody>
-          <tr :key="index" v-for="(row, index) in rows">
-            <td v-if="checkbox.show">
-              <input v-model="row.checked" class="checkbox" type="checkbox">
-            </td>
-            <template v-for="(field, fieldIndex) in fields">
-              <td v-if="!field.hidden" :key="fieldIndex">{{row[field.field]}}</td>
-            </template>
-          </tr>
-        </tbody>
-      </table>
+              <template v-for="(field, index) in fields">
+                <th v-if="!field.hidden" :key="index">{{field.name}}</th>
+              </template>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr :key="index" v-for="(row, index) in rows">
+              <td v-if="checkbox.show">
+                <input v-model="row.checked" class="checkbox" type="checkbox">
+              </td>
+              <template v-for="(field, fieldIndex) in fields">
+                <td v-if="!field.hidden" :key="fieldIndex">{{row[field.field]}}</td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+      </transition>
 
       <div class="pagination">
         <a @click="pageChange(-1)" class="button">上一页</a>
@@ -138,7 +141,8 @@ export default {
       },
       action: 'save',
       editForm: null,
-      form: null
+      form: null,
+      show: false
     }
   },
 
@@ -267,6 +271,7 @@ export default {
     },
 
     getList () {
+      this.show = false
       const tmpParam = this.form
       tmpParam.page = this.pageInfo
 
@@ -275,6 +280,7 @@ export default {
         .then(data => {
           this.rows = data.rows
           this.total = data.total
+          this.show = true
           this.initCheckbox()
         })
         .catch(() => {
@@ -349,5 +355,14 @@ export default {
 
 .pagination .rows {
   float: right;
+}
+
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active for below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

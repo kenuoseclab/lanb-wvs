@@ -6,19 +6,25 @@
       <div class="menu-bar">
         <a class="menu-bar__item">会员</a>
         <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="menu-bar__item">帮助</a>
-        <a href="https://github.com/colodoo/lanb-wvs/issues" target="_blank" class="menu-bar__item">反馈</a>
+        <a
+          href="https://github.com/colodoo/lanb-wvs/issues"
+          target="_blank"
+          class="menu-bar__item"
+        >反馈</a>
       </div>
     </header>
 
     <!-- 主体 -->
     <main>
-      <!-- 左侧菜单 -->
-      <div class="main__left sider">
-        <!-- 列表菜单 -->
-        <!-- <menus :menus.sync="menus" :callback="menuCallback"></menus> -->
-        <!-- 树形菜单 -->
-        <tree-menu :folder="treeMenus" :callback="menuCallback"></tree-menu>
-      </div>
+      <transition name="expand">
+        <!-- 左侧菜单 -->
+        <div class="main__left sider" v-if="showSider">
+          <!-- 列表菜单 -->
+          <!-- <menus :menus.sync="menus" :callback="menuCallback"></menus> -->
+          <!-- 树形菜单 -->
+          <tree-menu :folder="treeMenus" :callback="menuCallback"></tree-menu>
+        </div>
+      </transition>
 
       <div class="main__right">
         <!-- 选项卡 -->
@@ -26,6 +32,7 @@
 
         <!-- 内容主体 -->
         <div class="content">
+          <button @click="showSider = !showSider">showSider</button>
           <!-- is特性方式 -->
           <keep-alive>
             <component ref="currentPage" v-if="keepAlive && hackReset" :is="currentPage"></component>
@@ -57,6 +64,8 @@ export default {
 
   data () {
     return {
+
+      showSider: true,
 
       systemName: 'LANB FE',
 
@@ -209,5 +218,15 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.5s;
+}
+.expand-enter,
+.expand-leave-to {
+  width: 0px;
+  min-width: 0px;
+  max-width: 0px;
 }
 </style>

@@ -7,8 +7,12 @@
     <div class="right">
       <div class="header">
         <div class="header-bar">
-          <a class="header-bar__item">反馈</a>
-          <a class="header-bar__item">帮助</a>
+          <a
+            href="https://github.com/colodoo/lanb-wvs/issues"
+            target="_blank"
+            class="header-bar__item"
+          >反馈</a>
+          <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="header-bar__item">帮助</a>
           <a class="header-bar__item">会员</a>
         </div>
       </div>
@@ -150,5 +154,11 @@ export default {
 /* reset */
 .menu .menu__item {
   line-height: 40px;
+}
+
+.menu-tip {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 </style>

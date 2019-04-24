@@ -69,6 +69,11 @@ export default new Router({
       path: '/index-ice',
       name: 'IndexIce',
       component: require('@/page/IndexIce.vue').default
+    },
+    {
+      path: '/index-zui',
+      name: 'IndexZui',
+      component: require('@/page/IndexZui.vue').default
     }
   ]
 })
