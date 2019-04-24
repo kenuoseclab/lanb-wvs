@@ -5,8 +5,8 @@
       <div class="header__logo">{{systemName}}</div>
       <div class="menu-bar">
         <a class="menu-bar__item">会员</a>
-        <a class="menu-bar__item">帮助</a>
-        <a class="menu-bar__item">反馈</a>
+        <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="menu-bar__item">帮助</a>
+        <a href="https://github.com/colodoo/lanb-wvs/issues" target="_blank" class="menu-bar__item">反馈</a>
       </div>
     </header>
 
@@ -14,40 +14,28 @@
     <main>
       <!-- 左侧菜单 -->
       <div class="main__left sider">
-        <menus :menus.sync="menus" :callback="menuCallback"></menus>
-
-        <!-- <ul class="menu">
-        <li class="menu__item">
-          系统管理
-          <ul class="sub-menu">
-            <li class="sub-menu__item">系统参数</li>
-            <li class="sub-menu__item">
-              代码设置
-              <ul class="sub-menu">
-                <li class="sub-menu__item">代码类别</li>
-                <li class="sub-menu__item">代码信息</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        </ul>-->
+        <!-- 列表菜单 -->
+        <!-- <menus :menus.sync="menus" :callback="menuCallback"></menus> -->
+        <!-- 树形菜单 -->
+        <tree-menu :folder="treeMenus" :callback="menuCallback"></tree-menu>
       </div>
 
       <div class="main__right">
         <!-- 选项卡 -->
-        <tabs :tabs.sync="tabs" :callback="tabCallback"></tabs>
+        <tabs :tabs.sync="tabs" :callback="tabCallback" :refreshCallback="refreshCallback"></tabs>
 
         <!-- 内容主体 -->
         <div class="content">
-          <!-- <button @click="refresh">刷新</button> -->
+          <!-- is特性方式 -->
           <keep-alive>
-            <component ref="currentPage" v-if="keepAlive" :is="currentPage"></component>
+            <component ref="currentPage" v-if="keepAlive && hackReset" :is="currentPage"></component>
           </keep-alive>
-          <component ref="currentPage" v-if="!keepAlive" :is="currentPage"></component>
+          <component ref="currentPage" v-if="!keepAlive && hackReset" :is="currentPage"></component>
+          <!-- 路由方式 -->
           <!-- <keep-alive>
             <router-view v-if="keepAlive" name="content"></router-view>
           </keep-alive>
-          <router-view v-if="!keepAlive" name="content"></router-view> -->
+          <router-view v-if="!keepAlive" name="content"></router-view>-->
         </div>
       </div>
     </main>
@@ -62,41 +50,6 @@ const tabs = [{
   component: 'dashboard'
 }]
 
-// const menus = [
-//   {
-//     title: '首页',
-//     selected: true,
-//     component: 'dashboard'
-//   }, {
-//     title: '表格页面',
-//     selected: false,
-//     component: 'test-table'
-//   }, {
-//     title: '任务管理',
-//     selected: false,
-//     component: 'task-table'
-//   }, {
-//     title: '漏洞管理',
-//     selected: false,
-//     component: 'bug-table'
-//   }, {
-//     title: '漏洞等級管理',
-//     selected: false,
-//     component: 'bug-level-table'
-//   }, {
-//     title: '资产管理',
-//     selected: false,
-//     component: 'asset-table'
-//   }, {
-//     title: '空页面',
-//     selected: false,
-//     component: 'blank-page'
-//   }, {
-//     title: '任务属性管理',
-//     selected: false,
-//     component: 'task-attr-table'
-//   }]
-
 const menus = []
 
 export default {
@@ -107,6 +60,7 @@ export default {
 
       systemName: 'LANB FE',
 
+      // 是否缓存组件
       keepAlive: true,
 
       // 选项卡
@@ -115,8 +69,13 @@ export default {
       // 菜单
       menus: menus,
 
+      // 树菜单
+      treeMenus: [],
+
+      hackReset: true,
+
       // 菜单点击回调
-      menuCallback: (menu, index) => {
+      menuCallback: (menu) => {
         const component = menu.component
         const tabComponents = this.getTabComponents()
 
@@ -136,7 +95,7 @@ export default {
       },
 
       // 选项卡点击回调
-      tabCallback: (tab, index) => {
+      tabCallback: (tab) => {
         // 菜单中和该选项卡匹配的项要选中
         const component = tab.component
         for (let i = 0; i < this.menus.length; i++) {
@@ -147,6 +106,10 @@ export default {
             menu.selected = false
           }
         }
+      },
+
+      refreshCallback: (tab) => {
+        this.refresh(tab.component)
       }
     }
   },
@@ -159,13 +122,30 @@ export default {
           return tab.component
         }
       }
+    },
+
+    keepAliveCache () {
+      return this.$refs.currentPage.$vnode.parent.child.cache
     }
   },
 
   methods: {
 
-    refresh () {
-      this.keepAlive = false
+    // 新刷组件
+    refresh (component) {
+      // 清除该组件缓存
+      const cid = this.$refs.currentPage.$vnode.componentOptions.Ctor.cid
+      const componentKey = cid + '::' + component
+      for (let key in this.keepAliveCache) {
+        if (key.indexOf(componentKey) !== -1) {
+          delete this.keepAliveCache[key]
+        }
+      }
+      // 强制刷新dom
+      this.hackReset = false
+      this.$nextTick(() => {
+        this.hackReset = true
+      })
     },
 
     getTabComponents () {
@@ -202,6 +182,14 @@ export default {
           })
         }
         this.menus = tmpMenus
+      }).catch(error => {
+        console.log(error)
+      })
+
+      this.$post('/api/menu/getTreeMenu', {}).then(data => {
+        const rows = data
+        const tmpMenus = rows
+        this.treeMenus = tmpMenus
       }).catch(error => {
         console.log(error)
       })

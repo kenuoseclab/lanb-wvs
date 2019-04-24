@@ -1,16 +1,11 @@
 <template>
   <ul class="menu">
-    <!-- <li class="menu__item">系统管理</li>
-    <li class="menu__item menu__item--selected">系统管理</li>
-    <li class="menu__item">系统管理</li>
-    <li class="menu__item">系统管理</li>-->
     <li
       :key="index"
       v-for="(menu, index) in menus"
       :class="{'menu__item': true, 'menu__item--selected': menu.selected}"
-      @click="changeMenu(menu, index)"
+      @click="changeMenu(menu)"
     >{{menu.title}}</li>
-    <!-- <a style="margin: 16px;" class="button">添加标签</a> -->
   </ul>
 </template>
 
@@ -37,12 +32,12 @@ export default {
   },
 
   methods: {
-    changeMenu (menu, index) {
+    changeMenu (menu) {
       for (let i = 0; i < this.menus.length; i++) {
         this.menus[i].selected = false
       }
       menu.selected = true
-      this.callback(menu, index)
+      this.callback(menu)
     }
   }
 }

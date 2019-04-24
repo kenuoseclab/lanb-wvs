@@ -1,10 +1,12 @@
 <template>
-  <div class="panel" style="height: 200px;">
-    <h1>Dashboard</h1>
-    <div class="panel__inner">
-      <div class="panel item color--green">总任务数</div>
-      <div class="panel item color--blue">正在运行任务数</div>
-      <div class="panel item color--red">错误任务数</div>
+  <div>
+    <div class="panel" style="height: 200px;">
+      <h1>Dashboard</h1>
+      <div class="panel__inner">
+        <div class="panel item color--green">总任务数</div>
+        <div class="panel item color--blue">正在运行任务数</div>
+        <div class="panel item color--red">错误任务数</div>
+      </div>
     </div>
   </div>
 </template>

@@ -20,7 +20,9 @@ main {
 main .main__left {
   width: 200px;
   max-width: 200px;
-  /* overflow-y: auto; */
+  min-width: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 main .main__right {

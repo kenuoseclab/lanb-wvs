@@ -13,8 +13,7 @@ export default {
       fields: [
         {
           field: 'menuId',
-          name: '菜单ID',
-          hidden: true
+          name: '菜单ID'
         },
         {
           field: 'menuName',

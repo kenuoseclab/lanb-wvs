@@ -144,7 +144,7 @@ export default {
 
   computed: {
     maxPage () {
-      return parseInt(this.total / this.pageInfo.rows)
+      return parseInt(this.total / this.pageInfo.rows) + 1
     }
   },
 

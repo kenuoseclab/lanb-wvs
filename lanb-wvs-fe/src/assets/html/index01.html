@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../menu.css">
+  <link rel="stylesheet" href="../panel.css">
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+      font-size: 12px;
+      font-family: Roboto, Helvetica Neue, Helvetica, Tahoma, Arial, PingFang SC, Microsoft YaHei;
+      line-height: 1.28571;
+      color: #333;
+    }
+
+    .wapper {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .aside {
+      width: 240px;
+      background-color: #ffffff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .aside .logo {
+      height: 62px;
+      line-height: 62px;
+      text-align: center;
+      border-bottom: 1px solid rgb(245, 245, 245);
+      ;
+    }
+
+    .aside .menu {
+      flex-grow: 1;
+    }
+
+    .right {
+      height: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right .header {
+      height: 62px;
+      background-color: rgb(68, 126, 255);
+      box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    }
+
+    .right .main {
+      background-color: #f5f5f5;
+      flex-grow: 1;
+    }
+
+    .main .main-container {
+      padding: 20px;
+    }
+
+    /* reset */
+    .menu .menu__item {
+      line-height: 40px;
+    }
+
+    .menu .menu__item--selected {
+      border-right: 2px solid rgb(68, 126, 255);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wapper">
+    <div class="aside">
+      <div class="logo">
+        LOGO
+      </div>
+      <ul class="menu">
+        <li class="menu__item">首页</li>
+        <li class="menu__item">系统管理</li>
+        <li class="menu__item">代码类型</li>
+        <li class="menu__item">菜单管理</li>
+        <li class="menu__item menu__item--selected">基础表单</li>
+        <li class="menu__item">代码信息</li>
+        <li class="menu__item">代码生成管理</li>
+      </ul>
+    </div>
+    <div class="right">
+      <div class="header"></div>
+      <div class="main">
+        <div class="main-container">
+          1
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

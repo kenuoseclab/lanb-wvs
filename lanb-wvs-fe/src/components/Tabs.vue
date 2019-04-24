@@ -14,13 +14,13 @@
       :style="{left: contextmenuPostion.x, top: contextmenuPostion.y}"
     >
       <ul class="menu">
-        <li class="menu__item" @click="refresh($event)">刷新</li>
+        <li class="menu__item" @click="refresh">刷新</li>
         <li class="menu__item" @click="close">关闭</li>
         <li class="menu__item" @click="closeOther">关闭其他</li>
         <li class="menu__item" @click="closeAll">关闭所有</li>
       </ul>
     </div>
-    <div class="mask" @click="isContextmenu = false"></div>
+    <div class="mask" @click="isContextmenu = false" @contextmenu.prevent="isContextmenu = false"></div>
   </div>
 </template>
 
@@ -40,9 +40,12 @@ export default {
 
     callback: {
       type: Function,
-      default: function () {
-        console.log('default callback')
-      }
+      default: function () { }
+    },
+
+    refreshCallback: {
+      type: Function,
+      default: function (item) { }
     }
   },
 
@@ -78,10 +81,9 @@ export default {
       this.callback(tab, index)
     },
 
-    refresh (event) {
+    refresh () {
       this.isContextmenu = false
-      console.log(this)
-      console.log(this.contextmenuTab)
+      this.refreshCallback(this.contextmenuTab)
     },
 
     close () {

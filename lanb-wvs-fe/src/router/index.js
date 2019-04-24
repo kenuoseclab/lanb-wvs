@@ -64,6 +64,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: require('@/page/Login').default
+    },
+    {
+      path: '/index-ice',
+      name: 'IndexIce',
+      component: require('@/page/IndexIce.vue').default
     }
   ]
 })
