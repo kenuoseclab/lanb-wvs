@@ -66,7 +66,7 @@ export default {
           component: row.menuUrl
         })
       }
-      this.menus = tmpMenus
+      this.menus = tmpMenus.splice(0, 5)
     }).catch(error => {
       console.log(error)
     })
@@ -160,5 +160,9 @@ export default {
   position: absolute;
   bottom: 0px;
   left: 0px;
+}
+
+.menu__item--selected {
+  border-right: 2px solid rgb(68, 126, 255);
 }
 </style>

@@ -32,7 +32,7 @@
 
         <!-- 内容主体 -->
         <div class="content">
-          <button @click="showSider = !showSider">showSider</button>
+          <!-- <button @click="showSider = !showSider">showSider</button> -->
           <!-- is特性方式 -->
           <keep-alive>
             <component ref="currentPage" v-if="keepAlive && hackReset" :is="currentPage"></component>
@@ -134,7 +134,11 @@ export default {
     },
 
     keepAliveCache () {
-      return this.$refs.currentPage.$vnode.parent.child.cache
+      if (this.keepAlive) {
+        return this.$refs.currentPage.$vnode.parent.child.cache
+      } else {
+        return this.$refs.currentPage.$vnode.parent.child.cache
+      }
     }
   },
 
@@ -145,9 +149,11 @@ export default {
       // 清除该组件缓存
       const cid = this.$refs.currentPage.$vnode.componentOptions.Ctor.cid
       const componentKey = cid + '::' + component
-      for (let key in this.keepAliveCache) {
-        if (key.indexOf(componentKey) !== -1) {
-          delete this.keepAliveCache[key]
+      if (this.keepAliveCache !== null) {
+        for (let key in this.keepAliveCache) {
+          if (key.indexOf(componentKey) !== -1) {
+            delete this.keepAliveCache[key]
+          }
         }
       }
       // 强制刷新dom

@@ -14,6 +14,21 @@ Vue.prototype.$fetch = fetch
 Vue.prototype.$patch = patch
 Vue.prototype.$put = put
 
+Vue.config.errorHandler = function (err, vm, info) {
+  console.log(err)
+  console.log(vm)
+  console.log(info)
+}
+
+Vue.config.warnHandler = function (msg, vm, trace) {
+  console.log(msg)
+  console.log(vm)
+  console.log(trace)
+  if (vm.currPage) {
+    vm.currPage = 'blank-page'
+  }
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

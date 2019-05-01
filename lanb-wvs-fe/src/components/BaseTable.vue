@@ -43,26 +43,26 @@
         <a @click="updateHandle" class="button">修改</a>
       </div>
 
-      <transition name="component-fade" mode="out-in">
-        <table class="table" key="table">
-          <thead>
-            <tr>
-              <th v-if="checkbox.show">
-                <input
-                  v-model="checkbox.checked"
-                  @click="selectToggle"
-                  class="checkbox"
-                  type="checkbox"
-                >
-              </th>
+      <table class="table">
+        <thead>
+          <tr>
+            <th v-if="checkbox.show">
+              <input
+                v-model="checkbox.checked"
+                @click="selectToggle"
+                class="checkbox"
+                type="checkbox"
+              >
+            </th>
 
-              <template v-for="(field, index) in fields">
-                <th v-if="!field.hidden" :key="index">{{field.name}}</th>
-              </template>
-            </tr>
-          </thead>
+            <template v-for="(field, index) in fields">
+              <th v-if="!field.hidden" :key="index">{{field.name}}</th>
+            </template>
+          </tr>
+        </thead>
 
-          <tbody>
+        <transition name="component-fade" mode="out-in">
+          <tbody v-if="show">
             <tr :key="index" v-for="(row, index) in rows">
               <td v-if="checkbox.show">
                 <input v-model="row.checked" class="checkbox" type="checkbox">
@@ -72,8 +72,8 @@
               </template>
             </tr>
           </tbody>
-        </table>
-      </transition>
+        </transition>
+      </table>
 
       <div class="pagination">
         <a @click="pageChange(-1)" class="button">上一页</a>
@@ -280,8 +280,11 @@ export default {
         .then(data => {
           this.rows = data.rows
           this.total = data.total
-          this.show = true
-          this.initCheckbox()
+          // 强制刷新dom,防止checkbox出现问题
+          this.$nextTick(() => {
+            this.show = true
+            this.initCheckbox()
+          })
         })
         .catch(() => {
           this.$router.push({

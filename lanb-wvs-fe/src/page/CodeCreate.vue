@@ -8,8 +8,8 @@
           <input class="input" v-model="form.packageName" name="packageName" placeholder="请输入包名">
         </div>
         <div class="form__block">
-          <label class="input-label" for="数据库名">数据库名</label>
-          <input class="input" v-model="form.tableName" name="tableName" placeholder="请输入数据库名">
+          <label class="input-label" for="数据表名">数据表名</label>
+          <input class="input" v-model="form.tableName" name="tableName" placeholder="请输入数据表名">
         </div>
         <div class="form__block">
           <a class="button" @click="create">生成</a>
@@ -35,9 +35,9 @@ export default {
   methods: {
     create () {
       this.$post('/api/creater/createAllString', this.form).then(data => {
-        console.log(data)
+        alert(data.msg)
       }).catch(error => {
-        console.log(error)
+        alert(error)
       })
     }
   }

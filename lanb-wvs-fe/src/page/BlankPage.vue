@@ -1,5 +1,5 @@
 <template>
-  <div class="panel" style="height: 90%;">
+  <div class="panel" style="height: 500px;">
     <div class="info">404 NOT FOUND</div>
   </div>
 </template>
