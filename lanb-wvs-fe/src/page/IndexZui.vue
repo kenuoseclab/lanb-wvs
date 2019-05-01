@@ -31,7 +31,9 @@
             @click.stop="subMenuCallback(item)"
           >{{item.text}}</li>
         </ul>
-        <div></div>
+        <div class="sub-header__item" style="margin-right: 20px;">
+          <a class="button">刷新</a>
+        </div>
       </div>
       <div class="main">
         <div class="main-container">
@@ -67,13 +69,13 @@ export default {
     menuCallback (menu) {
       if (menu.attributes.menuUrl !== '') {
         this.currPage = menu.attributes.menuUrl
-        for (let index = 0; index < this.subMenus.length; index++) {
-          const element = this.subMenus[index]
-          element.checked = false
-        }
         this.subMenus = []
       } else if (menu.children !== null) {
         this.subMenus = menu.children
+      }
+      for (let index = 0; index < this.subMenus.length; index++) {
+        const element = this.subMenus[index]
+        element.checked = false
       }
       for (let index = 0; index < this.menus.length; index++) {
         const element = this.menus[index]
@@ -97,25 +99,6 @@ export default {
   },
 
   created () {
-    // this.$post('/api/menu/query', {}).then(data => {
-    //   const rows = data
-    //   const tmpMenus = []
-    //   for (let i = 0; i < rows.length; i++) {
-    //     const row = rows[i]
-    //     let selected = false
-    //     if (row.visible === 1) {
-    //       selected = true
-    //     }
-    //     tmpMenus.push({
-    //       title: row.menuName,
-    //       selected: selected,
-    //       component: row.menuUrl
-    //     })
-    //   }
-    //   this.menus = tmpMenus.splice(0, 5)
-    // }).catch(error => {
-    //   console.log(error)
-    // })
     this.$post('/api/menu/getTreeMenu', {}).then(data => {
       const rows = data
       const tmpMenus = rows
@@ -191,6 +174,13 @@ export default {
   justify-content: space-between;
 }
 
+.sub-header .sub-header__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .container .main {
   background-color: #f5f5f5;
   flex-grow: 1;
@@ -221,6 +211,7 @@ export default {
 }
 
 .nav-bar .nav-bar__item {
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
   float: left;
   list-style: none;
   color: #ffffff;
