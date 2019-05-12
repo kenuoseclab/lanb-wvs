@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.colodoo.manager.task.service.mapper.TaskSQLMapper">
+<mapper namespace="com.colodoo.framework.manager.roleMenu.service.mapper.RoleMenuSQLMapper">
 
-	<select id="getTaskList" resultType="com.colodoo.manager.task.model.Task" parameterType="com.colodoo.manager.task.model.TaskVO">
+	<select id="getRoleMenuList" resultType="com.colodoo.framework.manager.roleMenu.model.RoleMenu" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenuVO">
 		select
-			a.`task_id` as `taskId`,
-			a.`task_name` as `taskName`,
-			a.`desc` as `desc`,
-			a.`status` as `status`,
+			a.`role_menu_id` as `roleMenuId`,
+			a.`role_id` as `roleId`,
+			a.`menu_id` as `menuId`,
 			a.`create_time` as `createTime`,
 			a.`create_user_id` as `createUserId`,
 			a.`update_time` as `updateTime`,
 			a.`update_user_id` as `updateUserId`,
 			a.`remark` as `remark`
 		from
-		    task a
+		    role_menu a
 		<where>
 			<trim suffixOverrides="and">
-				<if test="taskId != null and taskId !=''">
-				     a.`task_id` = #{taskId} and
+				<if test="roleMenuId != null and roleMenuId !=''">
+				     a.`role_menu_id` = #{roleMenuId} and
 				</if>
-				<if test="taskName != null and taskName !=''">
-				     a.`task_name` = #{taskName} and
+				<if test="roleId != null and roleId !=''">
+				     a.`role_id` = #{roleId} and
 				</if>
-				<if test="desc != null and desc !=''">
-				     a.`desc` = #{desc} and
-				</if>
-				<if test="status != null and status !=''">
-				     a.`status` = #{status} and
+				<if test="menuId != null and menuId !=''">
+				     a.`menu_id` = #{menuId} and
 				</if>
 				<if test="createTime != null and createTime !=''">
 				     a.`create_time` = #{createTime} and

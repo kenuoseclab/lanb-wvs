@@ -1,8 +1,8 @@
-package com.colodoo.manager.task.action;
+package com.colodoo.framework.manager.roleMenu.action;
 
-import com.colodoo.manager.task.model.Task;
-import com.colodoo.manager.task.model.TaskVO;
-import com.colodoo.manager.task.service.TaskService;
+import com.colodoo.framework.manager.roleMenu.model.RoleMenu;
+import com.colodoo.framework.manager.roleMenu.model.RoleMenuVO;
+import com.colodoo.framework.manager.roleMenu.service.RoleMenuService;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-14 18:40:18
+* @date 2019-4-25 17:07:42
 * @description
 */
 @Controller
-@RequestMapping(value = "/task")
+@RequestMapping(value = "/roleMenu")
 @CrossOrigin
-public class TaskAction {
+public class RoleMenuAction {
 
     @Autowired
-    TaskService taskService;
+    RoleMenuService roleMenuService;
 
 	/**
 	 * 新增数据
@@ -36,9 +36,9 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Map<String, Object> save(@RequestBody Task model) {
+    public Map<String, Object> save(@RequestBody RoleMenu model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskService.saveTask(model);
+        int ret = roleMenuService.saveRoleMenu(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -55,9 +55,9 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, Object> delete(@RequestBody Task model) {
+    public Map<String, Object> delete(@RequestBody RoleMenu model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskService.deleteTask(model);
+        int ret = roleMenuService.deleteRoleMenu(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -74,9 +74,9 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map<String, Object> update(@RequestBody Task model) {
+    public Map<String, Object> update(@RequestBody RoleMenu model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskService.updateTask(model);
+        int ret = roleMenuService.updateRoleMenu(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -93,9 +93,9 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/queryById")
     @ResponseBody
-    public Map<String, Object> queryById(@RequestBody Task model) {
+    public Map<String, Object> queryById(@RequestBody RoleMenu model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        rspMap.put("rows", taskService.queryById(model));
+        rspMap.put("rows", roleMenuService.queryById(model));
         return rspMap;
     }
 
@@ -107,8 +107,8 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<Task> query(@RequestBody TaskVO model) {
-        return taskService.query(model);
+    public List<RoleMenu> query(@RequestBody RoleMenuVO model) {
+        return roleMenuService.query(model);
     }
 
 	/**
@@ -119,9 +119,9 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/queryPage")
     @ResponseBody
-    public Map<String, Object> queryPage(@RequestBody TaskVO model) {
+    public Map<String, Object> queryPage(@RequestBody RoleMenuVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<Task> info = taskService.query(model.getPage(), model);
+        PageInfo<RoleMenu> info = roleMenuService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;

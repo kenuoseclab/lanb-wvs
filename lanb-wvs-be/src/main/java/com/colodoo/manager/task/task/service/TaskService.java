@@ -1,27 +1,31 @@
-package com.colodoo.framework.manager.log.service;
+package com.colodoo.manager.task.task.service;
 
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
-import com.colodoo.framework.manager.log.model.Log;
+import com.colodoo.manager.task.task.model.Task;
+import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.manager.log.model.LogExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import com.colodoo.manager.task.task.service.mapper.TaskSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2018-8-31 16:14:20
+* @date 2019-4-25 16:16:24
 * @description 
 */
 @Service
 @Slf4j
-public class LogService extends BaseService<Log> {
+public class TaskService extends BaseService<Task> {
+
+	@Autowired
+	TaskSQLMapper sqlMapper;
 
     /**
     * 新增数据
@@ -29,10 +33,10 @@ public class LogService extends BaseService<Log> {
     * @param model
     * @return
     */
-    public int saveLog(Log model) {
+    public int saveTask(Task model) {
         int ret = Contants.CODE_FAILED;
-        model.setLogId(uuid());
-         model.setCreateTime(new Date());
+        model.setTaskId(uuid());
+        // model.setCreateDate(new Date());
         // model.setLastDate(new Date());
         try {
             ret = this.insert(model);
@@ -48,10 +52,10 @@ public class LogService extends BaseService<Log> {
     * @param model
     * @return
     */
-    public int deleteLog(Log model) {
+    public int deleteTask(Task model) {
         int ret = Contants.CODE_FAILED;
         try {
-            ret = this.delete(model.getLogId());
+            ret = this.delete(model.getTaskId());
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -64,7 +68,7 @@ public class LogService extends BaseService<Log> {
     * @param model
     * @return
     */
-    public int updateLog(Log model) {
+    public int updateTask(Task model) {
         int ret = Contants.CODE_FAILED;
         try {
             ret = this.update(model);
@@ -80,14 +84,14 @@ public class LogService extends BaseService<Log> {
     * @param model
     * @return
     */
-    public Log queryById(Log model) {
-        Log logModel = null;
+    public Task queryById(Task model) {
+        Task task = null;
         try {
-            logModel = this.get(model.getLogId());
+            task = this.get(model.getTaskId());
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        return logModel;
+        return task;
     }
 
     /**
@@ -95,11 +99,10 @@ public class LogService extends BaseService<Log> {
     *
     * @return
     */
-    public List<Log> query() {
-        List<Log> list = null;
-        LogExample example = new LogExample();
+    public List<Task> query(TaskVO model) {
+        List<Task> list = null;
         try {
-            list = this.find(example);
+            list = sqlMapper.getTaskList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -112,16 +115,16 @@ public class LogService extends BaseService<Log> {
     * @param page
     * @return
     */
-    public PageInfo query(Page page) {
-        PageInfo pageInfo;
-        List<Log> list = null;
+    public PageInfo<Task> query(Page page, TaskVO model) {
+        PageInfo<Task> pageInfo;
+        List<Task> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
-            list = this.find();
+            list = sqlMapper.getTaskList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        pageInfo = new PageInfo(list);
+        pageInfo = new PageInfo<Task>(list);
         return pageInfo;
     }
 }

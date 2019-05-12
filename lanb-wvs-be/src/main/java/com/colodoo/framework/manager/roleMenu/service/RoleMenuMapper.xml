@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.colodoo.manager.task.service.TaskMapper">
-  <resultMap id="BaseResultMap" type="com.colodoo.manager.task.model.Task">
-    <id column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+<mapper namespace="com.colodoo.framework.manager.roleMenu.service.RoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.colodoo.framework.manager.roleMenu.model.RoleMenu">
+    <id column="role_menu_id" jdbcType="VARCHAR" property="roleMenuId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -71,16 +70,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    task_id, task_name, `desc`, `status`, create_time, create_user_id, update_time, update_user_id, 
+    role_menu_id, role_id, menu_id, create_time, create_user_id, update_time, update_user_id, 
     remark
   </sql>
-  <select id="selectByExample" parameterType="com.colodoo.manager.task.model.TaskExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from task
+    from role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,43 +90,38 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from task
-    where task_id = #{taskId,jdbcType=VARCHAR}
+    from role_menu
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from task
-    where task_id = #{taskId,jdbcType=VARCHAR}
+    delete from role_menu
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.colodoo.manager.task.model.TaskExample">
-    delete from task
+  <delete id="deleteByExample" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenuExample">
+    delete from role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.colodoo.manager.task.model.Task">
-    insert into task (task_id, task_name, `desc`, 
-      `status`, create_time, create_user_id, 
-      update_time, update_user_id, remark
-      )
-    values (#{taskId,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenu">
+    insert into role_menu (role_menu_id, role_id, menu_id, 
+      create_time, create_user_id, update_time, 
+      update_user_id, remark)
+    values (#{roleMenuId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.colodoo.manager.task.model.Task">
-    insert into task
+  <insert id="insertSelective" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenu">
+    insert into role_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
-        task_id,
+      <if test="roleMenuId != null">
+        role_menu_id,
       </if>
-      <if test="taskName != null">
-        task_name,
+      <if test="roleId != null">
+        role_id,
       </if>
-      <if test="desc != null">
-        `desc`,
-      </if>
-      <if test="status != null">
-        `status`,
+      <if test="menuId != null">
+        menu_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -146,17 +140,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="taskId != null">
-        #{taskId,jdbcType=VARCHAR},
+      <if test="roleMenuId != null">
+        #{roleMenuId,jdbcType=VARCHAR},
       </if>
-      <if test="taskName != null">
-        #{taskName,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
+      <if test="menuId != null">
+        #{menuId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -175,26 +166,23 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.colodoo.manager.task.model.TaskExample" resultType="java.lang.Long">
-    select count(*) from task
+  <select id="countByExample" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenuExample" resultType="java.lang.Long">
+    select count(*) from role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update task
+    update role_menu
     <set>
-      <if test="record.taskId != null">
-        task_id = #{record.taskId,jdbcType=VARCHAR},
+      <if test="record.roleMenuId != null">
+        role_menu_id = #{record.roleMenuId,jdbcType=VARCHAR},
       </if>
-      <if test="record.taskName != null">
-        task_name = #{record.taskName,jdbcType=VARCHAR},
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null">
-        `desc` = #{record.desc,jdbcType=VARCHAR},
-      </if>
-      <if test="record.status != null">
-        `status` = #{record.status,jdbcType=VARCHAR},
+      <if test="record.menuId != null">
+        menu_id = #{record.menuId,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -217,11 +205,10 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update task
-    set task_id = #{record.taskId,jdbcType=VARCHAR},
-      task_name = #{record.taskName,jdbcType=VARCHAR},
-      `desc` = #{record.desc,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=VARCHAR},
+    update role_menu
+    set role_menu_id = #{record.roleMenuId,jdbcType=VARCHAR},
+      role_id = #{record.roleId,jdbcType=VARCHAR},
+      menu_id = #{record.menuId,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       create_user_id = #{record.createUserId,jdbcType=VARCHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -231,17 +218,14 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.manager.task.model.Task">
-    update task
+  <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenu">
+    update role_menu
     <set>
-      <if test="taskName != null">
-        task_name = #{taskName,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        `desc` = #{desc,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=VARCHAR},
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -259,18 +243,17 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where task_id = #{taskId,jdbcType=VARCHAR}
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.colodoo.manager.task.model.Task">
-    update task
-    set task_name = #{taskName,jdbcType=VARCHAR},
-      `desc` = #{desc,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.roleMenu.model.RoleMenu">
+    update role_menu
+    set role_id = #{roleId,jdbcType=VARCHAR},
+      menu_id = #{menuId,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_user_id = #{createUserId,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       update_user_id = #{updateUserId,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR}
-    where task_id = #{taskId,jdbcType=VARCHAR}
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
   </update>
 </mapper>

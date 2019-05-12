@@ -1,31 +1,31 @@
-package com.colodoo.manager.task.service;
+package com.colodoo.framework.manager.roleMenu.service;
 
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
-import com.colodoo.manager.task.model.Task;
-import com.colodoo.manager.task.model.TaskVO;
+import com.colodoo.framework.manager.roleMenu.model.RoleMenu;
+import com.colodoo.framework.manager.roleMenu.model.RoleMenuVO;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.colodoo.manager.task.service.mapper.TaskSQLMapper;
+import com.colodoo.framework.manager.roleMenu.service.mapper.RoleMenuSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-14 18:40:18
+* @date 2019-4-25 17:07:42
 * @description 
 */
 @Service
 @Slf4j
-public class TaskService extends BaseService<Task> {
+public class RoleMenuService extends BaseService<RoleMenu> {
 
 	@Autowired
-	TaskSQLMapper sqlMapper;
+	RoleMenuSQLMapper sqlMapper;
 
     /**
     * 新增数据
@@ -33,9 +33,9 @@ public class TaskService extends BaseService<Task> {
     * @param model
     * @return
     */
-    public int saveTask(Task model) {
+    public int saveRoleMenu(RoleMenu model) {
         int ret = Contants.CODE_FAILED;
-        model.setTaskId(uuid());
+        model.setRoleMenuId(uuid());
         // model.setCreateDate(new Date());
         // model.setLastDate(new Date());
         try {
@@ -52,10 +52,10 @@ public class TaskService extends BaseService<Task> {
     * @param model
     * @return
     */
-    public int deleteTask(Task model) {
+    public int deleteRoleMenu(RoleMenu model) {
         int ret = Contants.CODE_FAILED;
         try {
-            ret = this.delete(model.getTaskId());
+            ret = this.delete(model.getRoleMenuId());
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -68,7 +68,7 @@ public class TaskService extends BaseService<Task> {
     * @param model
     * @return
     */
-    public int updateTask(Task model) {
+    public int updateRoleMenu(RoleMenu model) {
         int ret = Contants.CODE_FAILED;
         try {
             ret = this.update(model);
@@ -84,14 +84,14 @@ public class TaskService extends BaseService<Task> {
     * @param model
     * @return
     */
-    public Task queryById(Task model) {
-        Task task = null;
+    public RoleMenu queryById(RoleMenu model) {
+        RoleMenu roleMenu = null;
         try {
-            task = this.get(model.getTaskId());
+            roleMenu = this.get(model.getRoleMenuId());
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        return task;
+        return roleMenu;
     }
 
     /**
@@ -99,10 +99,10 @@ public class TaskService extends BaseService<Task> {
     *
     * @return
     */
-    public List<Task> query(TaskVO model) {
-        List<Task> list = null;
+    public List<RoleMenu> query(RoleMenuVO model) {
+        List<RoleMenu> list = null;
         try {
-            list = sqlMapper.getTaskList(model);
+            list = sqlMapper.getRoleMenuList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
@@ -115,16 +115,16 @@ public class TaskService extends BaseService<Task> {
     * @param page
     * @return
     */
-    public PageInfo<Task> query(Page page, TaskVO model) {
-        PageInfo<Task> pageInfo;
-        List<Task> list = null;
+    public PageInfo<RoleMenu> query(Page page, RoleMenuVO model) {
+        PageInfo<RoleMenu> pageInfo;
+        List<RoleMenu> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
-            list = sqlMapper.getTaskList(model);
+            list = sqlMapper.getRoleMenuList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        pageInfo = new PageInfo<Task>(list);
+        pageInfo = new PageInfo<RoleMenu>(list);
         return pageInfo;
     }
 }

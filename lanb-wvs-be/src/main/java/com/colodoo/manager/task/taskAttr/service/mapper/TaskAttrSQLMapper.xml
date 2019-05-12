@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.task.taskAttr.service.mapper.TaskAttrSQLMapper">
+
+	<select id="getTaskAttrList" resultType="com.colodoo.manager.task.taskAttr.model.TaskAttr" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttrVO">
+		select
+			a.`task_attr_id` as `taskAttrId`,
+			a.`task_attr_key` as `taskAttrKey`,
+			a.`task_attr_value` as `taskAttrValue`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`update_time` as `updateTime`,
+			a.`update_user_id` as `updateUserId`,
+			a.`remark` as `remark`
+		from
+		    task_attr a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="taskAttrId != null and taskAttrId !=''">
+				     a.`task_attr_id` = #{taskAttrId} and
+				</if>
+				<if test="taskAttrKey != null and taskAttrKey !=''">
+				     a.`task_attr_key` = #{taskAttrKey} and
+				</if>
+				<if test="taskAttrValue != null and taskAttrValue !=''">
+				     a.`task_attr_value` = #{taskAttrValue} and
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+				     a.`create_user_id` = #{createUserId} and
+				</if>
+				<if test="updateTime != null and updateTime !=''">
+				     a.`update_time` = #{updateTime} and
+				</if>
+				<if test="updateUserId != null and updateUserId !=''">
+				     a.`update_user_id` = #{updateUserId} and
+				</if>
+				<if test="remark != null and remark !=''">
+				     a.`remark` = #{remark} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

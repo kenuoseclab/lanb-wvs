@@ -1,29 +1,24 @@
-package com.colodoo.manager.task.model;
+package com.colodoo.manager.task.taskAttr.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Task {
+public class TaskAttr {
     /**
-     * 任务ID
+     * 任务属性ID
      */
-    private String taskId;
+    private String taskAttrId;
 
     /**
-     * 任务名称
+     * 任务属性名
      */
-    private String taskName;
+    private String taskAttrKey;
 
     /**
-     * 任务描述
+     * 任务属性值
      */
-    private String desc;
-
-    /**
-     * 任务状态
-     */
-    private String status;
+    private String taskAttrValue;
 
     /**
      * 创建时间
@@ -55,67 +50,51 @@ public class Task {
     private String remark;
 
     /**
-     * 任务ID
-     * @return task_id 任务ID
+     * 任务属性ID
+     * @return task_attr_id 任务属性ID
      */
-    public String getTaskId() {
-        return taskId;
+    public String getTaskAttrId() {
+        return taskAttrId;
     }
 
     /**
-     * 任务ID
-     * @param taskId 任务ID
+     * 任务属性ID
+     * @param taskAttrId 任务属性ID
      */
-    public void setTaskId(String taskId) {
-        this.taskId = taskId == null ? null : taskId.trim();
+    public void setTaskAttrId(String taskAttrId) {
+        this.taskAttrId = taskAttrId == null ? null : taskAttrId.trim();
     }
 
     /**
-     * 任务名称
-     * @return task_name 任务名称
+     * 任务属性名
+     * @return task_attr_key 任务属性名
      */
-    public String getTaskName() {
-        return taskName;
+    public String getTaskAttrKey() {
+        return taskAttrKey;
     }
 
     /**
-     * 任务名称
-     * @param taskName 任务名称
+     * 任务属性名
+     * @param taskAttrKey 任务属性名
      */
-    public void setTaskName(String taskName) {
-        this.taskName = taskName == null ? null : taskName.trim();
+    public void setTaskAttrKey(String taskAttrKey) {
+        this.taskAttrKey = taskAttrKey == null ? null : taskAttrKey.trim();
     }
 
     /**
-     * 任务描述
-     * @return desc 任务描述
+     * 任务属性值
+     * @return task_attr_value 任务属性值
      */
-    public String getDesc() {
-        return desc;
+    public String getTaskAttrValue() {
+        return taskAttrValue;
     }
 
     /**
-     * 任务描述
-     * @param desc 任务描述
+     * 任务属性值
+     * @param taskAttrValue 任务属性值
      */
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
-    }
-
-    /**
-     * 任务状态
-     * @return status 任务状态
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * 任务状态
-     * @param status 任务状态
-     */
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setTaskAttrValue(String taskAttrValue) {
+        this.taskAttrValue = taskAttrValue == null ? null : taskAttrValue.trim();
     }
 
     /**

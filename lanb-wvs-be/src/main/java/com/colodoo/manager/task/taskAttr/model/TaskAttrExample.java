@@ -1,36 +1,36 @@
-package com.colodoo.manager.task.model;
+package com.colodoo.manager.task.taskAttr.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaskExample {
+public class TaskAttrExample {
     /**
-     * task
+     * task_attr
      */
     protected String orderByClause;
 
     /**
-     * task
+     * task_attr
      */
     protected boolean distinct;
 
     /**
-     * task
+     * task_attr
      */
     protected List<Criteria> oredCriteria;
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
-    public TaskExample() {
+    public TaskAttrExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -38,7 +38,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -46,7 +46,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -54,7 +54,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public boolean isDistinct() {
         return distinct;
@@ -62,7 +62,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -70,7 +70,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -78,7 +78,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -88,7 +88,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -100,7 +100,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -109,7 +109,7 @@ public class TaskExample {
 
     /**
      *
-     * @mbg.generated 2019-04-14
+     * @mbg.generated 2019-04-25
      */
     public void clear() {
         oredCriteria.clear();
@@ -118,7 +118,7 @@ public class TaskExample {
     }
 
     /**
-     * task 2019-04-14
+     * task_attr 2019-04-25
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -161,283 +161,213 @@ public class TaskExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andTaskIdIsNull() {
-            addCriterion("task_id is null");
+        public Criteria andTaskAttrIdIsNull() {
+            addCriterion("task_attr_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIsNotNull() {
-            addCriterion("task_id is not null");
+        public Criteria andTaskAttrIdIsNotNull() {
+            addCriterion("task_attr_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdEqualTo(String value) {
-            addCriterion("task_id =", value, "taskId");
+        public Criteria andTaskAttrIdEqualTo(String value) {
+            addCriterion("task_attr_id =", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotEqualTo(String value) {
-            addCriterion("task_id <>", value, "taskId");
+        public Criteria andTaskAttrIdNotEqualTo(String value) {
+            addCriterion("task_attr_id <>", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThan(String value) {
-            addCriterion("task_id >", value, "taskId");
+        public Criteria andTaskAttrIdGreaterThan(String value) {
+            addCriterion("task_attr_id >", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThanOrEqualTo(String value) {
-            addCriterion("task_id >=", value, "taskId");
+        public Criteria andTaskAttrIdGreaterThanOrEqualTo(String value) {
+            addCriterion("task_attr_id >=", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThan(String value) {
-            addCriterion("task_id <", value, "taskId");
+        public Criteria andTaskAttrIdLessThan(String value) {
+            addCriterion("task_attr_id <", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThanOrEqualTo(String value) {
-            addCriterion("task_id <=", value, "taskId");
+        public Criteria andTaskAttrIdLessThanOrEqualTo(String value) {
+            addCriterion("task_attr_id <=", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLike(String value) {
-            addCriterion("task_id like", value, "taskId");
+        public Criteria andTaskAttrIdLike(String value) {
+            addCriterion("task_attr_id like", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotLike(String value) {
-            addCriterion("task_id not like", value, "taskId");
+        public Criteria andTaskAttrIdNotLike(String value) {
+            addCriterion("task_attr_id not like", value, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIn(List<String> values) {
-            addCriterion("task_id in", values, "taskId");
+        public Criteria andTaskAttrIdIn(List<String> values) {
+            addCriterion("task_attr_id in", values, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotIn(List<String> values) {
-            addCriterion("task_id not in", values, "taskId");
+        public Criteria andTaskAttrIdNotIn(List<String> values) {
+            addCriterion("task_attr_id not in", values, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdBetween(String value1, String value2) {
-            addCriterion("task_id between", value1, value2, "taskId");
+        public Criteria andTaskAttrIdBetween(String value1, String value2) {
+            addCriterion("task_attr_id between", value1, value2, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotBetween(String value1, String value2) {
-            addCriterion("task_id not between", value1, value2, "taskId");
+        public Criteria andTaskAttrIdNotBetween(String value1, String value2) {
+            addCriterion("task_attr_id not between", value1, value2, "taskAttrId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameIsNull() {
-            addCriterion("task_name is null");
+        public Criteria andTaskAttrKeyIsNull() {
+            addCriterion("task_attr_key is null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameIsNotNull() {
-            addCriterion("task_name is not null");
+        public Criteria andTaskAttrKeyIsNotNull() {
+            addCriterion("task_attr_key is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameEqualTo(String value) {
-            addCriterion("task_name =", value, "taskName");
+        public Criteria andTaskAttrKeyEqualTo(String value) {
+            addCriterion("task_attr_key =", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameNotEqualTo(String value) {
-            addCriterion("task_name <>", value, "taskName");
+        public Criteria andTaskAttrKeyNotEqualTo(String value) {
+            addCriterion("task_attr_key <>", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameGreaterThan(String value) {
-            addCriterion("task_name >", value, "taskName");
+        public Criteria andTaskAttrKeyGreaterThan(String value) {
+            addCriterion("task_attr_key >", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameGreaterThanOrEqualTo(String value) {
-            addCriterion("task_name >=", value, "taskName");
+        public Criteria andTaskAttrKeyGreaterThanOrEqualTo(String value) {
+            addCriterion("task_attr_key >=", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameLessThan(String value) {
-            addCriterion("task_name <", value, "taskName");
+        public Criteria andTaskAttrKeyLessThan(String value) {
+            addCriterion("task_attr_key <", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameLessThanOrEqualTo(String value) {
-            addCriterion("task_name <=", value, "taskName");
+        public Criteria andTaskAttrKeyLessThanOrEqualTo(String value) {
+            addCriterion("task_attr_key <=", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameLike(String value) {
-            addCriterion("task_name like", value, "taskName");
+        public Criteria andTaskAttrKeyLike(String value) {
+            addCriterion("task_attr_key like", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameNotLike(String value) {
-            addCriterion("task_name not like", value, "taskName");
+        public Criteria andTaskAttrKeyNotLike(String value) {
+            addCriterion("task_attr_key not like", value, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameIn(List<String> values) {
-            addCriterion("task_name in", values, "taskName");
+        public Criteria andTaskAttrKeyIn(List<String> values) {
+            addCriterion("task_attr_key in", values, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameNotIn(List<String> values) {
-            addCriterion("task_name not in", values, "taskName");
+        public Criteria andTaskAttrKeyNotIn(List<String> values) {
+            addCriterion("task_attr_key not in", values, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameBetween(String value1, String value2) {
-            addCriterion("task_name between", value1, value2, "taskName");
+        public Criteria andTaskAttrKeyBetween(String value1, String value2) {
+            addCriterion("task_attr_key between", value1, value2, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andTaskNameNotBetween(String value1, String value2) {
-            addCriterion("task_name not between", value1, value2, "taskName");
+        public Criteria andTaskAttrKeyNotBetween(String value1, String value2) {
+            addCriterion("task_attr_key not between", value1, value2, "taskAttrKey");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNull() {
-            addCriterion("`desc` is null");
+        public Criteria andTaskAttrValueIsNull() {
+            addCriterion("task_attr_value is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNotNull() {
-            addCriterion("`desc` is not null");
+        public Criteria andTaskAttrValueIsNotNull() {
+            addCriterion("task_attr_value is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescEqualTo(String value) {
-            addCriterion("`desc` =", value, "desc");
+        public Criteria andTaskAttrValueEqualTo(String value) {
+            addCriterion("task_attr_value =", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotEqualTo(String value) {
-            addCriterion("`desc` <>", value, "desc");
+        public Criteria andTaskAttrValueNotEqualTo(String value) {
+            addCriterion("task_attr_value <>", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThan(String value) {
-            addCriterion("`desc` >", value, "desc");
+        public Criteria andTaskAttrValueGreaterThan(String value) {
+            addCriterion("task_attr_value >", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThanOrEqualTo(String value) {
-            addCriterion("`desc` >=", value, "desc");
+        public Criteria andTaskAttrValueGreaterThanOrEqualTo(String value) {
+            addCriterion("task_attr_value >=", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThan(String value) {
-            addCriterion("`desc` <", value, "desc");
+        public Criteria andTaskAttrValueLessThan(String value) {
+            addCriterion("task_attr_value <", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThanOrEqualTo(String value) {
-            addCriterion("`desc` <=", value, "desc");
+        public Criteria andTaskAttrValueLessThanOrEqualTo(String value) {
+            addCriterion("task_attr_value <=", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescLike(String value) {
-            addCriterion("`desc` like", value, "desc");
+        public Criteria andTaskAttrValueLike(String value) {
+            addCriterion("task_attr_value like", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotLike(String value) {
-            addCriterion("`desc` not like", value, "desc");
+        public Criteria andTaskAttrValueNotLike(String value) {
+            addCriterion("task_attr_value not like", value, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescIn(List<String> values) {
-            addCriterion("`desc` in", values, "desc");
+        public Criteria andTaskAttrValueIn(List<String> values) {
+            addCriterion("task_attr_value in", values, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotIn(List<String> values) {
-            addCriterion("`desc` not in", values, "desc");
+        public Criteria andTaskAttrValueNotIn(List<String> values) {
+            addCriterion("task_attr_value not in", values, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescBetween(String value1, String value2) {
-            addCriterion("`desc` between", value1, value2, "desc");
+        public Criteria andTaskAttrValueBetween(String value1, String value2) {
+            addCriterion("task_attr_value between", value1, value2, "taskAttrValue");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotBetween(String value1, String value2) {
-            addCriterion("`desc` not between", value1, value2, "desc");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIsNull() {
-            addCriterion("`status` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIsNotNull() {
-            addCriterion("`status` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusEqualTo(String value) {
-            addCriterion("`status` =", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotEqualTo(String value) {
-            addCriterion("`status` <>", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThan(String value) {
-            addCriterion("`status` >", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusGreaterThanOrEqualTo(String value) {
-            addCriterion("`status` >=", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThan(String value) {
-            addCriterion("`status` <", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLessThanOrEqualTo(String value) {
-            addCriterion("`status` <=", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusLike(String value) {
-            addCriterion("`status` like", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotLike(String value) {
-            addCriterion("`status` not like", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIn(List<String> values) {
-            addCriterion("`status` in", values, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotIn(List<String> values) {
-            addCriterion("`status` not in", values, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusBetween(String value1, String value2) {
-            addCriterion("`status` between", value1, value2, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotBetween(String value1, String value2) {
-            addCriterion("`status` not between", value1, value2, "status");
+        public Criteria andTaskAttrValueNotBetween(String value1, String value2) {
+            addCriterion("task_attr_value not between", value1, value2, "taskAttrValue");
             return (Criteria) this;
         }
 
@@ -773,7 +703,7 @@ public class TaskExample {
     }
 
     /**
-     *  * task
+     *  * task_attr
      */
     public static class Criteria extends GeneratedCriteria {
 
@@ -783,7 +713,7 @@ public class TaskExample {
     }
 
     /**
-     * task 2019-04-14
+     * task_attr 2019-04-25
      */
     public static class Criterion {
         private String condition;

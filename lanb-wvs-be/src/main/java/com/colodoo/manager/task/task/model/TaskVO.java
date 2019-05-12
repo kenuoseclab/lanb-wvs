@@ -1,4 +1,4 @@
-package com.colodoo.manager.task.model;
+package com.colodoo.manager.task.task.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import com.colodoo.framework.easyui.Page;
 
 /**
 * @author colodoo
-* @date 2019-4-14 18:40:18
+* @date 2019-4-25 16:16:24
 * @description 
 */
 public class TaskVO extends Task implements Serializable {
