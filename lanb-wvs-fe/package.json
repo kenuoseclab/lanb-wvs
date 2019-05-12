@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "calendar-months": "^1.0.1",
     "date-formatter": "^0.1.1",
+    "echarts": "^4.2.1",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "vue": "^2.5.2",

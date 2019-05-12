@@ -26,6 +26,7 @@ Vue.config.warnHandler = function (msg, vm, trace) {
   console.log(trace)
   if (vm.currPage) {
     vm.currPage = 'blank-page'
+    // router.push('/404')
   }
 }
 

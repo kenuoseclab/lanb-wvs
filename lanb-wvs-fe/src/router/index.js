@@ -74,6 +74,11 @@ export default new Router({
       path: '/index-zui',
       name: 'IndexZui',
       component: require('@/page/IndexZui.vue').default
+    },
+    {
+      path: '/404',
+      name: 'BlankPage',
+      component: require('@/page/BlankPage.vue').default
     }
   ]
 })
