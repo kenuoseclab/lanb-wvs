@@ -3,21 +3,20 @@
     <div class="modal" v-if="isModal">
       <div class="modal__inner panel">
         <h1>编辑表单</h1>
-        <form class="form">
+        <form class="form modal__body">
           <template v-for="(field, index) in fields">
             <div v-if="!field.hidden" :key="index" class="form__block">
               <label class="input-label" :for="field.field">{{field.name}}:</label>
               <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
             </div>
           </template>
-
-          <div class="button-group">
-            <a @click="postForm" class="button">确定</a>
-            <a @click="isModal = false" class="button">取消</a>
-          </div>
         </form>
+        <div class="button-group">
+          <a @click="postForm" class="button">确定</a>
+          <a @click="isModal = false" class="button">取消</a>
+        </div>
       </div>
-      <div class="mask" @click="isModal = false"></div>
+      <div class="mask"></div>
     </div>
 
     <div class="panel">
@@ -335,20 +334,9 @@ export default {
 
 </script>
 <style scoped>
-.modal__inner {
-  padding: 30px;
-  padding-bottom: 50px !important;
-}
-
 .form .input {
   margin-top: 8px;
   margin-right: 8px;
-}
-
-.form .button-group {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
 }
 
 .form .button {

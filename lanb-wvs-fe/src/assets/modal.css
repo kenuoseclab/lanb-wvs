@@ -8,6 +8,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1001;
+  /* max-height: 300px;
+  overflow-y: auto; */
 }
 
 .modal .modal__inner+.mask {
@@ -18,4 +20,22 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 1000;
+}
+
+.modal .button-group {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+}
+
+.modal .modal__body {
+  overflow-y: auto;
+  max-height: 400px;
+  min-height: 200px;
+  transition: all 0.5s;
+}
+
+.modal .modal__inner {
+  padding: 30px;
+  padding-bottom: 50px !important;
 }
