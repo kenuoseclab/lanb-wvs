@@ -57,7 +57,8 @@ export default {
       const tmpMenu = {
         title: menu.text,
         selected: true,
-        component: menu.attributes.menuUrl
+        component: menu.attributes.menuUrl,
+        item: menu
       }
       this.callback(tmpMenu)
     }

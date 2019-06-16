@@ -14,11 +14,18 @@
           <input type="password" v-model="user.password" class="input" placeholder="密码">
         </div>
 
-        <div class="btn-group"></div>
-        <a class="button" @click="login">登录</a>
-        <a class="button" @click="reset">重置</a>
+        <div class="btn-group">
+          <a class="button" @click="login">登录</a>
+          <a class="button" @click="reset">重置</a>
+        </div>
       </div>
     </form>
+
+    <p style="margin-top: 32px; font-size: 14px;">
+      基于
+      <a style="color: #f5f5f5 !important;" href="#">LANB WEB</a>
+      框架开发
+    </p>
   </div>
 </template>
 
@@ -78,7 +85,8 @@ export default {
 
 <style scoped>
 .login {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
+  background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -93,6 +101,8 @@ export default {
   padding-left: 30px;
   padding-right: 30px;
   border: 1px solid #dcdee2;
+  border-radius: 5px;
+  box-shadow: 0 1px 10px rgba(0, 21, 41, 0.08);
 }
 
 .login__title {
@@ -101,6 +111,7 @@ export default {
 
 .login__inner {
   margin: 16px;
+  margin-top: 64px !important;
 }
 
 .form__block {
@@ -108,6 +119,16 @@ export default {
 }
 
 .btn-group {
-  margin-top: 16px;
+  margin-top: 64px;
+}
+
+.login p {
+  color: #ffffff;
+}
+
+.login em {
+  color: #bbb;
+  font-size: 12px;
+  font-style: normal;
 }
 </style>

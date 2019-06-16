@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: require('@/page/Index').default,
+      component: require('@/page/IndexZui').default,
       children: [
         {
           path: 'dashboard',

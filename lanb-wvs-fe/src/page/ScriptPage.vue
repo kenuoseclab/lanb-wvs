@@ -15,6 +15,10 @@
             <input class="input" placeholder="请输入头部">
             <label class="add-btn" @click="isModal = true">+</label>
           </div>
+          <!-- <div class="form__block">
+            <label class="input-label" for="自定义脚本">自定义脚本</label>
+            <textarea placeholder="请输入自定义脚本" rows="5" style="resize:none; width: 30%; padding: 8px;"></textarea>
+          </div> -->
           <div class="form__block">
             <a class="button">保存</a>
             <a class="button" @click="resetForm">重置</a>
@@ -23,7 +27,7 @@
       </div>
     </div>
 
-    <div class="modal" v-if="isModal">
+    <div class="modal" v-show="isModal">
       <div class="modal__inner panel">
         <h1>编辑参数</h1>
         <form class="form modal__body">

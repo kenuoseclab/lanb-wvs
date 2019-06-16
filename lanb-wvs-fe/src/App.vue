@@ -58,6 +58,7 @@ export default {
 @import url(./assets/table.css);
 @import url(./assets/input.css);
 @import url(./assets/color.css);
+@import url(./assets/dialog.css);
 #app {
   height: 100vh;
   display: flex;

@@ -237,7 +237,6 @@ export default {
 <style scoped>
 .modal__inner {
   padding: 30px;
-  padding-bottom: 50px !important;
 }
 
 .form .button-group {

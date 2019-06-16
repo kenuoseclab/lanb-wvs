@@ -1,23 +1,52 @@
 <template>
   <div>
-    <div class="modal" v-if="isModal">
-      <div class="modal__inner panel">
-        <h1>编辑表单</h1>
-        <form class="form modal__body">
-          <template v-for="(field, index) in fields">
-            <div v-if="!field.hidden" :key="index" class="form__block">
-              <label class="input-label" :for="field.field">{{field.name}}:</label>
-              <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
-            </div>
-          </template>
-        </form>
-        <div class="button-group">
-          <a @click="postForm" class="button">确定</a>
-          <a @click="isModal = false" class="button">取消</a>
+    <div class="modal" v-show="isModal">
+      <transition name="bounce">
+        <div v-show="isModal" class="modal__inner panel">
+          <h1>编辑表单</h1>
+          <form class="form modal__body">
+            <template v-for="(field, index) in fields">
+              <div v-show="!field.hidden" :key="index" class="form__block">
+                <label class="input-label" :for="field.field">{{field.name}}</label>
+                <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
+              </div>
+            </template>
+          </form>
+          <div class="button-group">
+            <a @click="postForm" class="button">确定</a>
+            <a @click="isModal = false" class="button">取消</a>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <!-- <div v-show="isModal" class="mask"></div> -->
+
+    <transition name="fade">
+      <div class="dialog" v-show="isDialog">
+        <div class="dialog__inner">
+          <h1>提示</h1>
+          <div class="dialog__body">操作成功</div>
+          <div class="button-group">
+            <a @click="isDialog = false" class="button">确定</a>
+          </div>
         </div>
       </div>
-      <div class="mask"></div>
-    </div>
+    </transition>
+    <!-- <div v-show="isDialog" class="mask"></div> -->
+
+    <!-- <div class="modal" v-show="isDialog">
+      <transition name="bounce">
+        <div v-show="isDialog" class="modal__inner panel">
+          <h1>提示</h1>
+          <div class="modal__body">
+            <div class="dialog__body">操作成功</div>
+          </div>
+          <div class="button-group">
+            <a @click="isDialog = false" class="button">确定</a>
+          </div>
+        </div>
+      </transition>
+    </div> -->
 
     <div class="panel">
       <form class="form">
@@ -60,8 +89,8 @@
           </tr>
         </thead>
 
-        <transition name="component-fade" mode="out-in">
-          <tbody v-if="show">
+        <transition name="fade">
+          <tbody v-show="show">
             <tr :key="index" v-for="(row, index) in rows">
               <td v-if="checkbox.show">
                 <input v-model="row.checked" class="checkbox" type="checkbox">
@@ -141,12 +170,16 @@ export default {
       action: 'save',
       editForm: null,
       form: null,
-      show: false
+      show: false,
+      isDialog: false
     }
   },
 
   computed: {
     maxPage () {
+      if (this.total % this.pageInfo.rows === 0) {
+        return parseInt(this.total / this.pageInfo.rows)
+      }
       return parseInt(this.total / this.pageInfo.rows) + 1
     }
   },
@@ -162,6 +195,7 @@ export default {
           .then(data => {
             if (data.success) {
               this.isModal = false
+              this.isDialog = true
               this.getList()
             } else {
               alert(data.msg)
@@ -178,6 +212,7 @@ export default {
           .then(data => {
             if (data.success) {
               this.isModal = false
+              this.isDialog = true
               this.getList()
             } else {
               alert(data.msg)
@@ -227,12 +262,16 @@ export default {
         alert('请选择一行数据!')
         return
       }
+      this.show = false
       const row = rows[0]
       delete row.checked
       this
         .$post(this.baseURL + this.api.delete, row)
         .then(data => {
           if (data.success) {
+            this.isDialog = true
+            this.checkbox.checked = false
+            this.show = true
             this.getList()
           } else {
             alert(data.msg)
@@ -346,14 +385,5 @@ export default {
 
 .pagination .rows {
   float: right;
-}
-
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active for below version 2.1.8 */ {
-  opacity: 0;
 }
 </style>
