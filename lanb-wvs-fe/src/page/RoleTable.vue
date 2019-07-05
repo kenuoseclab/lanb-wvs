@@ -13,8 +13,7 @@ export default {
       fields: [
         {
           field: 'roleId',
-          name: '角色ID',
-          hidden: true
+          name: '角色ID'
         },
         {
           field: 'roleName',
@@ -22,11 +21,13 @@ export default {
         },
         {
           field: 'options',
-          name: '角色配置项'
+          name: '角色配置项',
+          hidden: true
         },
         {
           field: 'parentRoleId',
-          name: '父角色ID'
+          name: '父角色ID',
+          hidden: true
         },
         {
           field: 'sort',
@@ -34,7 +35,8 @@ export default {
         },
         {
           field: 'createTime',
-          name: '创建时间'
+          name: '创建时间',
+          type: 'date'
         }
       ]
     }

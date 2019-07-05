@@ -12,7 +12,15 @@
       @click="focus"
     >
     <div class="datetime" v-if="show">
-      <div class="datetime__title" ref="datetime__title">{{month.year}}&nbsp;{{month.month + 1}}</div>
+      <div class="datetime__title" ref="datetime__title">
+        <span>&lt;</span>
+        <div>
+          <input style="width: 30px;" v-model="input.year">
+          <!-- {{month.year}}-{{month.month + 1}} -->
+          <input style="width: 30px;" v-model="input.month">
+        </div>
+        <span>&gt;</span>
+      </div>
       <div class="datetime__body" ref="datetime__body">
         <table class="tup-table datetime__table" ref="datetime__table">
           <thead>
@@ -58,14 +66,25 @@ export default {
     return {
       show: false,
       data: [],
-      month: {}
+      month: {},
+      input: {
+        year: '',
+        month: ''
+      }
     }
   },
   methods: {
+    initData () {
+      // this.month = Month.create(moment())
+      this.month = Month.create('2019-7')
+      this.data = this.month.calendarWeeks()
+    },
+
     blur: function (e) {
       this.show = false
     },
     focus: function (e) {
+      this.initData()
       this.show = true
       this.$nextTick(() => {
         let width = this.$refs.datetime__table.offsetWidth
@@ -82,8 +101,7 @@ export default {
     }
   },
   created () {
-    this.month = Month.create(moment())
-    this.data = this.month.calendarWeeks()
+    this.initData()
   }
 }
 </script>
@@ -106,16 +124,23 @@ export default {
 .datetime__input {
   transition: all 0.5s;
 }
-.datetime__input:hover,
-.datetime__input:focus {
-  /* border: 1px solid #57a3f3; */
+/* .datetime__input:hover {
+  border-color: #a0a2ad;
   cursor: pointer;
 }
+
+.datetime__input:focus {
+  border: 0.5px solid #3080fe;
+  cursor: pointer;
+} */
+
 .datetime__title {
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   background-color: rgb(250, 250, 250);
   padding: 16px;
+  display: flex;
+  justify-content: space-between;
 }
 .datetime__table td {
   text-align: center;

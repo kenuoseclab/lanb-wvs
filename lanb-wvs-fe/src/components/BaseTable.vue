@@ -8,7 +8,26 @@
             <template v-for="(field, index) in fields">
               <div v-show="!field.hidden" :key="index" class="form__block">
                 <label class="input-label" :for="field.field">{{field.name}}</label>
-                <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
+                <!-- 判断是否包含下拉 -->
+                <template v-if="field.type === 'select'">
+                  <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
+                    <option value>请选择</option>
+                    <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                      <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+                    </template>
+                  </select>
+                </template>
+                 <!-- 是否为日期类型 -->
+                <template v-else-if="field.type === 'date'">
+                  <datepiacker
+                    style="margin-top: 8px; margin-right: 8px;"
+                    :key="index"
+                    :day.sync="form[field.field]"
+                  ></datepiacker>
+                </template>
+                <template v-else>
+                  <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
+                </template>
               </div>
             </template>
           </form>
@@ -46,18 +65,37 @@
           </div>
         </div>
       </transition>
-    </div> -->
+    </div>-->
 
     <div class="panel">
       <form class="form">
         <template v-for="(field, index) in fields">
-          <input
-            v-if="!field.hidden"
-            :key="index"
-            class="input"
-            v-model="form[field.field]"
-            :placeholder="field.name"
-          >
+          <!-- 是否为下拉 -->
+          <template v-if="field.type === 'select'">
+            <select
+              :key="index"
+              class="input"
+              v-model="form[field.field]"
+              :placeholder="field.name"
+            >
+              <option value>{{ field.name }}</option>
+              <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+              </template>
+            </select>
+          </template>
+          <!-- 是否为日期类型 -->
+          <template v-else-if="field.type === 'date'">
+            <datepiacker
+              style="margin-top: 8px; margin-right: 8px;"
+              :key="index"
+              :day.sync="form[field.field]"
+            ></datepiacker>
+          </template>
+          <!-- 否则输入框 -->
+          <template v-else>
+            <input :key="index" class="input" v-model="form[field.field]" :placeholder="field.name">
+          </template>
         </template>
         <a @click="search" class="button">查询</a>
         <a @click="formReset" class="button">重置</a>
@@ -84,7 +122,7 @@
             </th>
 
             <template v-for="(field, index) in fields">
-              <th v-if="!field.hidden" :key="index">{{field.name}}</th>
+              <th v-show="!field.hidden" :key="index">{{field.name}}</th>
             </template>
           </tr>
         </thead>
@@ -96,7 +134,7 @@
                 <input v-model="row.checked" class="checkbox" type="checkbox">
               </td>
               <template v-for="(field, fieldIndex) in fields">
-                <td v-if="!field.hidden" :key="fieldIndex">{{row[field.field]}}</td>
+                <td v-if="!field.hidden" :key="fieldIndex">{{cellFormatter(field, row)}}</td>
               </template>
             </tr>
           </tbody>
@@ -171,7 +209,8 @@ export default {
       editForm: null,
       form: null,
       show: false,
-      isDialog: false
+      isDialog: false,
+      day: ''
     }
   },
 
@@ -186,6 +225,31 @@ export default {
 
   methods: {
 
+    // 取得代码类型列表
+    getCodeTypeMap (field) {
+      return this.$store.state.cache.codeInfo[field.codeType]
+    },
+
+    // 单元格格式化
+    cellFormatter (field, row) {
+      let val = String(row[field.field])
+      // 处理需要格式化内容
+      if (typeof field.codeType !== 'undefined') {
+        let codeTypeName = field.codeType
+        let codeInfo = this.$store.state.cache.codeInfo[codeTypeName]
+        for (let index = 0; index < codeInfo.length; index++) {
+          const element = codeInfo[index]
+          if (element.value === val) {
+            return element.name
+          }
+        }
+        return val
+      } else {
+        return val
+      }
+    },
+
+    // 提交表单
     postForm () {
       const tmpParam = this.editForm
       delete tmpParam.checked
@@ -226,6 +290,7 @@ export default {
       }
     },
 
+    // 表单重置
     formReset () {
       this.initSearchForm()
       this.search()
@@ -303,6 +368,7 @@ export default {
       }
     },
 
+    // 查询
     search () {
       this.pageInfo.page = 1
       this.getList()
@@ -330,6 +396,8 @@ export default {
           })
         })
     },
+
+    // 改变页码
     pageChange (num) {
       if (this.pageInfo.page + num > this.maxPage) {
         return
@@ -342,6 +410,7 @@ export default {
       this.getList()
     },
 
+    // 初始化编辑表单
     initEditForm () {
       const tmpForm = {}
       for (let index = 0; index < this.fields.length; index++) {
@@ -351,6 +420,7 @@ export default {
       this.editForm = tmpForm
     },
 
+    // 初始化查询表单
     initSearchForm () {
       const tmpForm = {}
       for (let index = 0; index < this.fields.length; index++) {

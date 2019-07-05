@@ -33,7 +33,8 @@ export default {
         },
         {
           field: 'visible',
-          name: '是否可见'
+          name: '是否可见',
+          codeType: 'yesOrNo'
         }
       ]
     }
@@ -42,7 +43,7 @@ export default {
   methods: {},
 
   created () {
-    console.log(this.$store)
+    // console.log(this.$store)
   }
 }
 

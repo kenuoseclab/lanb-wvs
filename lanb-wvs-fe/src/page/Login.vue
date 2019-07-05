@@ -6,12 +6,12 @@
       <div class="login__inner">
         <div class="form__block">
           <label class="input-label" for="userId">用户名:</label>
-          <input type="text" v-model="user.userName" class="input" placeholder="用户名">
+          <input type="text" v-model="user.userName" class="input" placeholder="用户名" @keyup.enter="login">
         </div>
 
         <div class="form__block">
           <label class="input-label" for="password">密码:</label>
-          <input type="password" v-model="user.password" class="input" placeholder="密码">
+          <input type="password" v-model="user.password" class="input" @keyup.enter="login" placeholder="密码">
         </div>
 
         <div class="btn-group">
@@ -26,6 +26,18 @@
       <a style="color: #f5f5f5 !important;" href="#">LANB WEB</a>
       框架开发
     </p>
+
+    <transition name="fade">
+      <div class="dialog" v-show="isDialog">
+        <div class="dialog__inner">
+          <h1>提示</h1>
+          <div class="dialog__body">{{ msg }}</div>
+          <div class="button-group">
+            <a @click="isDialog = false" class="button">确定</a>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -41,7 +53,9 @@ export default {
       user: {
         userName: '',
         password: ''
-      }
+      },
+      isDialog: false,
+      msg: '操作成功'
     }
   },
 
@@ -53,12 +67,19 @@ export default {
       }
       this.$post('/api/user/loginCheck', param).then(data => {
         if (data.success) {
+          // 设置登陆状态
           this.$store.commit('SET_IS_LOGIN', true)
-          this.$router.push({ path: '/' })
+          // 设置代码信息
+          this.$post('/api/codeInfo/getCodeInfoMap', {}).then(data => {
+            this.$store.commit('SET_CODE_INFO', data.data)
+            this.$router.push({ path: '/' })
+          })
         } else {
           alert(data.info)
         }
       }).catch(error => {
+        this.msg = '操作失败'
+        this.isDialog = true
         console.log(error)
       })
     },
@@ -72,11 +93,10 @@ export default {
   },
 
   created () {
-    this.$store.commit('SET_IS_LOGIN', false)
-    const state = this.$store.state
-    console.log(state)
     this.$post('/api/user/logout').then(data => {
-      console.log(data)
+      if (data.success) {
+        this.$store.commit('SET_IS_LOGIN', false)
+      }
     })
   }
 
@@ -111,7 +131,7 @@ export default {
 
 .login__inner {
   margin: 16px;
-  margin-top: 64px !important;
+  margin-top: 32px !important;
 }
 
 .form__block {
@@ -119,7 +139,7 @@ export default {
 }
 
 .btn-group {
-  margin-top: 64px;
+  margin-top: 32px;
 }
 
 .login p {

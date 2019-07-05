@@ -19,6 +19,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+
+    SET_CODE_INFO (state, codeInfo) {
+      state.cache.codeInfo = codeInfo
+    },
+
     SET_IS_LOGIN (state, isLogin) {
       state.user.isLogin = isLogin
     },
