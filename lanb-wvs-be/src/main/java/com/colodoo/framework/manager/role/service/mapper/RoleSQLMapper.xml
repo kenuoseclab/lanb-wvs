@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.role.service.mapper.RoleSQLMapper">
+
+	<select id="getRoleList" resultType="com.colodoo.framework.manager.role.model.Role" parameterType="com.colodoo.framework.manager.role.model.RoleVO">
+		select
+			a.`role_id` as `roleId`,
+			a.`role_name` as `roleName`,
+			a.`options` as `options`,
+			a.`parent_role_id` as `parentRoleId`,
+			a.`sort` as `sort`,
+			a.`create_time` as `createTime`
+		from
+		    role a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="roleId != null and roleId !=''">
+				     a.`role_id` = #{roleId} and
+				</if>
+				<if test="roleName != null and roleName !=''">
+				     a.`role_name` = #{roleName} and
+				</if>
+				<if test="options != null and options !=''">
+				     a.`options` = #{options} and
+				</if>
+				<if test="parentRoleId != null and parentRoleId !=''">
+				     a.`parent_role_id` = #{parentRoleId} and
+				</if>
+				<if test="sort != null and sort !=''">
+				     a.`sort` = #{sort} and
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>
