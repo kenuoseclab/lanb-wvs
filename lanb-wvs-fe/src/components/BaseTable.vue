@@ -143,12 +143,12 @@
 
       <div class="pagination">
         <a @click="pageChange(-1)" class="button">上一页</a>
-        <input type="text" v-model="pageInfo.page" class="input" value="1">
+        <input type="number" v-model="pageInfo.page" @change="getList" class="input" value="1">
         <a @click="pageChange(1)" class="button">下一页</a>
 
         <div class="rows">
           <label for="rows">每页</label>
-          <input type="text" class="input" placeholder v-model="pageInfo.rows" @change="getList">
+          <input type="number" class="input" placeholder v-model="pageInfo.rows" @change="getList">
         </div>
       </div>
     </div>
@@ -403,6 +403,9 @@ export default {
 
     // 改变页码
     pageChange (num) {
+      if (typeof (this.pageInfo.page) === 'string') {
+        this.pageInfo.page = parseInt(this.pageInfo.page)
+      }
       if (this.pageInfo.page + num > this.maxPage) {
         return
       }

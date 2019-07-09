@@ -23,7 +23,7 @@
 
     <p style="margin-top: 32px; font-size: 14px;">
       基于
-      <a style="color: #f5f5f5 !important;" href="#">LANB WEB</a>
+      <a style="color: #f5f5f5 !important;" href="https://github.com/lanb-code/">LANB WEB</a>
       框架开发
     </p>
 
