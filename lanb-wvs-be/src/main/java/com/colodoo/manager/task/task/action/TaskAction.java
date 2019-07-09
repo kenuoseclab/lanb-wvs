@@ -1,16 +1,19 @@
 package com.colodoo.manager.task.task.action;
 
+import com.colodoo.manager.task.task.model.DashboardVO;
 import com.colodoo.manager.task.task.model.Task;
 import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.manager.task.task.service.TaskService;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -107,7 +110,7 @@ public class TaskAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<Task> query(@RequestBody TaskVO model) {
+    public List<TaskVO> query(@RequestBody TaskVO model) {
         return taskService.query(model);
     }
 
@@ -121,9 +124,21 @@ public class TaskAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody TaskVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<Task> info = taskService.query(model.getPage(), model);
+        PageInfo<TaskVO> info = taskService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
+    }
+    
+    /**
+	 * 取首页仪表盘数据
+	 * 
+	 * @param model
+	 * @return
+	 */
+    @RequestMapping(value = "/getDashboardData")
+    @ResponseBody
+    public List<DashboardVO> getDashboardData(@RequestBody TaskVO model) {
+        return taskService.getDashboardData(model);
     }
 }

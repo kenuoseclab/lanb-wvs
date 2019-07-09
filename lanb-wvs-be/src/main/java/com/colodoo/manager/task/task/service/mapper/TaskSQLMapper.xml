@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.colodoo.manager.task.task.service.mapper.TaskSQLMapper">
 
-	<select id="getTaskList" resultType="com.colodoo.manager.task.task.model.Task" parameterType="com.colodoo.manager.task.task.model.TaskVO">
+	<select id="getTaskList" resultType="com.colodoo.manager.task.task.model.TaskVO" parameterType="com.colodoo.manager.task.task.model.TaskVO">
 		select
 			a.`task_id` as `taskId`,
 			a.`task_name` as `taskName`,
@@ -10,11 +10,15 @@
 			a.`status` as `status`,
 			a.`create_time` as `createTime`,
 			a.`create_user_id` as `createUserId`,
+			create_user.`user_name` as `createUserName`,
 			a.`update_time` as `updateTime`,
 			a.`update_user_id` as `updateUserId`,
+			update_user.`user_name` as `updateUserName`,
 			a.`remark` as `remark`
 		from
 		    task a
+		left join user create_user on a.`create_user_id` = create_user.user_id
+		left join user update_user on a.`update_user_id` = update_user.user_id
 		<where>
 			<trim suffixOverrides="and">
 				<if test="taskId != null and taskId !=''">
@@ -47,6 +51,26 @@
 			</trim>
 		</where>
 
+	</select>
+	
+	<!-- 取首页仪表盘数据 -->
+	<select id="getDashboardData" resultType="com.colodoo.manager.task.task.model.DashboardVO" parameterType="com.colodoo.manager.task.task.model.TaskVO">
+		select 
+			  count(1) as `allCount`
+			, count( case when t.`status` = '2' then 1 else null end ) as `runningCount`
+			, count( case when t.`status` = '4' then 1 else null end ) as `errorCount`
+		from 
+			task t
+		<where>
+			<trim suffixOverrides="and">
+				<if test="dateFrom != null">
+				     t.`create_time` >= #{dateFrom} and
+				</if>
+				<if test="dateTo != null">
+				     t.`create_time` &lt;= #{dateTo} and
+				</if>
+			</trim>
+		</where>
 	</select>
 
 </mapper>

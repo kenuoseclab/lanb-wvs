@@ -17,9 +17,30 @@ public class TaskVO extends Task implements Serializable {
 	private Date dateFrom;
     private Date dateTo;
     
+    // 创建人用户名
+    private String createUserName;
+    // 更新人用户名
+    private String updateUserName;
+    
     private Page page;
 
-    public Page getPage() {
+    public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public String getUpdateUserName() {
+		return updateUserName;
+	}
+
+	public void setUpdateUserName(String updateUserName) {
+		this.updateUserName = updateUserName;
+	}
+
+	public Page getPage() {
 		return page;
 	}
 
