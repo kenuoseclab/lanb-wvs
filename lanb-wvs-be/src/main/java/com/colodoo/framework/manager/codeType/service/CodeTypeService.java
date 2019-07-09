@@ -101,11 +101,7 @@ public class CodeTypeService extends BaseService<CodeType> {
     */
     public List<CodeType> query(CodeTypeVO model) {
         List<CodeType> list = null;
-        try {
-            list = sqlMapper.getCodeTypeList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getCodeTypeList(model);
         return list;
     }
 
@@ -119,11 +115,7 @@ public class CodeTypeService extends BaseService<CodeType> {
         PageInfo<CodeType> pageInfo;
         List<CodeType> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = sqlMapper.getCodeTypeList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getCodeTypeList(model);
         pageInfo = new PageInfo<CodeType>(list);
         return pageInfo;
     }

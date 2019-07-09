@@ -110,7 +110,7 @@ public class UserAction {
 
 	@RequestMapping(value = "/save")
 	@ResponseBody
-	public Map save(User model) {
+	public Map save(@RequestBody User model) {
 		Map rspMap = new HashMap();
 		int ret = userService.save(model);
 		if (ret > 0) {
@@ -123,7 +123,7 @@ public class UserAction {
 
 	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public Map delete(User model) {
+	public Map delete(@RequestBody User model) {
 		Map rspMap = new HashMap();
 		int ret = userService.delete(model);
 		if (ret > 0) {
@@ -136,7 +136,7 @@ public class UserAction {
 
 	@RequestMapping(value = "/update")
 	@ResponseBody
-	public Map update(User model) {
+	public Map update(@RequestBody User model) {
 		Map rspMap = new HashMap();
 		int ret = userService.update(model);
 		if (ret > 0) {

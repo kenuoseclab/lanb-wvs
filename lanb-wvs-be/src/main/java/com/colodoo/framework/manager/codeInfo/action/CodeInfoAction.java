@@ -126,4 +126,20 @@ public class CodeInfoAction {
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
     }
+    
+    /**
+     * 查找代码信息集合
+     * 
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/getCodeInfoMap")
+    @ResponseBody
+    public Map<String, Object> getCodeInfoMap(@RequestBody CodeInfoVO model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        Map<String, List<CodeInfo>> map = codeInfoService.getCodeInfoMap(model);
+        rspMap.put("success", true);
+        rspMap.put("data", map);
+        return rspMap;
+    }
 }

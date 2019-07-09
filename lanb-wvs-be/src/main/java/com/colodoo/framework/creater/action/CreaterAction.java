@@ -21,11 +21,6 @@ public class CreaterAction {
     @Autowired
     CreaterService createrService;
 
-    @RequestMapping(value = {"/", ""})
-    public String creater() {
-        return "creater/creater";
-    }
-
     /**
      * 生成查询语句
      *

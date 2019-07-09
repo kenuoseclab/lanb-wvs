@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_name, options, parent_role_id, sort, create_time
+    role_id, role_name, `options`, parent_role_id, sort, create_time
   </sql>
   <select id="selectByExample" parameterType="com.colodoo.framework.manager.role.model.RoleExample" resultMap="BaseResultMap">
     select
@@ -101,7 +101,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.colodoo.framework.manager.role.model.Role">
-    insert into role (role_id, role_name, options, 
+    insert into role (role_id, role_name, `options`, 
       parent_role_id, sort, create_time
       )
     values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{options,jdbcType=VARCHAR}, 
@@ -118,7 +118,7 @@
         role_name,
       </if>
       <if test="options != null">
-        options,
+        `options`,
       </if>
       <if test="parentRoleId != null">
         parent_role_id,
@@ -167,7 +167,7 @@
         role_name = #{record.roleName,jdbcType=VARCHAR},
       </if>
       <if test="record.options != null">
-        options = #{record.options,jdbcType=VARCHAR},
+        `options` = #{record.options,jdbcType=VARCHAR},
       </if>
       <if test="record.parentRoleId != null">
         parent_role_id = #{record.parentRoleId,jdbcType=VARCHAR},
@@ -187,7 +187,7 @@
     update role
     set role_id = #{record.roleId,jdbcType=VARCHAR},
       role_name = #{record.roleName,jdbcType=VARCHAR},
-      options = #{record.options,jdbcType=VARCHAR},
+      `options` = #{record.options,jdbcType=VARCHAR},
       parent_role_id = #{record.parentRoleId,jdbcType=VARCHAR},
       sort = #{record.sort,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -202,7 +202,7 @@
         role_name = #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="options != null">
-        options = #{options,jdbcType=VARCHAR},
+        `options` = #{options,jdbcType=VARCHAR},
       </if>
       <if test="parentRoleId != null">
         parent_role_id = #{parentRoleId,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
   <update id="updateByPrimaryKey" parameterType="com.colodoo.framework.manager.role.model.Role">
     update role
     set role_name = #{roleName,jdbcType=VARCHAR},
-      options = #{options,jdbcType=VARCHAR},
+      `options` = #{options,jdbcType=VARCHAR},
       parent_role_id = #{parentRoleId,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}

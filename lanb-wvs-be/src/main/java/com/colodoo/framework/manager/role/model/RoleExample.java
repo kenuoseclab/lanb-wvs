@@ -5,46 +5,91 @@ import java.util.Date;
 import java.util.List;
 
 public class RoleExample {
+    /**
+     * role
+     */
     protected String orderByClause;
 
+    /**
+     * role
+     */
     protected boolean distinct;
 
+    /**
+     * role
+     */
     protected List<Criteria> oredCriteria;
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public RoleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -53,17 +98,28 @@ public class RoleExample {
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-01
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
     }
 
+    /**
+     * role 2019-07-01
+     */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
@@ -246,72 +302,72 @@ public class RoleExample {
         }
 
         public Criteria andOptionsIsNull() {
-            addCriterion("options is null");
+            addCriterion("`options` is null");
             return (Criteria) this;
         }
 
         public Criteria andOptionsIsNotNull() {
-            addCriterion("options is not null");
+            addCriterion("`options` is not null");
             return (Criteria) this;
         }
 
         public Criteria andOptionsEqualTo(String value) {
-            addCriterion("options =", value, "options");
+            addCriterion("`options` =", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsNotEqualTo(String value) {
-            addCriterion("options <>", value, "options");
+            addCriterion("`options` <>", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsGreaterThan(String value) {
-            addCriterion("options >", value, "options");
+            addCriterion("`options` >", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsGreaterThanOrEqualTo(String value) {
-            addCriterion("options >=", value, "options");
+            addCriterion("`options` >=", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsLessThan(String value) {
-            addCriterion("options <", value, "options");
+            addCriterion("`options` <", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsLessThanOrEqualTo(String value) {
-            addCriterion("options <=", value, "options");
+            addCriterion("`options` <=", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsLike(String value) {
-            addCriterion("options like", value, "options");
+            addCriterion("`options` like", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsNotLike(String value) {
-            addCriterion("options not like", value, "options");
+            addCriterion("`options` not like", value, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsIn(List<String> values) {
-            addCriterion("options in", values, "options");
+            addCriterion("`options` in", values, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsNotIn(List<String> values) {
-            addCriterion("options not in", values, "options");
+            addCriterion("`options` not in", values, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsBetween(String value1, String value2) {
-            addCriterion("options between", value1, value2, "options");
+            addCriterion("`options` between", value1, value2, "options");
             return (Criteria) this;
         }
 
         public Criteria andOptionsNotBetween(String value1, String value2) {
-            addCriterion("options not between", value1, value2, "options");
+            addCriterion("`options` not between", value1, value2, "options");
             return (Criteria) this;
         }
 
@@ -506,6 +562,9 @@ public class RoleExample {
         }
     }
 
+    /**
+     *  * role
+     */
     public static class Criteria extends GeneratedCriteria {
 
         protected Criteria() {
@@ -513,6 +572,9 @@ public class RoleExample {
         }
     }
 
+    /**
+     * role 2019-07-01
+     */
     public static class Criterion {
         private String condition;
 

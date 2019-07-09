@@ -1,18 +1,14 @@
 package com.colodoo.framework.manager.user.service;
 
-import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.common.Msg;
 import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.manager.log.model.Log;
-import com.colodoo.framework.manager.log.model.LogExample;
 import com.colodoo.framework.manager.log.service.LogService;
-import com.colodoo.framework.manager.role.service.RoleMapper;
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
 import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
 import com.colodoo.framework.manager.roleUser.service.RoleUserMapper;
 import com.colodoo.framework.manager.user.model.User;
 import com.colodoo.framework.utils.Contants;
-import com.colodoo.framework.utils.DateUtils;
 import com.colodoo.framework.utils.RequestUtils;
 import com.colodoo.framework.utils.StringUtil;
 import com.colodoo.framework.easyui.Page;

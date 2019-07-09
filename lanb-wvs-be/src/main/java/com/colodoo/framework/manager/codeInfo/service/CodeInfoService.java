@@ -11,9 +11,14 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.colodoo.framework.manager.codeInfo.service.mapper.CodeInfoSQLMapper;
+import com.colodoo.framework.manager.codeType.model.CodeType;
+import com.colodoo.framework.manager.codeType.model.CodeTypeVO;
+import com.colodoo.framework.manager.codeType.service.mapper.CodeTypeSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author colodoo
@@ -26,6 +31,10 @@ public class CodeInfoService extends BaseService<CodeInfo> {
 
 	@Autowired
 	CodeInfoSQLMapper sqlMapper;
+	@Autowired
+	CodeTypeSQLMapper codeTypeSQLMapper;
+	@Autowired
+	CodeInfoMapper codeInfoMapper;
 
     /**
     * 新增数据
@@ -101,11 +110,7 @@ public class CodeInfoService extends BaseService<CodeInfo> {
     */
     public List<CodeInfo> query(CodeInfoVO model) {
         List<CodeInfo> list = null;
-        try {
-            list = sqlMapper.getCodeInfoList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getCodeInfoList(model);
         return list;
     }
 
@@ -119,12 +124,34 @@ public class CodeInfoService extends BaseService<CodeInfo> {
         PageInfo<CodeInfo> pageInfo;
         List<CodeInfo> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = sqlMapper.getCodeInfoList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getCodeInfoList(model);
         pageInfo = new PageInfo<CodeInfo>(list);
         return pageInfo;
     }
+
+    /**
+     * 查找代码信息集合
+     * 
+     * @param model
+     * @return
+     */
+	public Map<String, List<CodeInfo>> getCodeInfoMap(CodeInfoVO model) {
+		Map<String, List<CodeInfo>> map = new HashMap<>();
+		// 查找代码类型
+		List<CodeType> codeTypes = codeTypeSQLMapper.getCodeTypeList(new CodeTypeVO());
+		// 根据代码类型组装代码信息
+		for (int i = 0; i < codeTypes.size(); i++) {
+			CodeType codeType = codeTypes.get(i);
+			if(codeType != null) {
+				String codeTypeId = codeType.getCodeTypeId();
+				String codeTypeName = codeType.getCodeTypeName();
+				if(codeTypeId != null && !"".equals(codeTypeId)) {
+					model.setCodeTypeId(codeType.getCodeTypeId());
+					List<CodeInfo> codeInfos = sqlMapper.getCodeInfoList(model);
+					map.put(codeTypeName, codeInfos);
+				}
+			}
+		}
+		return map;
+	}
 }

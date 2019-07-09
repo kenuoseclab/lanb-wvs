@@ -34,7 +34,7 @@ spring.datasource:
 
 # 代码生成相关
 creater:
-  src-path: E:\dev\project\lanb-wvs\lanb-wvs-be
+  #src-path: E:\dev\project\lanb-wvs\lanb-wvs-be
   table-schema: ${database.name}
   url: ${spring.datasource.url}
 
@@ -61,3 +61,9 @@ spring.servlet.multipart.max-request-size: 100MB
 #server.session.tracking-modes =＃会话跟踪模式（以下一个或多个：“cookie”，“url”，“ssl”）。
 
 #server.servlet.session.timeout: 1
+
+#rabbitMQ
+spring.rabbitmq.host: 192.168.31.129
+spring.rabbitmq.port: 5672
+spring.rabbitmq.username: guest
+spring.rabbitmq.password: guest

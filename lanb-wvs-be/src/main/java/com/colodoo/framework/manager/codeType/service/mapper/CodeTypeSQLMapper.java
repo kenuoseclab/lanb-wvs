@@ -2,7 +2,6 @@ package com.colodoo.framework.manager.codeType.service.mapper;
 
 import java.util.List;
 
-import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.manager.codeType.model.CodeTypeVO;
 import com.colodoo.framework.manager.codeType.model.CodeType;
 
@@ -13,6 +12,6 @@ import com.colodoo.framework.manager.codeType.model.CodeType;
  */
 public interface CodeTypeSQLMapper {
 	
-	public List<CodeType> getCodeTypeList(CodeTypeVO model) throws DAOException;
+	public List<CodeType> getCodeTypeList(CodeTypeVO model);
 
 }

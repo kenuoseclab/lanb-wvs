@@ -6,20 +6,31 @@ import java.util.Date;
 import com.colodoo.framework.easyui.Page;
 
 /**
-* @author colodoo
-* @date 2019-4-24 22:40:31
-* @description 
-*/
+ * @author colodoo
+ * @date 2019-4-24 22:40:31
+ * @description
+ */
 public class CodeInfoVO extends CodeInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private Date dateFrom;
-    private Date dateTo;
-    
-    private Page page;
 
-    public Page getPage() {
+	private Date dateFrom;
+	private Date dateTo;
+
+	private Page page;
+
+	// 代码名称
+	private String codeTypeName;
+
+	public String getCodeTypeName() {
+		return codeTypeName;
+	}
+
+	public void setCodeTypeName(String codeTypeName) {
+		this.codeTypeName = codeTypeName;
+	}
+
+	public Page getPage() {
 		return page;
 	}
 
@@ -27,23 +38,23 @@ public class CodeInfoVO extends CodeInfo implements Serializable {
 		this.page = page;
 	}
 
-    public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
-    }
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
 
-    public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
-    }
-    
-    public Date getDateFrom(Date dateFrom) {
-        return this.dateFrom;
-    }
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
+	}
 
-    public Date getDateTo(Date dateTo) {
-        return this.dateTo;
-    }
-    
-    public CodeInfoVO() {
+	public Date getDateFrom(Date dateFrom) {
+		return this.dateFrom;
+	}
+
+	public Date getDateTo(Date dateTo) {
+		return this.dateTo;
+	}
+
+	public CodeInfoVO() {
 		this.page = new Page();
 	}
 }

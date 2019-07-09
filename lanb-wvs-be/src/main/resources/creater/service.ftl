@@ -101,11 +101,7 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
     */
     public List<${tableName?cap_first}> query(${tableName?cap_first}VO model) {
         List<${tableName?cap_first}> list = null;
-        try {
-            list = sqlMapper.get${tableName?cap_first}List(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.get${tableName?cap_first}List(model);
         return list;
     }
 
@@ -119,11 +115,7 @@ public class ${tableName?cap_first}Service extends BaseService<${tableName?cap_f
         PageInfo<${tableName?cap_first}> pageInfo;
         List<${tableName?cap_first}> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = sqlMapper.get${tableName?cap_first}List(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.get${tableName?cap_first}List(model);
         pageInfo = new PageInfo<${tableName?cap_first}>(list);
         return pageInfo;
     }

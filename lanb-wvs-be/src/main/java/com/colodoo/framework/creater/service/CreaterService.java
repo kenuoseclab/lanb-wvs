@@ -5,11 +5,8 @@ import com.colodoo.framework.creater.config.CreaterCfg;
 import com.colodoo.framework.creater.model.*;
 //import com.colodoo.framework.manager.menu.model.Menu;
 //import com.colodoo.framework.manager.menu.service.MenuService;
-
-import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -19,7 +16,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;

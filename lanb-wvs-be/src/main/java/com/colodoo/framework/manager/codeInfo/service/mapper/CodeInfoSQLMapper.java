@@ -13,6 +13,6 @@ import com.colodoo.framework.manager.codeInfo.model.CodeInfo;
  */
 public interface CodeInfoSQLMapper {
 	
-	public List<CodeInfo> getCodeInfoList(CodeInfoVO model) throws DAOException;
+	public List<CodeInfo> getCodeInfoList(CodeInfoVO model);
 
 }

@@ -1,8 +1,5 @@
 package com.colodoo.framework.security.shiro;
 
-import com.colodoo.framework.manager.role.model.Role;
-import com.colodoo.framework.manager.role.model.RoleExample;
-import com.colodoo.framework.manager.role.service.RoleMapper;
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
 import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
 import com.colodoo.framework.manager.roleUser.service.RoleUserMapper;
@@ -48,19 +45,6 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        /*// 从数据库获取对应用户名密码的用户
-        UserExample example = new UserExample();
-        example.createCriteria().andUserNameEqualTo(token.getUsername());
-        List<User> users = userMapper.selectByExample(example);
-        String password = null;
-        if (users.size() > 0) {
-            password = users.get(0).getPassword();
-        }
-        if (null == password) {
-            throw new AccountException("用户名不正确");
-        } else if (!password.equals(new String((char[]) token.getCredentials()))) {
-            throw new AccountException("密码不正确");
-        }*/
         return new SimpleAuthenticationInfo(token.getPrincipal(), new String((char[]) token.getCredentials()), getName());
     }
 
