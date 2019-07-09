@@ -29,7 +29,7 @@ export default {
           name: '创建时间'
         },
         {
-          field: 'createUserId',
+          field: 'createUserName',
           name: '创建人'
         },
         {
@@ -37,7 +37,7 @@ export default {
           name: '更新时间'
         },
         {
-          field: 'updateUserId',
+          field: 'updateUserName',
           name: '更新人'
         },
         {

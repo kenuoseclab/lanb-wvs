@@ -59,6 +59,7 @@ export default {
 @import url(./assets/input.css);
 @import url(./assets/color.css);
 @import url(./assets/dialog.css);
+@import url(//at.alicdn.com/t/font_815256_qdgxccl7akg.css);
 #app {
   height: 100vh;
   display: flex;

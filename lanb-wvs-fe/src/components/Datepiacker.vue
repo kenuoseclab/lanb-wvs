@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline-block;">
-    <div class="mask" @click="show = !show" v-if="show"></div>
+    <div class="mask" @click="show = !show" v-show="show"></div>
     <input
       type="text"
       class="input datetime__input"
@@ -11,15 +11,15 @@
       v-model="day"
       @click="focus"
     >
-    <div class="datetime" v-if="show">
+    <div class="datetime" v-show="show">
       <div class="datetime__title" ref="datetime__title">
-        <span>&lt;</span>
+        <span><i class="iconfont icon-fanhui"></i></span>
         <div>
-          <input style="width: 30px;" v-model="input.year">
-          <!-- {{month.year}}-{{month.month + 1}} -->
-          <input style="width: 30px;" v-model="input.month">
+          <!-- <input style="width: 30px;" v-model="input.year"> -->
+          {{month.year}}-{{month.month + 1}}
+          <!-- <input style="width: 30px;" v-model="input.month"> -->
         </div>
-        <span>&gt;</span>
+        <span style="transform:rotate(180deg);"><i class="iconfont icon-fanhui"></i></span>
       </div>
       <div class="datetime__body" ref="datetime__body">
         <table class="tup-table datetime__table" ref="datetime__table">
@@ -75,8 +75,8 @@ export default {
   },
   methods: {
     initData () {
-      // this.month = Month.create(moment())
-      this.month = Month.create('2019-7')
+      this.month = Month.create(moment())
+      // this.month = Month.create('2019-7')
       this.data = this.month.calendarWeeks()
     },
 
@@ -123,6 +123,7 @@ export default {
 }
 .datetime__input {
   transition: all 0.5s;
+  cursor: pointer;
 }
 /* .datetime__input:hover {
   border-color: #a0a2ad;
@@ -140,7 +141,7 @@ export default {
   background-color: rgb(250, 250, 250);
   padding: 16px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .datetime__table td {
   text-align: center;
@@ -170,5 +171,16 @@ table.tup-table {
   border-width: 1px;
   padding: 8px;
   background-color: #ffffff;
+}
+
+.icon-fanhui {
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.icon-fanhui:hover {
+  background-color: #ffffff;
+  cursor: pointer;
 }
 </style>

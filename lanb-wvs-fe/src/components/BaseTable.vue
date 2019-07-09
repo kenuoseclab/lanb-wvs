@@ -11,18 +11,18 @@
                 <!-- 判断是否包含下拉 -->
                 <template v-if="field.type === 'select'">
                   <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
-                    <option value>请选择</option>
+                    <option value>请选择{{ field.name }}</option>
                     <template v-for="(codeType, index) in getCodeTypeMap(field)">
                       <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
                     </template>
                   </select>
                 </template>
-                 <!-- 是否为日期类型 -->
+                <!-- 是否为日期类型 -->
                 <template v-else-if="field.type === 'date'">
                   <datepiacker
                     style="margin-top: 8px; margin-right: 8px;"
                     :key="index"
-                    :day.sync="form[field.field]"
+                    :day.sync="editForm[field.field]"
                   ></datepiacker>
                 </template>
                 <template v-else>
@@ -41,15 +41,15 @@
     <!-- <div v-show="isModal" class="mask"></div> -->
 
     <!-- <transition name="fade"> -->
-      <div class="dialog" v-show="isDialog">
-        <div class="dialog__inner">
-          <h1>提示</h1>
-          <div class="dialog__body">操作成功</div>
-          <div class="button-group">
-            <a @click="isDialog = false" class="button">确定</a>
-          </div>
+    <div class="dialog" v-show="isDialog">
+      <div class="dialog__inner">
+        <h1>提示</h1>
+        <div class="dialog__body">操作成功</div>
+        <div class="button-group">
+          <a @click="isDialog = false" class="button">确定</a>
         </div>
       </div>
+    </div>
     <!-- </transition> -->
     <!-- <div v-show="isDialog" class="mask"></div> -->
 
@@ -78,7 +78,7 @@
               v-model="form[field.field]"
               :placeholder="field.name"
             >
-              <option value>{{ field.name }}</option>
+              <option value>请选择{{ field.name }}</option>
               <template v-for="(codeType, index) in getCodeTypeMap(field)">
                 <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
               </template>
@@ -355,7 +355,11 @@ export default {
         alert('请选中一行数据!')
         return
       }
-      this.editForm = rows[0]
+      /**
+       * 对象拷贝,防止改动到表格内容
+       */
+      const tmpRow = JSON.parse(JSON.stringify(rows[0]))
+      this.editForm = tmpRow
       this.isModal = true
       this.action = 'update'
     },

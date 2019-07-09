@@ -189,7 +189,7 @@ export default {
 }
 
 .main .main-container {
-  padding: 20px;
+  padding: 16px;
 }
 
 /* reset */

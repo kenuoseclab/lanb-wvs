@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="panel" style="height: 200px;">
-      <h1>Dashboard</h1>
+      <h1>数据总览</h1>
       <div class="row panel__inner">
         <div class="col-4">
-          <div class="panel item color--green">总任务数&nbsp;10</div>
+          <div class="panel item color--green">总任务数&nbsp;{{ dashboardData.allCount }}</div>
         </div>
         <div class="col-4">
-          <div class="panel item color--blue">正在运行任务数&nbsp;1</div>
+          <div class="panel item color--blue">正在运行任务数&nbsp;{{ dashboardData.runningCount }}</div>
         </div>
         <div class="col-4">
-          <div class="panel item color--red">错误任务数&nbsp;0</div>
+          <div class="panel item color--red">错误任务数&nbsp;{{ dashboardData.errorCount }}</div>
         </div>
       </div>
     </div>
@@ -42,11 +42,16 @@ const echarts = require('echarts/lib/echarts')
 require('echarts/lib/chart/pie')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
+var df = require('date-formatter')
 export default {
   name: 'dashboard',
   data () {
     return {
-
+      dashboardData: {
+        allCount: 0,
+        runningCount: 0,
+        errorCount: 0
+      }
     }
   },
 
@@ -75,6 +80,23 @@ export default {
     myChart.setOption(option)
     myChart2.setOption(option)
     myChart3.setOption(option)
+
+    // 取首页仪表盘数据
+    const parms = {
+      dateFrom: df(new Date(), 'YYYY-MM-DD')
+    }
+    this
+      .$post('/api/task/getDashboardData', parms)
+      .then(data => {
+        if (data.length === 1) {
+          this.dashboardData = data[0]
+        }
+      })
+      .catch(() => {
+        this.$router.push({
+          path: '/login'
+        })
+      })
   }
 }
 </script>
