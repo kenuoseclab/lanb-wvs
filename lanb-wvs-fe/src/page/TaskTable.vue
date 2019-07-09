@@ -46,7 +46,9 @@ export default {
         },
         {
           field: 'status',
-          name: '状态'
+          name: '状态',
+          type: 'select',
+          codeType: 'taskStatus'
         }
       ]
     }

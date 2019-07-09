@@ -47,7 +47,9 @@ export default {
         },
         {
           field: 'visible',
-          name: '是否可见'
+          name: '是否可见',
+          type: 'select',
+          codeType: 'yesOrNo'
         }
       ],
       formData: {

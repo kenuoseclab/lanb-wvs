@@ -13,8 +13,7 @@ export default {
       fields: [
         {
           field: 'codeTypeId',
-          name: '代码类型ID',
-          hidden: true
+          name: '代码类型ID'
         },
         {
           field: 'codeTypeName',

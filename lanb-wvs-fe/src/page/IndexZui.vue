@@ -18,7 +18,7 @@
             class="header-bar__item"
           >反馈</a>
           <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="header-bar__item">帮助</a>
-          <a class="header-bar__item">会员</a>
+          <router-link class="header-bar__item" to="/login">会员</router-link>
         </div>
       </div>
       <div class="sub-header">

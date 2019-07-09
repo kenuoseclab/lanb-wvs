@@ -40,7 +40,7 @@
     </div>
     <!-- <div v-show="isModal" class="mask"></div> -->
 
-    <transition name="fade">
+    <!-- <transition name="fade"> -->
       <div class="dialog" v-show="isDialog">
         <div class="dialog__inner">
           <h1>提示</h1>
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-    </transition>
+    <!-- </transition> -->
     <!-- <div v-show="isDialog" class="mask"></div> -->
 
     <!-- <div class="modal" v-show="isDialog">
