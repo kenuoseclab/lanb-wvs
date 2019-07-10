@@ -13,13 +13,17 @@
     >
     <div class="datetime" v-show="show">
       <div class="datetime__title" ref="datetime__title">
-        <span><i class="iconfont icon-fanhui"></i></span>
+        <span>
+          <i class="iconfont icon-fanhui" @click="addMonth(-1)"></i>
+        </span>
         <div>
           <!-- <input style="width: 30px;" v-model="input.year"> -->
           {{month.year}}-{{month.month + 1}}
           <!-- <input style="width: 30px;" v-model="input.month"> -->
         </div>
-        <span style="transform:rotate(180deg);"><i class="iconfont icon-fanhui"></i></span>
+        <span style="transform:rotate(180deg);">
+          <i class="iconfont icon-fanhui" @click="addMonth(1)"></i>
+        </span>
       </div>
       <div class="datetime__body" ref="datetime__body">
         <table class="tup-table datetime__table" ref="datetime__table">
@@ -98,6 +102,27 @@ export default {
     },
     isThisMonth (date) {
       return this.month.containsDay(moment(date))
+    },
+    // 修改月份
+    addMonth (add) {
+      // 小于等于0就减年份
+      if (this.month.month <= 0 && add < 0) {
+        this.month.year -= 1
+        this.month.month = 11
+        this.data = this.month.calendarWeeks()
+        return
+      }
+      // 大于等于11就加年份
+      if (this.month.month >= 11 && add > 0) {
+        this.month.year += 1
+        this.month.month = 0
+        this.data = this.month.calendarWeeks()
+        return
+      }
+
+      // 一般情况
+      this.month.month += add
+      this.data = this.month.calendarWeeks()
     }
   },
   created () {

@@ -232,7 +232,10 @@ export default {
 
     // 单元格格式化
     cellFormatter (field, row) {
+      // 处理字符串
       let val = String(row[field.field])
+      // 处理为空情况
+      val = val === null || val === 'null' ? '' : val
       // 处理需要格式化内容
       if (typeof field.codeType !== 'undefined') {
         let codeTypeName = field.codeType
