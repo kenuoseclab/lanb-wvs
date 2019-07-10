@@ -5,46 +5,91 @@ import java.util.Date;
 import java.util.List;
 
 public class ConfigExample {
+    /**
+     * config
+     */
     protected String orderByClause;
 
+    /**
+     * config
+     */
     protected boolean distinct;
 
+    /**
+     * config
+     */
     protected List<Criteria> oredCriteria;
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public ConfigExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public String getOrderByClause() {
         return orderByClause;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public boolean isDistinct() {
         return distinct;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
@@ -53,17 +98,28 @@ public class ConfigExample {
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
+    /**
+     *
+     * @mbg.generated 2019-07-10
+     */
     public void clear() {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
     }
 
+    /**
+     * config 2019-07-10
+     */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
@@ -506,6 +562,9 @@ public class ConfigExample {
         }
     }
 
+    /**
+     *  * config
+     */
     public static class Criteria extends GeneratedCriteria {
 
         protected Criteria() {
@@ -513,6 +572,9 @@ public class ConfigExample {
         }
     }
 
+    /**
+     * config 2019-07-10
+     */
     public static class Criterion {
         private String condition;
 

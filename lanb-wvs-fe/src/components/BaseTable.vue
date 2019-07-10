@@ -143,7 +143,7 @@
 
       <div class="pagination">
         <a @click="pageChange(-1)" class="button">上一页</a>
-        <input type="number" v-model="pageInfo.page" @change="getList" class="input" value="1">
+        <input type="number" v-model="pageInfo.page" @change="getList" class="input">
         <a @click="pageChange(1)" class="button">下一页</a>
 
         <div class="rows">

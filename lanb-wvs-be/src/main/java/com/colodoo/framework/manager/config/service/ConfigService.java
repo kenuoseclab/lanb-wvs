@@ -4,23 +4,28 @@ import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.config.model.Config;
+import com.colodoo.framework.manager.config.model.ConfigVO;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.manager.config.model.ConfigExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import com.colodoo.framework.manager.config.service.mapper.ConfigSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2018-8-30 11:25:25
+* @date 2019-7-10 9:30:34
 * @description 
 */
 @Service
 @Slf4j
 public class ConfigService extends BaseService<Config> {
+
+	@Autowired
+	ConfigSQLMapper sqlMapper;
 
     /**
     * 新增数据
@@ -94,14 +99,9 @@ public class ConfigService extends BaseService<Config> {
     *
     * @return
     */
-    public List<Config> query() {
+    public List<Config> query(ConfigVO model) {
         List<Config> list = null;
-        ConfigExample example = new ConfigExample();
-        try {
-            list = this.find(example);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getConfigList(model);
         return list;
     }
 
@@ -111,16 +111,12 @@ public class ConfigService extends BaseService<Config> {
     * @param page
     * @return
     */
-    public PageInfo query(Page page) {
-        PageInfo pageInfo;
+    public PageInfo<Config> query(Page page, ConfigVO model) {
+        PageInfo<Config> pageInfo;
         List<Config> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = this.find();
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
-        pageInfo = new PageInfo(list);
+        list = sqlMapper.getConfigList(model);
+        pageInfo = new PageInfo<Config>(list);
         return pageInfo;
     }
 }

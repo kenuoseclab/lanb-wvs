@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.config.service.mapper.ConfigSQLMapper">
+
+	<select id="getConfigList" resultType="com.colodoo.framework.manager.config.model.Config" parameterType="com.colodoo.framework.manager.config.model.ConfigVO">
+		select
+			a.`config_id` as `configId`,
+			a.`config_name` as `configName`,
+			a.`config_value` as `configValue`,
+			a.`sort_no` as `sortNo`,
+			a.`create_date` as `createDate`,
+			a.`remark` as `remark`
+		from
+		    config a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="configId != null and configId !=''">
+				     a.`config_id` = #{configId} and
+				</if>
+				<if test="configName != null and configName !=''">
+				     a.`config_name` = #{configName} and
+				</if>
+				<if test="configValue != null and configValue !=''">
+				     a.`config_value` = #{configValue} and
+				</if>
+				<if test="sortNo != null and sortNo !=''">
+				     a.`sort_no` = #{sortNo} and
+				</if>
+				<if test="createDate != null and createDate !=''">
+				     a.`create_date` = #{createDate} and
+				</if>
+				<if test="remark != null and remark !=''">
+				     a.`remark` = #{remark} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

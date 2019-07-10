@@ -101,16 +101,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .panel__inner {
   padding: 16px;
   justify-content: space-between;
-}
-
-.panel__inner .item {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .item {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>
