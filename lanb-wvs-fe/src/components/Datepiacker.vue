@@ -4,10 +4,10 @@
     <input
       type="text"
       class="input datetime__input"
-      placeholder="请选择时间..."
+      :placeholder="placeholder"
       autocomplete="off"
       ref="datetime__input"
-      readonly="readonly"
+      readonly
       v-model="day"
       @click="focus"
     >
@@ -64,6 +64,10 @@ export default {
     day: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '请选择时间...'
     }
   },
   data () {
@@ -166,7 +170,7 @@ export default {
   background-color: rgb(250, 250, 250);
   padding: 16px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .datetime__table td {
   text-align: center;

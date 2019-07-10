@@ -67,7 +67,7 @@ export default {
 
       showSider: true,
 
-      systemName: 'LANB FE',
+      systemName: 'LANB WVS',
 
       // 是否缓存组件
       keepAlive: true,

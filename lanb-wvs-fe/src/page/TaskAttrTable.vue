@@ -26,7 +26,8 @@ export default {
         },
         {
           field: 'createTime',
-          name: '创建时间'
+          name: '创建时间',
+          type: 'date'
         },
         {
           field: 'createUserId',
@@ -34,7 +35,8 @@ export default {
         },
         {
           field: 'updateTime',
-          name: '更新时间'
+          name: '更新时间',
+          type: 'date'
         },
         {
           field: 'updateUserId',

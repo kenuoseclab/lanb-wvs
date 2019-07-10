@@ -1,8 +1,8 @@
 <template>
-  <div class="wapper">
+  <div class="wrapper">
     <div class="container">
       <div class="header">
-        <div class="header-logo">LANB FE</div>
+        <div class="header-logo">LANB WVS</div>
         <ul class="nav-bar">
           <li
             v-for="(item, index) in menus"
@@ -111,7 +111,7 @@ export default {
 
 </script>
 <style scoped>
-.wapper {
+.wrapper {
   height: 100vh;
   width: 100%;
   display: flex;
