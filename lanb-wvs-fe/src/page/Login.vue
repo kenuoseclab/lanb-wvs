@@ -1,17 +1,31 @@
 <template>
   <div class="login">
     <form class="panel login__form">
-      <h1 class="login__title">LOGIN</h1>
+      <!-- <h1 class="login__title">LOGIN</h1> -->
+
+      <i class="iconfont icon-youling"></i>
+
+      <p>登录到您的主页</p>
 
       <div class="login__inner">
         <div class="form__block">
-          <label class="input-label" for="userId">用户名:</label>
-          <input type="text" v-model="user.userName" class="input" placeholder="用户名" @keyup.enter="login">
+          <input
+            type="text"
+            v-model="user.userName"
+            class="input"
+            placeholder="用户名"
+            @keyup.enter="login"
+          >
         </div>
 
         <div class="form__block">
-          <label class="input-label" for="password">密码:</label>
-          <input type="password" v-model="user.password" class="input" @keyup.enter="login" placeholder="密码">
+          <input
+            type="password"
+            v-model="user.password"
+            class="input"
+            @keyup.enter="login"
+            placeholder="密码"
+          >
         </div>
 
         <div class="btn-group">
@@ -21,9 +35,11 @@
       </div>
     </form>
 
-    <p style="margin-top: 32px; font-size: 14px;">
+    <div class="login__bottom"></div>
+
+    <p style="z-index: 10001; color: #fff; margin-top: -35px;">
       基于
-      <a style="color: #f5f5f5 !important;" href="https://github.com/lanb-code/">LANB WEB</a>
+      <a style="color: #fff" href="https://github.com/lanb-code/">LANB WEB</a>
       框架开发
     </p>
 
@@ -75,7 +91,7 @@ export default {
             this.$router.push({ path: '/' })
           })
         } else {
-          alert(data.info)
+          alert(data.msg)
         }
       }).catch(error => {
         this.msg = '操作失败'
@@ -106,7 +122,7 @@ export default {
 <style scoped>
 .login {
   /* background: #f5f5f5; */
-  background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%);
+  /* background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%); */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -114,15 +130,26 @@ export default {
   justify-content: center;
 }
 
+.login .iconfont {
+  display: inline-block;
+  margin: 16px;
+  font-size: 40px !important;
+  /* color: #64AAE8; */
+  color: #58A5E5;
+}
+
 .login__form {
   text-align: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: 30px;
-  padding-right: 30px;
-  border: 1px solid #dcdee2;
-  border-radius: 5px;
-  box-shadow: 0 1px 10px rgba(0, 21, 41, 0.08);
+  /* padding-top: 50px;
+  padding-bottom: 50px; */
+  /* padding-left: 30px;
+  padding-right: 30px; */
+  width: 400px;
+  /* border: 1px solid #dcdee2; */
+  /* border-radius: 5px; */
+  box-shadow: 1px 1px 10px rgba(0, 21, 41, 0.08);
+  margin-bottom: 0px !important;
+  z-index: 10002;
 }
 
 .login__title {
@@ -131,7 +158,17 @@ export default {
 
 .login__inner {
   margin: 16px;
-  margin-top: 32px !important;
+}
+
+.login__bottom {
+  margin-top: -140px;
+  font-size: 14px;
+  color: #ffffff;
+  background: #4398E0 linear-gradient(-90deg, #4398E0 0, #64AAE8 100%);
+  box-shadow: 0 1px 10px rgba(0, 21, 41, 0.08);
+  width: 440px;
+  height: 200px;
+  z-index: 10001;
 }
 
 .form__block {
@@ -140,10 +177,6 @@ export default {
 
 .btn-group {
   margin-top: 32px;
-}
-
-.login p {
-  color: #ffffff;
 }
 
 .login em {
