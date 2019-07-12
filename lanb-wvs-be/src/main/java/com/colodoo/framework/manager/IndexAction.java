@@ -18,7 +18,8 @@ public class IndexAction {
 	
 	@RequestMapping(value = "/notRole")
     @ResponseBody
-	public Msg noRole() {
+	public Msg noRole(HttpServletResponse response) {
+		response.setStatus(401);
 		Msg msg = new Msg(false, "", "您未登录或者没有相应权限!");
         return msg;
 	}
@@ -26,7 +27,7 @@ public class IndexAction {
 	@RequestMapping(value = "/404")
     @ResponseBody
 	public Msg error(HttpServletResponse response) {
-		response.setStatus(401);
+		// response.setStatus(401);
 		Msg msg = new Msg(false, "", "您访问的地址不存在!");
         return msg;
 	}

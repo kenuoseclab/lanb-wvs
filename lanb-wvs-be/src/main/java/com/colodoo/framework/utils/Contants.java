@@ -14,6 +14,10 @@ public class Contants {
     /*返回值相关*/
     public static final int CODE_FAILED = -1;
     public static final int CODE_ZERO = 0;
+    
+    /*返回信息键值设置*/
+    public static final String MSG_KEY_SUCCESS = "success";
+    public static final String MSG_KEY_SMG = "msg";
 
     /*登录参数相关*/
     //最大登录次数
