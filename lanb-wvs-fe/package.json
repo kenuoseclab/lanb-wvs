@@ -14,10 +14,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@antv/g2": "^3.5.8-beta.1",
     "axios": "^0.18.0",
     "calendar-months": "^1.0.1",
     "date-formatter": "^0.1.1",
-    "echarts": "^4.2.1",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",

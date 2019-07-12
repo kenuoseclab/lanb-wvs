@@ -3,7 +3,7 @@
     <form class="panel login__form">
       <!-- <h1 class="login__title">LOGIN</h1> -->
 
-      <i class="iconfont icon-youling"></i>
+      <i class="iconfont icon-saomiao"></i>
 
       <p>登录到您的主页</p>
 
@@ -35,9 +35,9 @@
       </div>
     </form>
 
-    <div class="login__bottom"></div>
+    <!-- <div class="login__bottom"></div> -->
 
-    <p style="z-index: 10001; color: #fff; margin-top: -35px;">
+    <p style="z-index: 10001; color: #fff; margin-top: 35px;">
       基于
       <a style="color: #fff" href="https://github.com/lanb-code/">LANB WEB</a>
       框架开发
@@ -123,6 +123,7 @@ export default {
 .login {
   /* background: #f5f5f5; */
   /* background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%); */
+  background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -132,11 +133,25 @@ export default {
 
 .login .iconfont {
   display: inline-block;
-  margin: 16px;
-  font-size: 40px !important;
-  /* color: #64AAE8; */
-  color: #58A5E5;
+  padding: 10px;
+  margin-bottom: 16px;
+  font-size: 30px !important;
+  border-radius: 50%;
+
+  color: #64aae8;
+
+  /* background-color: #58A5E5;
+  color: #ffffff; */
+
+  /* color: #58A5E5; */
+  border-bottom: 3px solid;
+  border-left: 2px solid;
 }
+
+/* .login .iconfont:hover {
+  background-color: #58A5E5;
+  color: #ffffff;
+} */
 
 .login__form {
   text-align: center;
@@ -164,7 +179,7 @@ export default {
   margin-top: -140px;
   font-size: 14px;
   color: #ffffff;
-  background: #4398E0 linear-gradient(-90deg, #4398E0 0, #64AAE8 100%);
+  /* background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%); */
   box-shadow: 0 1px 10px rgba(0, 21, 41, 0.08);
   width: 440px;
   height: 200px;

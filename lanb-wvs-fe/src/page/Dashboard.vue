@@ -18,7 +18,7 @@
       <div class="col-4">
         <div class="panel">
           <h1>图表1</h1>
-          <div id="echart1" style="height: 350px;"></div>
+          <div id="echart1" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
       <div class="col-4">
@@ -38,10 +38,7 @@
 </template>
 
 <script>
-const echarts = require('echarts/lib/echarts')
-require('echarts/lib/chart/pie')
-require('echarts/lib/component/tooltip')
-require('echarts/lib/component/title')
+import G2 from '@antv/g2'
 var df = require('date-formatter')
 export default {
   name: 'dashboard',
@@ -56,30 +53,72 @@ export default {
   },
 
   mounted () {
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('echart1'))
-    var myChart2 = echarts.init(document.getElementById('echart2'))
-    var myChart3 = echarts.init(document.getElementById('echart3'))
-    var option = {
-      series: [
-        {
-          name: '访问来源',
-          type: 'pie',
-          radius: '55%',
-          data: [
-            { value: 235, name: '视频广告' },
-            { value: 274, name: '联盟广告' },
-            { value: 310, name: '邮件营销' },
-            { value: 335, name: '直接访问' },
-            { value: 400, name: '搜索引擎' }
-          ]
+    var data = [{
+      item: '事例一',
+      count: 40,
+      percent: 0.4
+    }, {
+      item: '事例二',
+      count: 21,
+      percent: 0.21
+    }, {
+      item: '事例三',
+      count: 17,
+      percent: 0.17
+    }, {
+      item: '事例四',
+      count: 13,
+      percent: 0.13
+    }, {
+      item: '事例五',
+      count: 9,
+      percent: 0.09
+    }]
+    var chart = new G2.Chart({
+      container: 'echart1',
+      forceFit: true,
+      height: 350,
+      animate: false
+    })
+    chart.source(data, {
+      percent: {
+        formatter: function formatter (val) {
+          val = val * 100 + '%'
+          return val
         }
-      ]
-    }
-    // 绘制图表
-    myChart.setOption(option)
-    myChart2.setOption(option)
-    myChart3.setOption(option)
+      }
+    })
+    chart.coord('theta', {
+      radius: 0.75,
+      innerRadius: 0.6
+    })
+    chart.tooltip({
+      showTitle: false,
+      itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+    })
+    // 辅助文本
+    chart.guide().html({
+      position: ['50%', '50%'],
+      html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">主机<br><span style="color:#8c8c8c;font-size:20px">200</span>台</div>',
+      alignX: 'middle',
+      alignY: 'middle'
+    })
+    var interval = chart.intervalStack().position('percent').color('item').label('percent', {
+      formatter: function formatter (val, item) {
+        return item.point.item + ': ' + val
+      }
+    }).tooltip('item*percent', function (item, percent) {
+      percent = percent * 100 + '%'
+      return {
+        name: item,
+        value: percent
+      }
+    }).style({
+      lineWidth: 1,
+      stroke: '#fff'
+    })
+    chart.render()
+    interval.setSelected(data[0])
 
     // 取首页仪表盘数据
     const parms = {

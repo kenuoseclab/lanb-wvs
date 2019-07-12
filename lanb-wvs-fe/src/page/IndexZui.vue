@@ -129,7 +129,7 @@ export default {
   height: 50px;
   min-height: 50px;
   max-height: 50px;
-  background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%);
+  background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   display: flex;
   justify-content: space-between;
@@ -162,7 +162,7 @@ export default {
 }
 
 .header-bar__item:hover {
-  background-color: #1861d5;
+   background-color: rgba(0, 0, 0, 0.15);
 }
 
 .sub-header {
