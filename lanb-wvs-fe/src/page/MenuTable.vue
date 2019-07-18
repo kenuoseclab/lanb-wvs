@@ -33,18 +33,12 @@ export default {
         },
         {
           field: 'visible',
-          name: '是否可见',
+          name: '是否首页',
           type: 'select',
           codeType: 'yesOrNo'
         }
       ]
     }
-  },
-
-  methods: {},
-
-  created () {
-    // console.log(this.$store)
   }
 }
 

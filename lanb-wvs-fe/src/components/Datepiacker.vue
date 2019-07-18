@@ -18,7 +18,7 @@
         </span>
         <div>
           <!-- <input style="width: 30px;" v-model="input.year"> -->
-          {{month.year}}-{{month.month + 1}}
+          {{month.year}}年{{month.month + 1}}月
           <!-- <input style="width: 30px;" v-model="input.month"> -->
         </div>
         <span style="transform:rotate(180deg);">
@@ -94,10 +94,10 @@ export default {
     focus: function (e) {
       this.initData()
       this.show = true
-      this.$nextTick(() => {
-        let width = this.$refs.datetime__table.offsetWidth
-        this.$refs.datetime__title.style.width = width + 'px'
-      })
+      // this.$nextTick(() => {
+      //   let width = this.$refs.datetime__table.offsetWidth
+      //   this.$refs.datetime__title.style.width = width + 'px'
+      // })
     },
     selectDay: function (date) {
       if (!this.isThisMonth(date)) return

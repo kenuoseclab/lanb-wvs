@@ -13,7 +13,8 @@ export default {
       fields: [
         {
           field: 'bugId',
-          name: '漏洞ID'
+          name: '漏洞ID',
+          hidden: true
         },
         {
           field: 'bugName',
@@ -21,19 +22,22 @@ export default {
         },
         {
           field: 'desc',
-          name: '漏洞描述'
+          name: '漏洞描述',
+          type: 'textarea'
         },
         {
           field: 'createTime',
-          name: '创建时间'
+          name: '创建时间',
+          type: 'date'
         },
         {
           field: 'createUserId',
           name: '创建人'
         },
         {
-          field: 'createTime',
-          name: '更新时间'
+          field: 'updateTime',
+          name: '更新时间',
+          type: 'date'
         },
         {
           field: 'updateUserId',
@@ -41,7 +45,8 @@ export default {
         },
         {
           field: 'remark',
-          name: '备注'
+          name: '备注',
+          type: 'textarea'
         }
       ]
     }

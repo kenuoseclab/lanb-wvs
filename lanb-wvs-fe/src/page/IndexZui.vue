@@ -32,22 +32,40 @@
           >{{item.text}}</li>
         </ul>
         <div class="sub-header__item" style="margin-right: 20px;">
-          <a class="button">刷新</a>
+          <a class="button" @click="refresh">刷新</a>
         </div>
       </div>
       <div class="main">
         <div class="main-container">
+          <!-- 左侧选项卡 -->
+          <!-- <ul class="left-tabs">
+            <li class="tab-item tab-item--active">首页</li>
+            <li class="tab-item">用户管理</li>
+            <li class="tab-item">系统设置</li>
+            <li class="tab-item">角色管理</li>
+            <li class="tab-item">日志管理</li>
+          </ul> -->
           <keep-alive>
-            <component ref="currPage" v-if="keepAlive" :is="currPage"></component>
+            <component ref="currPage" v-if="keepAlive && refreshFlag" :is="currPage"></component>
           </keep-alive>
-          <component ref="currPage" v-if="!keepAlive" :is="currPage"></component>
+          <component ref="currPage" v-if="!keepAlive && refreshFlag" :is="currPage"></component>
         </div>
       </div>
     </div>
+
+    <!-- loading -->
+    <loading
+      :active.sync="loading.isLoading"
+      :can-cancel="loading.canCancel"
+      :on-cancel="loading.onCancel"
+      :color="'rgb(0, 123, 255)'"
+    ></loading>
   </div>
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
   data () {
     return {
@@ -60,7 +78,19 @@ export default {
       // 子菜单
       subMenus: [],
 
-      keepAlive: false
+      keepAlive: false,
+
+      refreshFlag: true,
+
+      // 加载组件
+      loading: {
+        isLoading: true,
+        canCancel: true,
+        onCancel: () => {
+          this.show = true
+        },
+        opacity: 0
+      }
 
     }
   },
@@ -95,6 +125,13 @@ export default {
         element.checked = false
       }
       menu.checked = true
+    },
+
+    refresh () {
+      this.refreshFlag = false
+      this.$nextTick(() => {
+        this.refreshFlag = true
+      })
     }
   },
 
@@ -103,14 +140,20 @@ export default {
       const rows = data
       const tmpMenus = rows
       this.menus = tmpMenus
+
+      this.loading.isLoading = false
     }).catch(error => {
       console.log(error)
     })
+  },
+
+  components: {
+    Loading
   }
 }
 
 </script>
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
   height: 100vh;
   width: 100%;
@@ -162,7 +205,7 @@ export default {
 }
 
 .header-bar__item:hover {
-   background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .sub-header {
@@ -246,4 +289,26 @@ export default {
   color: #3c4353;
   background-color: rgba(0, 0, 0, 0.075);
 }
+
+// .left-tabs {
+//   position: absolute;
+//   left: 0px;
+//   background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
+//   color: #ffffff;
+//   text-align: center;
+//   list-style: none;
+//   z-index: 10001;
+//   width: 50px;
+//   .tab-item {
+//     padding: 16px;
+//     color: #ffffff;
+//     cursor: pointer;
+//     &:hover {
+//       background-color: rgba(0, 0, 0, 0.15);
+//     }
+//   }
+//   .tab-item--active {
+//     background-color: rgba(0, 0, 0, 0.1);
+//   }
+// }
 </style>

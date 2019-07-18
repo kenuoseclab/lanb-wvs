@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="panel">
-      <h1>脚本管理</h1>
+      <h1>配置脚本管理</h1>
 
       <div class="panel__inner">
         <form class="form">
@@ -18,7 +18,7 @@
           <!-- <div class="form__block">
             <label class="input-label" for="自定义脚本">自定义脚本</label>
             <textarea placeholder="请输入自定义脚本" rows="5" style="resize:none; width: 30%; padding: 8px;"></textarea>
-          </div> -->
+          </div>-->
           <div class="form__block">
             <a class="button">保存</a>
             <a class="button" @click="resetForm">重置</a>
@@ -49,6 +49,27 @@
         </form>
       </div>
       <div class="mask"></div>
+    </div>
+
+    <div class="panel">
+      <h1>自定义脚本代码</h1>
+
+      <div class="panel__inner">
+        <form class="form">
+          <div class="form__block">
+            <label class="input-label" for="脚本名称">脚本名称</label>
+            <input class="input" placeholder="请输入脚本名称">
+          </div>
+          <div class="form__block">
+            <label style="margin-bottom: 16px;" class="input-label" for="脚本内容">脚本内容</label>
+            <textarea style="width: 80%; height: 300px;" class="input" placeholder="请输入脚本内容..."></textarea>
+          </div>
+          <div class="form__block">
+            <a class="button">保存</a>
+            <a class="button">重置</a>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

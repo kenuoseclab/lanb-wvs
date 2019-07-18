@@ -15,7 +15,6 @@ export default {
 
   methods: {
     routerWatch () {
-      console.log('routerWatch')
       const state = this.$store.state
       const user = state.user
       if (!user.isLogin) {

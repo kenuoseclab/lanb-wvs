@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/user"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/user" :api="api"></baseTable>
 </template>
 
 <script>
@@ -9,10 +9,18 @@ export default {
   data () {
     return {
 
+      api: {
+        'save': '/register',
+        'delete': '/delete',
+        'update': '/update',
+        'query': '/queryPage'
+      },
+
       fields: [
         {
           field: 'userId',
-          name: '用户ID'
+          name: '用户ID',
+          hidden: true
         },
         {
           field: 'userName',
@@ -20,7 +28,8 @@ export default {
         },
         {
           field: 'password',
-          name: '密码'
+          name: '密码',
+          type: 'password'
         },
         {
           field: 'createDate',

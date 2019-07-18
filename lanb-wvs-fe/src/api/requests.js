@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router'
+// import router from '../router'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = ''
@@ -7,18 +7,19 @@ axios.defaults.baseURL = ''
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    if (response.data.errCode === 2) {
-      router.push({
-        path: '/login'
-      })
-    }
+    // if (response.data.errCode === 2) {
+    //   router.push({
+    //     path: '/login'
+    //   })
+    // }
     return response
   },
   error => {
     if (error.response.status === 401) {
-      router.push({
-        path: '/login'
-      })
+      alert(error.response.data.msg)
+      // router.push({
+      //   path: '/login'
+      // })
     }
     return Promise.reject(error)
   }

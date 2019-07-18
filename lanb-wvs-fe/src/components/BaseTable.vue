@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="modal" v-show="isModal">
+    <!-- 模态框 -->
+    <div class="modal">
       <transition name="bounce">
-        <div v-show="isModal" class="modal__inner panel">
+        <div v-if="isModal" class="modal__inner panel">
           <h1>编辑表单</h1>
           <form class="form modal__body">
             <template v-for="(field, index) in fields">
@@ -25,8 +26,29 @@
                     :day.sync="editForm[field.field]"
                   ></datepiacker>
                 </template>
+                <template v-else-if="field.type === 'textarea'">
+                  <textarea
+                    style="height: 100px;"
+                    class="input"
+                    v-model="editForm[field.field]"
+                    :placeholder="field.name"
+                  ></textarea>
+                </template>
+                <template v-else-if="field.type === 'password'">
+                  <input
+                    class="input"
+                    type="password"
+                    v-model="editForm[field.field]"
+                    :placeholder="field.name"
+                  >
+                </template>
                 <template v-else>
-                  <input class="input" v-model="editForm[field.field]" :placeholder="field.name">
+                  <input
+                    class="input"
+                    type="text"
+                    v-model="editForm[field.field]"
+                    :placeholder="field.name"
+                  >
                 </template>
               </div>
             </template>
@@ -38,9 +60,8 @@
         </div>
       </transition>
     </div>
-    <!-- <div v-show="isModal" class="mask"></div> -->
 
-    <!-- <transition name="fade"> -->
+    <!-- 提示框 -->
     <div class="dialog" v-show="isDialog">
       <div class="dialog__inner">
         <h1>提示</h1>
@@ -50,22 +71,6 @@
         </div>
       </div>
     </div>
-    <!-- </transition> -->
-    <!-- <div v-show="isDialog" class="mask"></div> -->
-
-    <!-- <div class="modal" v-show="isDialog">
-      <transition name="bounce">
-        <div v-show="isDialog" class="modal__inner panel">
-          <h1>提示</h1>
-          <div class="modal__body">
-            <div class="dialog__body">操作成功</div>
-          </div>
-          <div class="button-group">
-            <a @click="isDialog = false" class="button">确定</a>
-          </div>
-        </div>
-      </transition>
-    </div>-->
 
     <div class="panel">
       <form class="form">
@@ -152,15 +157,28 @@
         </div>
       </div>
     </div>
+
+    <!-- loading -->
+    <loading
+      :active="!show"
+      :can-cancel="loading.canCancel"
+      :on-cancel="loading.onCancel"
+      :color="loading.color"
+      :opacity="loading.opacity"
+    ></loading>
   </div>
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
 
   name: 'baseTable',
 
   props: {
+
+    // 字段配置
     fields: {
       type: Array,
       default: () => [{
@@ -169,16 +187,18 @@ export default {
       }, {
         field: 'testName',
         name: '测试名'
-
       }, {
         field: 'createTime',
         name: '创建时间'
       }]
     },
+
+    // 模块基础地址
     baseURL: {
       type: String,
       default: '/api/test'
     },
+
     api: {
       type: Object,
       default: () => {
@@ -188,6 +208,14 @@ export default {
           'update': '/update',
           'query': '/queryPage'
         }
+      }
+    },
+
+    // 按钮配置
+    btns: {
+      type: Array,
+      default: () => {
+        return []
       }
     }
   },
@@ -210,7 +238,15 @@ export default {
       form: null,
       show: false,
       isDialog: false,
-      day: ''
+      day: '',
+      loading: {
+        canCancel: true,
+        onCancel: () => {
+          this.show = true
+        },
+        opacity: 0,
+        color: 'rgb(0, 123, 255)'
+      }
     }
   },
 
@@ -261,17 +297,17 @@ export default {
           .$post(this.baseURL + this.api.save, tmpParam)
           .then(data => {
             if (data.success) {
-              this.isModal = false
               this.isDialog = true
+              this.isModal = false
               this.getList()
             } else {
               alert(data.msg)
             }
           })
           .catch(() => {
-            this.$router.push({
-              path: '/login'
-            })
+            // this.$router.push({
+            //   path: '/login'
+            // })
           })
       } else if (this.action === 'update') {
         this
@@ -286,9 +322,9 @@ export default {
             }
           })
           .catch(() => {
-            this.$router.push({
-              path: '/login'
-            })
+            // this.$router.push({
+            //   path: '/login'
+            // })
           })
       }
     },
@@ -346,9 +382,9 @@ export default {
           }
         })
         .catch(() => {
-          this.$router.push({
-            path: '/login'
-          })
+          // this.$router.push({
+          //   path: '/login'
+          // })
         })
     },
 
@@ -397,11 +433,6 @@ export default {
             this.initCheckbox()
           })
         })
-        .catch(() => {
-          this.$router.push({
-            path: '/login'
-          })
-        })
     },
 
     // 改变页码
@@ -444,11 +475,27 @@ export default {
   created () {
     this.initEditForm()
     this.initSearchForm()
+    this.getList()
   },
 
-  mounted () {
-    this.getList()
+  watch: {
+    'pageInfo.rows': function (newVal, oldVal) {
+      if (newVal <= 0) {
+        this.pageInfo.rows = oldVal
+      }
+    },
+
+    'pageInfo.page': function (newVal, oldVal) {
+      if (newVal <= 0 && newVal > this.maxPage) {
+        this.pageInfo.page = oldVal
+      }
+    }
+  },
+
+  components: {
+    Loading
   }
+
 }
 
 </script>

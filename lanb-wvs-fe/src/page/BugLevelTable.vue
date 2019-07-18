@@ -13,15 +13,17 @@ export default {
       fields: [
         {
           field: 'bugLevelId',
-          name: '漏洞等级ID'
+          name: '漏洞等级ID',
+          hidden: true
         },
         {
-          field: 'bugName',
+          field: 'bugLevelName',
           name: '漏洞等级名'
         },
         {
           field: 'createTime',
-          name: '创建时间'
+          name: '创建时间',
+          type: 'date'
         },
         {
           field: 'createUserId',
@@ -29,7 +31,8 @@ export default {
         },
         {
           field: 'createTime',
-          name: '更新时间'
+          name: '更新时间',
+          type: 'date'
         },
         {
           field: 'updateUserId',
