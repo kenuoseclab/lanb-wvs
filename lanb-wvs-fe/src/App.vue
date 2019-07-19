@@ -5,6 +5,19 @@
 </template>
 
 <script>
+import '@/assets/scss/all.scss'
+import '@/assets/scss/layout.scss'
+import '@/assets/scss/modal.scss'
+import '@/assets/scss/form.scss'
+import '@/assets/scss/button.scss'
+import '@/assets/scss/menu.scss'
+import '@/assets/scss/tab.scss'
+import '@/assets/scss/menu-bar.scss'
+import '@/assets/scss/panel.scss'
+import '@/assets/scss/table.scss'
+import '@/assets/scss/input.scss'
+import '@/assets/scss/color.scss'
+import '@/assets/scss/dialog.scss'
 export default {
   name: 'App',
 
@@ -45,19 +58,6 @@ export default {
 </script>
 
 <style>
-@import url(./assets/all.css);
-@import url(./assets/layout.css);
-@import url(./assets/modal.css);
-@import url(./assets/form.css);
-@import url(./assets/button.css);
-@import url(./assets/menu.css);
-@import url(./assets/tab.css);
-@import url(./assets/menu-bar.css);
-@import url(./assets/panel.css);
-@import url(./assets/table.css);
-@import url(./assets/input.css);
-@import url(./assets/color.css);
-@import url(./assets/dialog.css);
 @import url(//at.alicdn.com/t/font_727264_erizv82lgao.css);
 #app {
   height: 100vh;

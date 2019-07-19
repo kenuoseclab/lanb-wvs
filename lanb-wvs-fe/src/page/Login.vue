@@ -52,11 +52,24 @@
         </div>
       </div>
     </transition>
+
+    <!-- loading -->
+    <loading
+      style="z-index: 10003;"
+      :active.sync="loading.isLoading"
+      :can-cancel="loading.canCancel"
+      :on-cancel="loading.onCancel"
+      :color="loading.color"
+      :opacity="loading.opacity"
+    ></loading>
+
   </div>
 </template>
 
 <script>
 import md5 from 'md5'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
 
@@ -69,12 +82,23 @@ export default {
         password: ''
       },
       isDialog: false,
-      msg: '操作成功'
+      msg: '操作成功',
+
+      // 加载组件
+      loading: {
+        isLoading: false,
+        canCancel: true,
+        onCancel: () => {
+          this.show = true
+        },
+        color: 'rgb(0, 123, 255)'
+      }
     }
   },
 
   methods: {
     login () {
+      this.loading.isLoading = true
       const param = {
         userName: this.user.userName,
         password: md5(this.user.password)
@@ -86,6 +110,7 @@ export default {
           // 设置代码信息
           this.$post('/api/codeInfo/getCodeInfoMap', {}).then(data => {
             this.$store.commit('SET_CODE_INFO', data.data)
+            this.loading.isLoading = false
             this.$router.push({ path: '/' })
           })
         } else {
@@ -112,6 +137,10 @@ export default {
         this.$store.commit('SET_IS_LOGIN', false)
       }
     })
+  },
+
+  components: {
+    Loading
   }
 
 }

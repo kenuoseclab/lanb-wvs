@@ -3,7 +3,7 @@
     <div class="info">
       404 NOT FOUND
       <p>
-        <router-link style="margin-top: 16px;" class="button" to="/">返回主页</router-link>
+        <a style="margin-top: 16px;" class="button" @click="$router.go(-1)">返回上一页</a>
       </p>
     </div>
   </div>
@@ -18,10 +18,8 @@ export default {
     return {
 
     }
-  },
-  components: {
-
   }
+
 }
 </script>
 

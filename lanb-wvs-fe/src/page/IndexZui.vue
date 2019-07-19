@@ -91,8 +91,10 @@ export default {
       // 子菜单
       subMenus: [],
 
+      // 是否缓存组件
       keepAlive: false,
 
+      // 刷新标记,用于强制刷新组件
       refreshFlag: true,
 
       // 加载组件
@@ -115,6 +117,10 @@ export default {
     menuCallback (menu) {
       if (menu.attributes.menuUrl !== '') {
         this.currPage = menu.attributes.menuUrl
+        if (this.isRouter) {
+          // 更换当前路由地址
+          this.$router.push({ path: this.currPage })
+        }
         this.subMenus = []
       } else if (menu.children !== null) {
         this.subMenus = menu.children

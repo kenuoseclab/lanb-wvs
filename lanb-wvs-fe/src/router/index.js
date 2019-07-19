@@ -31,7 +31,7 @@ export default new Router({
         {
           path: '*',
           components: {
-            content: require('@/page/BlankPage.vue').default
+            content: require('@/page/page/BlankPage.vue').default
           }
         }
       ]
@@ -68,7 +68,7 @@ export default new Router({
     {
       path: '*',
       name: 'BlankPage',
-      component: require('@/page/BlankPage.vue').default
+      component: require('@/page/page/BlankPage.vue').default
     }
   ]
 })

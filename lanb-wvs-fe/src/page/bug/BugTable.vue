@@ -31,7 +31,7 @@ export default {
           type: 'date'
         },
         {
-          field: 'createUserId',
+          field: 'createUserName',
           name: '创建人'
         },
         {
@@ -40,7 +40,7 @@ export default {
           type: 'date'
         },
         {
-          field: 'updateUserId',
+          field: 'updateUserName',
           name: '更新人'
         },
         {
