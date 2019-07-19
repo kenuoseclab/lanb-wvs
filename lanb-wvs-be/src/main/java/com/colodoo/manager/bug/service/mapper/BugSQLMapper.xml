@@ -35,17 +35,25 @@
 				<if test="createUserId != null and createUserId !=''">
 				     a.`create_user_id` = #{createUserId} and
 				</if>
+				<if test="createUserName != null and createUserName !=''">
+				     create_user.`user_name` like CONCAT(CONCAT('%', #{createUserName}), '%') and
+				</if>
 				<if test="updateTime != null and updateTime !=''">
 				     a.`update_time` = #{updateTime} and
 				</if>
 				<if test="updateUserId != null and updateUserId !=''">
 				     a.`update_user_id` = #{updateUserId} and
 				</if>
+				<if test="updateUserName != null and updateUserName !=''">
+				     update_user.`user_name` like CONCAT(CONCAT('%', #{updateUserName}), '%') and
+				</if>
 				<if test="remark != null and remark !=''">
 				     a.`remark` = #{remark} and
 				</if>
 			</trim>
 		</where>
+		
+		order by a.`update_time` desc
 
 	</select>
 
