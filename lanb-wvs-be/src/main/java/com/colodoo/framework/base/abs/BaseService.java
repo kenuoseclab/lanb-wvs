@@ -11,14 +11,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpSession;
-import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +25,6 @@ import java.util.List;
  * 3; 编写的初衷是为了简化DAO层的代码量
  */
 @Slf4j
-@Transactional(rollbackFor = Exception.class)
 public abstract class BaseService<M> {
 
     @Autowired

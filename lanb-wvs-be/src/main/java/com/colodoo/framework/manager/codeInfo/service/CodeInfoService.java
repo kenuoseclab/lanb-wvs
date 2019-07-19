@@ -144,11 +144,10 @@ public class CodeInfoService extends BaseService<CodeInfo> {
 			CodeType codeType = codeTypes.get(i);
 			if(codeType != null) {
 				String codeTypeId = codeType.getCodeTypeId();
-				String codeTypeName = codeType.getCodeTypeName();
 				if(codeTypeId != null && !"".equals(codeTypeId)) {
 					model.setCodeTypeId(codeType.getCodeTypeId());
 					List<CodeInfo> codeInfos = sqlMapper.getCodeInfoList(model);
-					map.put(codeTypeName, codeInfos);
+					map.put(codeTypeId, codeInfos);
 				}
 			}
 		}

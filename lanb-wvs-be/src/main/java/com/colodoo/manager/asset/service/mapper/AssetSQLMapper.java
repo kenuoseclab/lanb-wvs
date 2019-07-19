@@ -13,6 +13,6 @@ import com.colodoo.manager.asset.model.Asset;
  */
 public interface AssetSQLMapper {
 	
-	public List<Asset> getAssetList(AssetVO model) throws DAOException;
+	public List<AssetVO> getAssetList(AssetVO model) throws DAOException;
 
 }

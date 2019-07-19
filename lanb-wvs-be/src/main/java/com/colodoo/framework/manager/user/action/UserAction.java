@@ -89,7 +89,7 @@ public class UserAction {
 
 	@RequestMapping(value = "/register")
 	@ResponseBody
-	public Map register(User model) {
+	public Map register(@RequestBody User model) {
 		Map map = new HashMap();
 		boolean isSuccessed = false;
 		try {

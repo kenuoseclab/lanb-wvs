@@ -8,11 +8,16 @@ import com.colodoo.manager.bugLevel.model.BugLevelVO;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
+
 import com.colodoo.manager.bugLevel.service.mapper.BugLevelSQLMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,8 +41,13 @@ public class BugLevelService extends BaseService<BugLevel> {
     public int saveBugLevel(BugLevel model) {
         int ret = Contants.CODE_FAILED;
         model.setBugLevelId(uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
+        Date now = new Date();
+    	// 创建时间,更新时间,创建人,更新人
+ 		model.setCreateTime(now);
+ 		model.setUpdateTime(now);
+ 		String userId = this.getSessionObject().getUser().getUserId();
+ 		model.setCreateUserId(userId);
+ 		model.setUpdateUserId(userId);
         try {
             ret = this.insert(model);
         } catch (DAOException e) {
@@ -71,6 +81,10 @@ public class BugLevelService extends BaseService<BugLevel> {
     public int updateBugLevel(BugLevel model) {
         int ret = Contants.CODE_FAILED;
         try {
+        	Date now = new Date();
+			model.setUpdateTime(now);
+			String userId = this.getSessionObject().getUser().getUserId();
+			model.setUpdateUserId(userId);
             ret = this.update(model);
         } catch (DAOException e) {
             log.error(e.getMsg());

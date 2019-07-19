@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.manager.bug.model.BugVO;
-import com.colodoo.manager.bug.model.Bug;
 
 /**
  * @author colodoo
@@ -13,6 +12,6 @@ import com.colodoo.manager.bug.model.Bug;
  */
 public interface BugSQLMapper {
 	
-	public List<Bug> getBugList(BugVO model) throws DAOException;
+	public List<BugVO> getBugList(BugVO model) throws DAOException;
 
 }

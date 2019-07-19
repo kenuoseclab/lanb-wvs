@@ -107,7 +107,7 @@ public class BugAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<Bug> query(@RequestBody BugVO model) {
+    public List<BugVO> query(@RequestBody BugVO model) {
         return bugService.query(model);
     }
 
@@ -121,7 +121,7 @@ public class BugAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody BugVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<Bug> info = bugService.query(model.getPage(), model);
+        PageInfo<BugVO> info = bugService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;

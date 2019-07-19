@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.colodoo.manager.bug.service.mapper.BugSQLMapper">
 
-	<select id="getBugList" resultType="com.colodoo.manager.bug.model.Bug" parameterType="com.colodoo.manager.bug.model.BugVO">
+	<select id="getBugList" resultType="com.colodoo.manager.bug.model.BugVO" parameterType="com.colodoo.manager.bug.model.BugVO">
 		select
 			a.`bug_id` as `bugId`,
 			a.`bug_name` as `bugName`,
@@ -11,16 +11,20 @@
 			a.`create_user_id` as `createUserId`,
 			a.`update_time` as `updateTime`,
 			a.`update_user_id` as `updateUserId`,
-			a.`remark` as `remark`
+			a.`remark` as `remark`,
+			create_user.`user_name` as `createUserName`,
+			update_user.`user_name` as `updateUserName`
 		from
 		    bug a
+		left join user create_user on a.`create_user_id` = create_user.user_id
+		left join user update_user on a.`update_user_id` = update_user.user_id
 		<where>
 			<trim suffixOverrides="and">
 				<if test="bugId != null and bugId !=''">
 				     a.`bug_id` = #{bugId} and
 				</if>
 				<if test="bugName != null and bugName !=''">
-				     a.`bug_name` = #{bugName} and
+				     a.`bug_name` like CONCAT(CONCAT('%', #{bugName}), '%')
 				</if>
 				<if test="desc != null and desc !=''">
 				     a.`desc` = #{desc} and

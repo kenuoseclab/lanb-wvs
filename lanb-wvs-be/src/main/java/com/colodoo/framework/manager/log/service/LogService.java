@@ -4,24 +4,28 @@ import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.log.model.Log;
+import com.colodoo.framework.manager.log.model.LogVO;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.manager.log.model.LogExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import com.colodoo.framework.manager.log.service.mapper.LogSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 /**
 * @author colodoo
-* @date 2018-8-31 16:14:20
+* @date 2019-7-16 16:04:15
 * @description 
 */
 @Service
 @Slf4j
 public class LogService extends BaseService<Log> {
+
+	@Autowired
+	LogSQLMapper sqlMapper;
 
     /**
     * 新增数据
@@ -32,7 +36,7 @@ public class LogService extends BaseService<Log> {
     public int saveLog(Log model) {
         int ret = Contants.CODE_FAILED;
         model.setLogId(uuid());
-         model.setCreateTime(new Date());
+        // model.setCreateDate(new Date());
         // model.setLastDate(new Date());
         try {
             ret = this.insert(model);
@@ -81,13 +85,13 @@ public class LogService extends BaseService<Log> {
     * @return
     */
     public Log queryById(Log model) {
-        Log logModel = null;
+        Log logTemp = null;
         try {
-            logModel = this.get(model.getLogId());
+        	logTemp = this.get(model.getLogId());
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        return logModel;
+        return logTemp;
     }
 
     /**
@@ -95,14 +99,9 @@ public class LogService extends BaseService<Log> {
     *
     * @return
     */
-    public List<Log> query() {
+    public List<Log> query(LogVO model) {
         List<Log> list = null;
-        LogExample example = new LogExample();
-        try {
-            list = this.find(example);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getLogList(model);
         return list;
     }
 
@@ -112,16 +111,12 @@ public class LogService extends BaseService<Log> {
     * @param page
     * @return
     */
-    public PageInfo query(Page page) {
-        PageInfo pageInfo;
+    public PageInfo<Log> query(Page page, LogVO model) {
+        PageInfo<Log> pageInfo;
         List<Log> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = this.find();
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
-        pageInfo = new PageInfo(list);
+        list = sqlMapper.getLogList(model);
+        pageInfo = new PageInfo<Log>(list);
         return pageInfo;
     }
 }

@@ -35,9 +35,6 @@ public class CodeTypeService extends BaseService<CodeType> {
     */
     public int saveCodeType(CodeType model) {
         int ret = Contants.CODE_FAILED;
-        model.setCodeTypeId(uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
         try {
             ret = this.insert(model);
         } catch (DAOException e) {

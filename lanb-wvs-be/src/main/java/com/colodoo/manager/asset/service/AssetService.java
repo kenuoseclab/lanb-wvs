@@ -114,8 +114,8 @@ public class AssetService extends BaseService<Asset> {
 	 *
 	 * @return
 	 */
-	public List<Asset> query(AssetVO model) {
-		List<Asset> list = null;
+	public List<AssetVO> query(AssetVO model) {
+		List<AssetVO> list = null;
 		try {
 			list = sqlMapper.getAssetList(model);
 		} catch (DAOException e) {
@@ -130,16 +130,16 @@ public class AssetService extends BaseService<Asset> {
 	 * @param page
 	 * @return
 	 */
-	public PageInfo<Asset> query(Page page, AssetVO model) {
-		PageInfo<Asset> pageInfo;
-		List<Asset> list = null;
+	public PageInfo<AssetVO> query(Page page, AssetVO model) {
+		PageInfo<AssetVO> pageInfo;
+		List<AssetVO> list = null;
 		PageHelper.startPage(page.getPage(), page.getRows());
 		try {
 			list = sqlMapper.getAssetList(model);
 		} catch (DAOException e) {
 			log.error(e.getMsg());
 		}
-		pageInfo = new PageInfo<Asset>(list);
+		pageInfo = new PageInfo<AssetVO>(list);
 		return pageInfo;
 	}
 }

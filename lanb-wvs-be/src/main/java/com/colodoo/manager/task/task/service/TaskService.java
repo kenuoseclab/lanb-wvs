@@ -2,7 +2,6 @@ package com.colodoo.manager.task.task.service;
 
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
-// import com.colodoo.framework.mq.TaskSender;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.task.task.model.DashboardVO;
 import com.colodoo.manager.task.task.model.Task;
@@ -34,8 +33,6 @@ public class TaskService extends BaseService<Task> {
 	@Autowired
 	TaskSQLMapper sqlMapper;
 
-	// @Autowired
-	// TaskSender taskSender;
 	/**
 	 * 新增数据
 	 *
@@ -54,8 +51,6 @@ public class TaskService extends BaseService<Task> {
 		model.setUpdateUserId(userId);
 		try {
 			ret = this.insert(model);
-			// 把任务加入到队列中
-			// taskSender.sendMsg(model);
 		} catch (DAOException e) {
 			log.error(e.getMsg());
 		}

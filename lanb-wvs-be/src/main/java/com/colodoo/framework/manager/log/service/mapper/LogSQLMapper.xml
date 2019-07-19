@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.log.service.mapper.LogSQLMapper">
+
+	<select id="getLogList" resultType="com.colodoo.framework.manager.log.model.Log" parameterType="com.colodoo.framework.manager.log.model.LogVO">
+		select
+			a.`log_id` as `logId`,
+			a.`log_type` as `logType`,
+			a.`log_source` as `logSource`,
+			a.`log_content` as `logContent`,
+			a.`create_time` as `createTime`
+		from
+		    log a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="logId != null and logId !=''">
+				     a.`log_id` = #{logId} and
+				</if>
+				<if test="logType != null and logType !=''">
+				     a.`log_type` = #{logType} and
+				</if>
+				<if test="logSource != null and logSource !=''">
+				     a.`log_source` = #{logSource} and
+				</if>
+				<if test="logContent != null and logContent !=''">
+				     a.`log_content` = #{logContent} and
+				</if>
+				<if test="createTime != null and createTime !=''">
+				     a.`create_time` = #{createTime} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

@@ -107,7 +107,7 @@ public class AssetAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<Asset> query(@RequestBody AssetVO model) {
+    public List<AssetVO> query(@RequestBody AssetVO model) {
         return assetService.query(model);
     }
 
@@ -121,7 +121,7 @@ public class AssetAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody AssetVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<Asset> info = assetService.query(model.getPage(), model);
+        PageInfo<AssetVO> info = assetService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;

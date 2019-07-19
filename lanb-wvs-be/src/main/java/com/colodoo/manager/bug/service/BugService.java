@@ -8,11 +8,16 @@ import com.colodoo.manager.bug.model.BugVO;
 import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
+
 import com.colodoo.manager.bug.service.mapper.BugSQLMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,8 +41,13 @@ public class BugService extends BaseService<Bug> {
     public int saveBug(Bug model) {
         int ret = Contants.CODE_FAILED;
         model.setBugId(uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
+        Date now = new Date();
+		// 创建时间,更新时间,创建人,更新人
+		model.setCreateTime(now);
+		model.setUpdateTime(now);
+		String userId = this.getSessionObject().getUser().getUserId();
+		model.setCreateUserId(userId);
+		model.setUpdateUserId(userId);
         try {
             ret = this.insert(model);
         } catch (DAOException e) {
@@ -71,6 +81,10 @@ public class BugService extends BaseService<Bug> {
     public int updateBug(Bug model) {
         int ret = Contants.CODE_FAILED;
         try {
+        	Date now = new Date();
+			model.setUpdateTime(now);
+			String userId = this.getSessionObject().getUser().getUserId();
+			model.setUpdateUserId(userId);
             ret = this.update(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
@@ -99,8 +113,8 @@ public class BugService extends BaseService<Bug> {
     *
     * @return
     */
-    public List<Bug> query(BugVO model) {
-        List<Bug> list = null;
+    public List<BugVO> query(BugVO model) {
+        List<BugVO> list = null;
         try {
             list = sqlMapper.getBugList(model);
         } catch (DAOException e) {
@@ -115,16 +129,16 @@ public class BugService extends BaseService<Bug> {
     * @param page
     * @return
     */
-    public PageInfo<Bug> query(Page page, BugVO model) {
-        PageInfo<Bug> pageInfo;
-        List<Bug> list = null;
+    public PageInfo<BugVO> query(Page page, BugVO model) {
+        PageInfo<BugVO> pageInfo;
+        List<BugVO> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
             list = sqlMapper.getBugList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        pageInfo = new PageInfo<Bug>(list);
+        pageInfo = new PageInfo<BugVO>(list);
         return pageInfo;
     }
 }
