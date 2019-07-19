@@ -45,10 +45,22 @@
             <li class="tab-item">角色管理</li>
             <li class="tab-item">日志管理</li>
           </ul> -->
-          <keep-alive>
-            <component ref="currPage" v-if="keepAlive && refreshFlag" :is="currPage"></component>
-          </keep-alive>
-          <component ref="currPage" v-if="!keepAlive && refreshFlag" :is="currPage"></component>
+
+          <!-- 采用组件切换的模式 -->
+          <template v-if="!isRouter">
+            <keep-alive>
+              <component ref="currPage" v-if="keepAlive && refreshFlag" :is="currPage"></component>
+            </keep-alive>
+            <component ref="currPage" v-if="!keepAlive && refreshFlag" :is="currPage"></component>
+          </template>
+
+          <!-- 采用路由方式 -->
+          <template v-if="isRouter">
+            <keep-alive>
+              <router-view v-if="keepAlive && refreshFlag" name="content"></router-view>
+            </keep-alive>
+            <router-view v-if="!keepAlive && refreshFlag" name="content"></router-view>
+          </template>
         </div>
       </div>
     </div>
@@ -58,7 +70,8 @@
       :active.sync="loading.isLoading"
       :can-cancel="loading.canCancel"
       :on-cancel="loading.onCancel"
-      :color="'rgb(0, 123, 255)'"
+      :color="loading.color"
+      :opacity="loading.opacity"
     ></loading>
   </div>
 </template>
@@ -89,8 +102,11 @@ export default {
         onCancel: () => {
           this.show = true
         },
-        opacity: 0
-      }
+        color: 'rgb(0, 123, 255)'
+      },
+
+      // 是否路由方式控制功能页面
+      isRouter: true
 
     }
   },
@@ -116,7 +132,12 @@ export default {
 
     subMenuCallback (menu) {
       if (menu.attributes.menuUrl !== '') {
+        // 更换当前页面
         this.currPage = menu.attributes.menuUrl
+        if (this.isRouter) {
+          // 更换当前路由地址
+          this.$router.push({ path: this.currPage })
+        }
       } else if (menu.children !== null) {
         this.subMenus = menu.children
       }
@@ -290,25 +311,25 @@ export default {
   background-color: rgba(0, 0, 0, 0.075);
 }
 
-// .left-tabs {
-//   position: absolute;
-//   left: 0px;
-//   background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
-//   color: #ffffff;
-//   text-align: center;
-//   list-style: none;
-//   z-index: 10001;
-//   width: 50px;
-//   .tab-item {
-//     padding: 16px;
-//     color: #ffffff;
-//     cursor: pointer;
-//     &:hover {
-//       background-color: rgba(0, 0, 0, 0.15);
-//     }
-//   }
-//   .tab-item--active {
-//     background-color: rgba(0, 0, 0, 0.1);
-//   }
-// }
+.left-tabs {
+  position: absolute;
+  left: 0px;
+  background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
+  color: #ffffff;
+  text-align: center;
+  list-style: none;
+  z-index: 10001;
+  width: 50px;
+  .tab-item {
+    padding: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+  .tab-item--active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
 </style>

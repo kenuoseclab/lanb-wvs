@@ -1,11 +1,12 @@
 {
   "name": "lanb-wvs",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "一个正在孵化的漏扫平台；漏洞扫描平台。",
   "author": "colodoo <lodog1@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "prod": "webpack-dev-server --inline --progress --config build/webpack.prod.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",

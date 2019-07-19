@@ -26,6 +26,7 @@
                     :day.sync="editForm[field.field]"
                   ></datepiacker>
                 </template>
+                <!-- 文本区域 -->
                 <template v-else-if="field.type === 'textarea'">
                   <textarea
                     style="height: 100px;"
@@ -34,6 +35,7 @@
                     :placeholder="field.name"
                   ></textarea>
                 </template>
+                <!-- 密码 -->
                 <template v-else-if="field.type === 'password'">
                   <input
                     class="input"
@@ -42,6 +44,7 @@
                     :placeholder="field.name"
                   >
                 </template>
+                <!-- 输入框 -->
                 <template v-else>
                   <input
                     class="input"

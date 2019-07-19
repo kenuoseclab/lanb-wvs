@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" tabindex="1" @keyup.enter="login">
     <form class="panel login__form">
       <!-- <h1 class="login__title">LOGIN</h1> -->
 
@@ -14,7 +14,6 @@
             v-model="user.userName"
             class="input"
             placeholder="用户名"
-            @keyup.enter="login"
           >
         </div>
 
@@ -23,7 +22,6 @@
             type="password"
             v-model="user.password"
             class="input"
-            @keyup.enter="login"
             placeholder="密码"
           >
         </div>

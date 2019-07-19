@@ -1,5 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import IndexZui from '@/page/IndexZui'
+import SystemRouter from './modules/system'
+import BugRouter from './modules/bug'
+import TaskRouter from './modules/task'
+import AssetRouter from './modules/asset'
+import ScriptRouter from './modules/script'
 
 Vue.use(Router)
 
@@ -7,9 +13,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: require('@/page/IndexZui').default,
+      redirect: '/main'
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      redirect: '/main/dashboard',
+      component: IndexZui,
       children: [
+        // 首页
         {
           path: 'dashboard',
           components: {
@@ -17,49 +29,27 @@ export default new Router({
           }
         },
         {
-          path: 'menu-table',
+          path: '*',
           components: {
-            content: require('@/page/MenuTable').default
-          }
-        },
-        {
-          path: 'code-type-table',
-          components: {
-            content: require('@/page/CodeTypeTable').default
-          }
-        },
-        {
-          path: 'bug-table',
-          components: {
-            content: require('@/page/BugTable').default
-          }
-        },
-        {
-          path: 'bug-level-table',
-          components: {
-            content: require('@/page/BugLevelTable').default
-          }
-        },
-        {
-          path: 'asset-table',
-          components: {
-            content: require('@/page/AssetTable').default
-          }
-        },
-        {
-          path: 'task-table',
-          components: {
-            content: require('@/page/TaskTable').default
-          }
-        },
-        {
-          path: 'task-create',
-          components: {
-            content: require('@/page/TaskCreate').default
+            content: require('@/page/BlankPage.vue').default
           }
         }
       ]
     },
+
+    // 自定义模块
+
+    // 系统管理
+    SystemRouter,
+    // 漏洞管理
+    BugRouter,
+    // 任务管理
+    TaskRouter,
+    // 资产管理
+    AssetRouter,
+    // 脚本管理
+    ScriptRouter,
+
     {
       path: '/login',
       name: 'Login',
@@ -76,7 +66,7 @@ export default new Router({
       component: require('@/page/IndexZui.vue').default
     },
     {
-      path: '/404',
+      path: '*',
       name: 'BlankPage',
       component: require('@/page/BlankPage.vue').default
     }
