@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/user" :api="api"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/user" :api="api" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -46,6 +46,15 @@ export default {
           type: 'select',
           name: '是否启用',
           codeType: 'yesOrNo'
+        }
+      ],
+
+      btns: [
+        {
+          title: '角色授权',
+          click: function (rows) {
+            console.log(rows)
+          }
         }
       ]
     }

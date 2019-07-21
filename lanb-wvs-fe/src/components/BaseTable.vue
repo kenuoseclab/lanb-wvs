@@ -115,6 +115,11 @@
         <a @click="saveHandle" class="button">新增</a>
         <a @click="deleteHandle" class="button">删除</a>
         <a @click="updateHandle" class="button">修改</a>
+
+        <template v-for="(btn, index) in btns">
+          <a :key="index" @click="btnClick(btn)" class="button">{{ btn.title }}</a>
+        </template>
+
       </div>
 
       <table class="table">
@@ -142,7 +147,7 @@
                 <input v-model="row.checked" class="checkbox" type="checkbox">
               </td>
               <template v-for="(field, fieldIndex) in fields">
-                <td v-if="!field.hidden" :key="fieldIndex">{{cellFormatter(field, row)}}</td>
+                <td v-if="!field.hidden" @click="row.checked = true" :key="fieldIndex">{{cellFormatter(field, row)}}</td>
               </template>
             </tr>
           </tbody>
@@ -279,6 +284,10 @@ export default {
       if (typeof field.codeType !== 'undefined') {
         let codeTypeName = field.codeType
         let codeInfo = this.$store.state.cache.codeInfo[codeTypeName]
+        // 处理为空情况
+        if (typeof codeInfo === 'undefined') {
+          return
+        }
         for (let index = 0; index < codeInfo.length; index++) {
           const element = codeInfo[index]
           if (element.value === val) {
@@ -472,6 +481,13 @@ export default {
         tmpForm[field.field] = ''
       }
       this.form = tmpForm
+    },
+
+    // 按钮点击事件
+    btnClick (btn) {
+      if (typeof btn.click !== 'undefined') {
+        btn.click(this.getSelectedRows())
+      }
     }
   },
 
