@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="container">
       <div class="header">
-        <div class="header-logo">LANB WVS</div>
+        <router-link tag="div" class="header-logo" to="/">LANB WVS</router-link>
         <ul class="nav-bar">
           <li
             v-for="(item, index) in menus"
@@ -16,12 +16,46 @@
             href="https://github.com/colodoo/lanb-wvs/issues"
             target="_blank"
             class="header-bar__item"
-          >反馈</a>
-          <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="header-bar__item">帮助</a>
-          <router-link class="header-bar__item" to="/login">会员</router-link>
+          >
+            <i class="iconfont icon-fankui"></i>
+            反馈
+          </a>
+          <a href="https://github.com/colodoo/lanb-wvs" target="_blank" class="header-bar__item">
+            <i class="iconfont icon-bangzhu"></i>
+            帮助
+          </a>
+          <div class="user-btn header-bar__item">
+            <i class="iconfont icon-yonghu"></i>
+            会员
+            <div class="user-dropdown">
+              <i class="arrow_white_up"></i>
+              <ul>
+                <li>
+                  <i class="iconfont icon-yonghu"></i>
+                  {{ $store.state.user.userInfo.userName }}
+                </li>
+                <li>
+                  <i class="iconfont icon-gerenshezhi"></i>个人设置
+                </li>
+                <li>
+                  <i class="iconfont icon-shezhi"></i>系统设置
+                </li>
+                <li>
+                  <i class="iconfont icon-qunliao"></i>QQ群:82667033
+                </li>
+                <router-link class="exit-btn" tag="li" to="/login">
+                  <i class="iconfont icon-tuichu"></i>退出系统
+                </router-link>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <div class="sub-header">
+        <!-- 面包屑 -->
+        <!-- <ul style="margin-left: 20px;" class="nav-bar">
+          <li>首页</li><span style="margin-left: 5px; color: gray;">/</span>
+        </ul>-->
         <div></div>
         <ul class="nav-bar">
           <li
@@ -32,7 +66,10 @@
           >{{item.text}}</li>
         </ul>
         <div class="sub-header__item" style="margin-right: 20px;">
-          <a class="button" @click="refresh">刷新</a>
+          <a class="button" @click="refresh">
+            <i data-v-5154d0fd class="iconfont icon-zhongzhi"></i>
+            刷新
+          </a>
         </div>
       </div>
       <div class="main">
@@ -44,7 +81,7 @@
             <li class="tab-item">系统设置</li>
             <li class="tab-item">角色管理</li>
             <li class="tab-item">日志管理</li>
-          </ul> -->
+          </ul>-->
 
           <!-- 采用组件切换的模式 -->
           <template v-if="!isRouter">
@@ -217,22 +254,32 @@ export default {
 }
 
 .header-bar {
-  display: flex;
   flex-direction: row;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-right: 20px;
+  // margin-right: 20px;
+  height: 50px;
 }
 
 .header-bar__item {
   color: #ffffff;
-  padding: 12px;
   cursor: pointer;
-}
+  height: 100%;
+  padding: 0px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.header-bar__item:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .iconfont {
+    font-size: 14px;
+    margin-right: 8px;
+  }
 }
 
 .sub-header {
@@ -278,6 +325,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
+  list-style: none;
 }
 
 .nav-bar .nav-bar__item {
@@ -309,7 +357,7 @@ export default {
 .sub-header .nav-bar__item {
   color: #3c4353;
   padding: 8px 12px;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 
 .sub-header .nav-bar__item:hover {
@@ -336,6 +384,64 @@ export default {
   }
   .tab-item--active {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.user-btn:hover .user-dropdown {
+  display: block;
+}
+
+.user-dropdown {
+  display: none;
+  color: #333333;
+  position: absolute;
+  right: 0px;
+  top: 50px;
+  background-color: #ffffff;
+  z-index: 10001;
+  border-left: 1px solid #e2e6ec;
+  border-bottom: 1px solid #e2e6ec;
+  border-right: 1px solid #e2e6ec;
+
+  .arrow_white_up {
+    border-top: 0;
+    border-right: 5px dashed transparent;
+    border-left: 5px dashed transparent;
+    border-bottom: 5px solid #ffffff;
+    top: -5px;
+    position: absolute;
+    right: 10px;
+  }
+
+  ul {
+    list-style: none;
+    min-width: 100px;
+
+    li {
+      text-align: left;
+      min-width: 100px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #e2e6ec;
+
+      &:hover {
+        background: rgb(247, 247, 247);
+        color: rgb(68, 126, 255);
+      }
+
+      .iconfont {
+        margin-right: 12px;
+      }
+    }
+
+    .exit-btn {
+      // background: rgb(247, 247, 247);
+      // color: rgb(68, 126, 255);
+      &:hover {
+        background: rgb(247, 247, 247);
+        color: rgb(68, 126, 255);
+      }
+    }
   }
 }
 </style>

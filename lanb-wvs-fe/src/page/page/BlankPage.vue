@@ -1,7 +1,8 @@
 <template>
   <div class="panel" style="height: 500px;">
+    <i class="iconfont icon-404" style="font-size: 300px;"></i>
     <div class="info">
-      404 NOT FOUND
+      页面走丢了
       <p>
         <a style="margin-top: 16px;" class="button" @click="$router.go(-1)">返回上一页</a>
       </p>
@@ -32,7 +33,8 @@ export default {
 }
 
 .info {
-  font-size: 45px;
+  margin-top: -25px;
+  font-size: 25px;
   width: 100%;
 }
 </style>

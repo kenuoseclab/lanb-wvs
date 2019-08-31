@@ -4,58 +4,62 @@
     <div class="modal">
       <transition name="bounce">
         <div v-if="isModal" class="modal__inner panel">
-          <h1>编辑表单</h1>
-          <form class="form modal__body">
-            <template v-for="(field, index) in fields">
-              <div v-show="!field.hidden" :key="index" class="form__block">
-                <label class="input-label" :for="field.field">{{field.name}}</label>
-                <!-- 判断是否包含下拉 -->
-                <template v-if="field.type === 'select'">
-                  <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
-                    <option value>请选择{{ field.name }}</option>
-                    <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                      <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
-                    </template>
-                  </select>
-                </template>
-                <!-- 是否为日期类型 -->
-                <template v-else-if="field.type === 'date'">
-                  <datepiacker
-                    style="margin-top: 8px; margin-right: 8px;"
-                    :key="index"
-                    :day.sync="editForm[field.field]"
-                  ></datepiacker>
-                </template>
-                <!-- 文本区域 -->
-                <template v-else-if="field.type === 'textarea'">
-                  <textarea
-                    style="height: 100px;"
-                    class="input"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  ></textarea>
-                </template>
-                <!-- 密码 -->
-                <template v-else-if="field.type === 'password'">
-                  <input
-                    class="input"
-                    type="password"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  >
-                </template>
-                <!-- 输入框 -->
-                <template v-else>
-                  <input
-                    class="input"
-                    type="text"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  >
-                </template>
-              </div>
-            </template>
-          </form>
+          <h1 class="paenl__title--border">{{ actionTitle }}</h1>
+          <div class="panel__body">
+            <form class="form modal__body">
+              <template v-for="(field, index) in fields">
+                <div v-show="!field.hidden" :key="index" class="form__block">
+                  <label class="input-label" :for="field.field">{{field.name}}</label>
+                  <!-- 判断是否包含下拉 -->
+                  <template v-if="field.type === 'select'">
+                    <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
+                      <option value>请选择{{ field.name }}</option>
+                      <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                        <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+                      </template>
+                    </select>
+                  </template>
+                  <!-- 是否为日期类型 -->
+                  <template v-else-if="field.type === 'date'">
+                    <datepiacker
+                      style="margin-top: 8px; margin-right: 8px;"
+                      :key="index"
+                      :day.sync="editForm[field.field]"
+                    ></datepiacker>
+                  </template>
+                  <!-- 文本区域 -->
+                  <template v-else-if="field.type === 'textarea'">
+                    <textarea
+                      style="height: 100px;"
+                      class="input"
+                      v-model="editForm[field.field]"
+                      :placeholder="field.name"
+                    ></textarea>
+                  </template>
+                  <!-- 密码 -->
+                  <template v-else-if="field.type === 'password'">
+                    <input
+                      autocomplete="off"
+                      class="input"
+                      type="password"
+                      v-model="editForm[field.field]"
+                      :placeholder="field.name"
+                    />
+                  </template>
+                  <!-- 输入框 -->
+                  <template v-else>
+                    <input
+                      autocomplete="off"
+                      class="input"
+                      type="text"
+                      v-model="editForm[field.field]"
+                      :placeholder="field.name"
+                    />
+                  </template>
+                </div>
+              </template>
+            </form>
+          </div>
           <div class="button-group">
             <a @click="postForm" class="button">确定</a>
             <a @click="isModal = false" class="button">取消</a>
@@ -63,6 +67,7 @@
         </div>
       </transition>
     </div>
+    <div class="mask" v-show="isModal"></div>
 
     <!-- 提示框 -->
     <div class="dialog" v-show="isDialog">
@@ -76,7 +81,7 @@
     </div>
 
     <div class="panel">
-      <form class="form">
+      <form class="form panel__body">
         <template v-for="(field, index) in fields">
           <!-- 是否为下拉 -->
           <template v-if="field.type === 'select'">
@@ -102,66 +107,95 @@
           </template>
           <!-- 否则输入框 -->
           <template v-else>
-            <input :key="index" class="input" v-model="form[field.field]" :placeholder="field.name">
+            <input :key="index" class="input" v-model="form[field.field]" :placeholder="field.name" />
           </template>
         </template>
-        <a @click="search" class="button">查询</a>
-        <a @click="formReset" class="button">重置</a>
+        <a @click="search" class="button">
+          <i class="iconfont icon-chazhao"></i>
+          查询
+        </a>
+        <a @click="formReset" class="button">
+          <i class="iconfont icon-zhongzhi"></i>
+          重置
+        </a>
       </form>
     </div>
 
     <div class="panel">
-      <div class="tool-bar">
-        <a @click="saveHandle" class="button">新增</a>
-        <a @click="deleteHandle" class="button">删除</a>
-        <a @click="updateHandle" class="button">修改</a>
+      <div>
+        <div class="tool-bar">
+          <a @click="saveHandle" class="button">
+            <i class="iconfont icon-addNew"></i>
+            新增
+          </a>
+          <a @click="deleteHandle" class="button">
+            <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
+            删除
+          </a>
+          <a @click="updateHandle" class="button">
+            <i style="font-size: 14px;" class="iconfont icon-edit"></i>
+            修改
+          </a>
 
-        <template v-for="(btn, index) in btns">
-          <a :key="index" @click="btnClick(btn)" class="button">{{ btn.title }}</a>
-        </template>
+          <template v-for="(btn, index) in btns">
+            <a :key="index" @click="btnClick(btn)" class="button">
+              <i :key="index" v-if="btn.icon != null" :class="'iconfont ' + btn.icon"></i>
+              {{ btn.title }}
+            </a>
+          </template>
+        </div>
 
-      </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th v-if="checkbox.show">
+                <input
+                  v-model="checkbox.checked"
+                  @click="selectToggle"
+                  class="checkbox"
+                  type="checkbox"
+                />
+              </th>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th v-if="checkbox.show">
-              <input
-                v-model="checkbox.checked"
-                @click="selectToggle"
-                class="checkbox"
-                type="checkbox"
-              >
-            </th>
-
-            <template v-for="(field, index) in fields">
-              <th v-show="!field.hidden" :key="index">{{field.name}}</th>
-            </template>
-          </tr>
-        </thead>
-
-        <transition name="fade">
-          <tbody v-show="show">
-            <tr :key="index" v-for="(row, index) in rows">
-              <td v-if="checkbox.show">
-                <input v-model="row.checked" class="checkbox" type="checkbox">
-              </td>
-              <template v-for="(field, fieldIndex) in fields">
-                <td v-if="!field.hidden" @click="row.checked = true" :key="fieldIndex">{{cellFormatter(field, row)}}</td>
+              <template v-for="(field, index) in fields">
+                <th v-show="!field.hidden" :key="index">{{field.name}}</th>
               </template>
             </tr>
-          </tbody>
-        </transition>
-      </table>
+          </thead>
 
-      <div class="pagination">
-        <a @click="pageChange(-1)" class="button">上一页</a>
-        <input type="number" v-model="pageInfo.page" @change="getList" class="input">
-        <a @click="pageChange(1)" class="button">下一页</a>
+          <transition name="fade">
+            <tbody v-show="show">
+              <tr :key="index" v-for="(row, index) in rows">
+                <td v-if="checkbox.show">
+                  <input v-model="row.checked" class="checkbox" type="checkbox" />
+                </td>
+                <template v-for="(field, fieldIndex) in fields">
+                  <td
+                    v-if="!field.hidden"
+                    @click="row.checked = true"
+                    :key="fieldIndex"
+                  >{{cellFormatter(field, row)}}</td>
+                </template>
+              </tr>
+            </tbody>
+          </transition>
+        </table>
 
-        <div class="rows">
-          <label for="rows">每页</label>
-          <input type="number" class="input" placeholder v-model="pageInfo.rows" @change="getList">
+        <div class="pagination">
+          <a @click="pageChange(-1)" class="button">上一页</a>
+          <input type="number" v-model="pageInfo.page" @change="getList" class="input" />
+          <a @click="pageChange(1)" class="button">下一页</a>
+
+          <div class="rows">
+            <label for="rows">每页</label>
+            <input
+              type="number"
+              class="input"
+              placeholder
+              v-model="pageInfo.rows"
+              @change="getList"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -264,6 +298,15 @@ export default {
         return parseInt(this.total / this.pageInfo.rows)
       }
       return parseInt(this.total / this.pageInfo.rows) + 1
+    },
+
+    actionTitle () {
+      if (this.action === 'save') {
+        return '新增表单'
+      } else if (this.action === 'update') {
+        return '编辑表单'
+      }
+      return '表单'
     }
   },
 
@@ -317,9 +360,9 @@ export default {
             }
           })
           .catch(() => {
-            // this.$router.push({
-            //   path: '/login'
-            // })
+            this.$router.push({
+              path: '/login'
+            })
           })
       } else if (this.action === 'update') {
         this
@@ -334,9 +377,9 @@ export default {
             }
           })
           .catch(() => {
-            // this.$router.push({
-            //   path: '/login'
-            // })
+            this.$router.push({
+              path: '/login'
+            })
           })
       }
     },
@@ -394,9 +437,9 @@ export default {
           }
         })
         .catch(() => {
-          // this.$router.push({
-          //   path: '/login'
-          // })
+          this.$router.push({
+            path: '/login'
+          })
         })
     },
 
@@ -444,6 +487,10 @@ export default {
             this.show = true
             this.initCheckbox()
           })
+        }).catch(() => {
+          this.$router.push({
+            path: '/login'
+          })
         })
     },
 
@@ -486,7 +533,7 @@ export default {
     // 按钮点击事件
     btnClick (btn) {
       if (typeof btn.click !== 'undefined') {
-        btn.click(this.getSelectedRows())
+        btn.click(this.getSelectedRows(), this)
       }
     }
   },
@@ -532,4 +579,5 @@ export default {
 .pagination .rows {
   float: right;
 }
+
 </style>

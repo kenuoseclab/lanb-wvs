@@ -3,32 +3,24 @@
     <form class="panel login__form">
       <!-- <h1 class="login__title">LOGIN</h1> -->
 
-      <i class="iconfont icon-saomiao"></i>
+      <div class="panel__body">
+        <i class="iconfont icon-saomiao"></i>
 
-      <p>登录到您的主页</p>
+        <p>登录到您的主页</p>
 
-      <div class="login__inner">
-        <div class="form__block">
-          <input
-            type="text"
-            v-model="user.userName"
-            class="input"
-            placeholder="用户名"
-          >
-        </div>
+        <div class="login__inner">
+          <div class="form__block">
+            <input type="text" v-model="user.userName" class="input" placeholder="用户名" />
+          </div>
 
-        <div class="form__block">
-          <input
-            type="password"
-            v-model="user.password"
-            class="input"
-            placeholder="密码"
-          >
-        </div>
+          <div class="form__block">
+            <input type="password" v-model="user.password" class="input" placeholder="密码" />
+          </div>
 
-        <div class="btn-group">
-          <a class="button" @click="login">登录</a>
-          <a class="button" @click="reset">重置</a>
+          <div class="btn-group">
+            <a class="button" @click="login">登录</a>
+            <a class="button" @click="reset">重置</a>
+          </div>
         </div>
       </div>
     </form>
@@ -62,7 +54,6 @@
       :color="loading.color"
       :opacity="loading.opacity"
     ></loading>
-
   </div>
 </template>
 
@@ -107,6 +98,7 @@ export default {
         if (data.success) {
           // 设置登陆状态
           this.$store.commit('SET_IS_LOGIN', true)
+          this.$store.commit('SET_USER_INFO', data.data)
           // 设置代码信息
           this.$post('/api/codeInfo/getCodeInfoMap', {}).then(data => {
             this.$store.commit('SET_CODE_INFO', data.data)
@@ -192,6 +184,8 @@ export default {
   box-shadow: 1px 1px 10px rgba(0, 21, 41, 0.08);
   margin-bottom: 0px !important;
   z-index: 10002;
+  height: 300px;
+  min-height: 300px;
 }
 
 .login__title {

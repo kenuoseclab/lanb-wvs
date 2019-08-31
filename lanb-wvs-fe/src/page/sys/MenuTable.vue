@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/menu"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/menu" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -36,6 +36,23 @@ export default {
           name: '是否首页',
           type: 'select',
           codeType: 'yesOrNo'
+        }
+      ],
+
+      btns: [
+        {
+          title: '菜单复制',
+          icon: 'icon-fuzhi',
+          click: function (rows, handle) {
+            if (rows.length === 1) {
+              const row = rows[0]
+              handle.editForm = row
+              handle.action = 'save'
+              handle.isModal = true
+            } else {
+              alert('请选择一个菜单')
+            }
+          }
         }
       ]
     }

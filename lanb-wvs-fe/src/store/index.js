@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -9,7 +8,8 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   state: {
     user: {
-      isLogin: false
+      isLogin: false,
+      userInfo: null
     },
     cache: {
       tabs: [],
@@ -54,6 +54,10 @@ export default new Vuex.Store({
       const index = opts.index
       const status = opts.status
       state.cache.menus[index].selected = status
+    },
+
+    SET_USER_INFO (state, userInfo) {
+      state.user.userInfo = userInfo
     }
   },
 

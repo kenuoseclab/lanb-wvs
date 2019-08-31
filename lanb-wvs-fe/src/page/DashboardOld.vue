@@ -1,106 +1,46 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-4">
-        <FastItems></FastItems>
-      </div>
-      <div class="col-4">
-        <div class="panel rowtop">
-          <h1>
-            <i class="iconfont icon-daibanshixiang"></i>
-            待办事项
-          </h1>
-          <div class="panel__body">
-            <div class="row">
-              <div class="col-6">
-                <div class="panel item color--red">
-                  未处理
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="panel item color--yellow">
-                  待确认
-                  <span class="item-num">{{ dashboardData.runningCount }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <div class="panel item color--blue">
-                  待扫描
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="panel item color--green">
-                  扫描总数
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="panel" style="height: 200px;">
+      <h1>数据总览</h1>
+      <div class="row panel__inner">
+        <div class="col-4">
+          <div class="panel item color--green">总任务数&nbsp;{{ dashboardData.allCount }}</div>
         </div>
-      </div>
-      <div class="col-4">
-        <div class="panel rowtop">
-          <h1>
-            <i class="iconfont icon-banbenhao"></i>
-            版本信息
-          </h1>
-          <div class="row panel__body">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>当前版本</td>
-                  <td>v0.1</td>
-                </tr>
-                <tr>
-                  <td>基于框架</td>
-                  <td>LANB-WEB</td>
-                </tr>
-                <tr>
-                  <td>讨论</td>
-                  <td>
-                    QQ群：82667033
-                    <br />QQ：425343603
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="col-4">
+          <div class="panel item color--blue">正在运行任务数&nbsp;{{ dashboardData.runningCount }}</div>
+        </div>
+        <div class="col-4">
+          <div class="panel item color--red">错误任务数&nbsp;{{ dashboardData.errorCount }}</div>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-6">
+      <div class="col-4">
         <div class="panel">
           <h1>图表1</h1>
           <div id="echart1" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-4">
         <div class="panel">
           <h1>图表2</h1>
           <div id="echart2" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
-      <!-- <div class="col-4">
+      <div class="col-4">
         <div class="panel">
           <h1>图表3</h1>
           <div id="echart3" style="height: 350px; width: 100%;"></div>
         </div>
-      </div>-->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import G2 from '@antv/g2'
-import FastItems from './dashboard/FastItems'
 var df = require('date-formatter')
-
 export default {
   name: 'dashboard',
   data () {
@@ -113,15 +53,11 @@ export default {
     }
   },
 
-  components: {
-    FastItems
-  },
-
   mounted () {
     // 初始化图表
     this.renderCharts('echart1')
     this.renderCharts('echart2')
-    // this.renderCharts('echart3')
+    this.renderCharts('echart3')
 
     // 取首页仪表盘数据
     const parms = {
@@ -215,40 +151,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .panel__body {
-//   padding: 16px;
-// }
-
-// .fastitem {
-//   // background-color: #f8f8f8;
-//   &:hover {
-//     background-color: #f2f2f2;
-//     border: 1px solid #f2f2f2;
-//     transition: all 0.3s;
-//     border: 1px solid #999999;
-//     cursor: pointer;
-//     color: #333333;
-//   }
-// }
-
-.fastitem {
-  cursor: pointer;
-}
-
-.rowtop {
-  max-height: 250px;
-  height: 250px;
-
+.panel__inner {
+  padding: 16px;
+  justify-content: space-between;
   .item {
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-}
-
-.item-num {
-  font-size: 14px;
-  margin-top: 8px;
 }
 </style>

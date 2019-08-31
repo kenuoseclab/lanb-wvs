@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/bug"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/bug" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -47,6 +47,17 @@ export default {
           field: 'remark',
           name: '备注',
           type: 'textarea'
+        }
+      ],
+
+      btns: [
+        {
+          title: '关联脚本',
+          icon: 'icon-guanlian',
+          click: function (rows, handle) {
+            console.log(rows)
+            console.log(handle)
+          }
         }
       ]
     }

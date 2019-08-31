@@ -52,6 +52,7 @@ export default {
       btns: [
         {
           title: '角色授权',
+          icon: 'icon-shouquan',
           click: function (rows) {
             console.log(rows)
           }
