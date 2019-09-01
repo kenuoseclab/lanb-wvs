@@ -46,7 +46,8 @@ export default {
           click: function (rows, handle) {
             if (rows.length === 1) {
               const row = rows[0]
-              handle.editForm = row
+              const tmpRow = JSON.parse(JSON.stringify(row))
+              handle.editForm = tmpRow
               handle.action = 'save'
               handle.isModal = true
             } else {

@@ -25,27 +25,27 @@
           </div>
           <div class="col-4">
             <div class="panel fastitem color--blue">
-              <router-link tag="div" class="panel__body" to="/script/script-page">
+              <router-link tag="div" class="panel__body" to="/asset/asset-table">
                 <i class="iconfont icon-script-language"></i>
-                脚本管理
+                新建资产
               </router-link>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
-            <div class="panel fastitem">
-              <div class="panel__body">
-                <i class="iconfont icon-kuaijieyingyon"></i>
-                快捷方式
-              </div>
+            <div class="panel fastitem color--blue">
+              <router-link tag="div" class="panel__body" to="/asset/asset-table">
+                <i class="iconfont icon-script-language"></i>
+                资产列表
+              </router-link>
             </div>
           </div>
           <div class="col-4">
             <div class="panel fastitem">
               <div class="panel__body">
                 <i class="iconfont icon-kuaijieyingyon"></i>
-                快捷方式
+                漏洞台账
               </div>
             </div>
           </div>

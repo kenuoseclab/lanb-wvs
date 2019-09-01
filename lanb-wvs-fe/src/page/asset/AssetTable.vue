@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/asset"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/asset" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -41,6 +41,21 @@ export default {
         {
           field: 'remark',
           name: '备注'
+        }
+      ],
+
+      btns: [
+        {
+          title: '资产信息',
+          icon: 'icon-chazhao'
+        },
+        {
+          title: '端口扫描',
+          icon: 'icon-chazhao'
+        },
+        {
+          title: '资产发现',
+          icon: 'icon-chazhao'
         }
       ]
     }

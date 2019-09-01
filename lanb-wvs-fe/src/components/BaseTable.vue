@@ -124,18 +124,20 @@
     <div class="panel">
       <div>
         <div class="tool-bar">
-          <a @click="saveHandle" class="button">
-            <i class="iconfont icon-addNew"></i>
-            新增
-          </a>
-          <a @click="deleteHandle" class="button">
-            <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
-            删除
-          </a>
-          <a @click="updateHandle" class="button">
-            <i style="font-size: 14px;" class="iconfont icon-edit"></i>
-            修改
-          </a>
+          <template v-if="isDefaultBtn">
+            <a @click="saveHandle" class="button">
+              <i class="iconfont icon-addNew"></i>
+              新增
+            </a>
+            <a @click="deleteHandle" class="button">
+              <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
+              删除
+            </a>
+            <a @click="updateHandle" class="button">
+              <i style="font-size: 14px;" class="iconfont icon-edit"></i>
+              修改
+            </a>
+          </template>
 
           <template v-for="(btn, index) in btns">
             <a :key="index" @click="btnClick(btn)" class="button">
@@ -170,11 +172,12 @@
                   <input v-model="row.checked" class="checkbox" type="checkbox" />
                 </td>
                 <template v-for="(field, fieldIndex) in fields">
-                  <td
-                    v-if="!field.hidden"
-                    @click="row.checked = true"
-                    :key="fieldIndex"
-                  >{{cellFormatter(field, row)}}</td>
+                  <td v-if="!field.hidden" @click="row.checked = true" :key="fieldIndex">
+                    <template v-if="field.formatter != null">
+                      <div v-html="field.formatter(cellFormatter(field, row))"></div>
+                    </template>
+                    <template v-else>{{cellFormatter(field, row)}}</template>
+                  </td>
                 </template>
               </tr>
             </tbody>
@@ -258,6 +261,13 @@ export default {
       type: Array,
       default: () => {
         return []
+      }
+    },
+
+    isDefaultBtn: {
+      type: Boolean,
+      default: () => {
+        return true
       }
     }
   },
@@ -542,6 +552,16 @@ export default {
     this.initEditForm()
     this.initSearchForm()
     this.getList()
+
+    document.onkeydown = (event) => {
+      var e = event || window.e
+      var keyCode = e.keyCode || e.which
+      switch (keyCode) {
+        case 13:
+          this.getList()
+          break
+      }
+    }
   },
 
   watch: {
@@ -565,7 +585,7 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .form .input {
   margin-top: 8px;
   margin-right: 8px;
@@ -580,4 +600,9 @@ export default {
   float: right;
 }
 
+.tool-bar {
+  .button {
+    margin-right: 5px;
+  }
+}
 </style>

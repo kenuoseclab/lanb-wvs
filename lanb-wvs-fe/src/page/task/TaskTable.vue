@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/task"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/task" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -51,6 +51,17 @@ export default {
           name: '状态',
           type: 'select',
           codeType: 'taskStatus'
+        }
+      ],
+
+      btns: [
+        {
+          title: '关联漏洞',
+          icon: 'icon-guanlian'
+        },
+        {
+          title: '关联资产',
+          icon: 'icon-guanlian'
         }
       ]
     }

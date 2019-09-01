@@ -48,6 +48,13 @@ const sysRouter = {
         content: require('@/page/sys/RoleMenuPage').default
       }
     },
+    // 角色用户管理
+    {
+      path: 'role-user-page',
+      components: {
+        content: require('@/page/sys/RoleUserPage').default
+      }
+    },
     // 日志管理
     {
       path: 'log-table',

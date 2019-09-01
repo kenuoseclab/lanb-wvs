@@ -5,7 +5,7 @@
 <script>
 export default {
 
-  name: 'codeTypeTable',
+  name: 'roleTable',
 
   data () {
     return {

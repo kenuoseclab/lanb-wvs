@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-6">
-      <div class="panel">
+      <div class="panel" style="height: 300px;">
         <h1>代码生成管理</h1>
         <div class="panel__body">
           <form class="form">
@@ -28,14 +28,23 @@
     </div>
 
     <div class="col-6">
-      <div class="panel">
+      <div class="panel" style="height: 300px;">
         <h1>代码生成历史</h1>
         <div class="panel__body">
           <ul>
-            <li>测试</li>
-            <li>测试</li>
-            <li>测试</li>
-            <li>测试</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
+            <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
           </ul>
         </div>
       </div>
