@@ -12,12 +12,12 @@ select {
 
 .input {
     border: 1px solid #c4c6cf;
-    height: 30px;
-    line-height: 30px;
+    height: 35px;
+    line-height: 35px;
     padding: 0 12px;
-    // border-radius: 3px;
+    border-radius: 3px;
     transition: all 0.5s;
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 .input:hover {

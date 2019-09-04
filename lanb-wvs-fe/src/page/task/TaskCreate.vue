@@ -2,21 +2,36 @@
   <div>
     <div class="row">
       <div class="col-6">
-        <div class="panel" style="height:500px;">
+        <div class="panel" style="height: 100%;">
           <h1>新建扫描任务</h1>
           <div class="panel__body">
             <form class="form">
               <div class="form__block">
                 <label class="input-label" for="taskName">任务名</label>
-                <input class="input" placeholder="请输入任务名" />
-                <a class="edit-btn">
+                <input v-model="form.taskName" class="input" placeholder="请输入任务名" />
+                <a class="edit-btn" @click="generateTaskName">
                   <!-- <i class="iconfont icon-addNew"></i> -->
                   生成
                 </a>
               </div>
               <div class="form__block">
+                <label class="input-label" for="任务周期">任务周期</label>
+                <select v-model="form.cycle" class="input">
+                  <option value>请选择任务周期</option>
+                  <option value="0">仅一次</option>
+                  <option value="1">每日扫描任务</option>
+                  <option value="2">每周扫描任务</option>
+                  <option value="3">每月扫描任务</option>
+                  <option value="4">自定义周期</option>
+                </select>
+                <a class="edit-btn">
+                  <!-- <i class="iconfont icon-addNew"></i> -->
+                  自定义
+                </a>
+              </div>
+              <div class="form__block">
                 <label class="input-label" for="资产列表">资产列表</label>
-                <input class="input" v-model="assetIds" placeholder="请选择资产列表" />
+                <input class="input" v-model="form.assets" placeholder="请选择资产列表" />
                 <a class="edit-btn" @click="isModal = true">
                   <!-- <i class="iconfont icon-addNew"></i> -->
                   选择
@@ -24,7 +39,7 @@
               </div>
               <div class="form__block">
                 <label class="input-label" for="漏洞列表">漏洞列表</label>
-                <input class="input" v-model="bugIds" placeholder="请选择漏洞列表" />
+                <input class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
                 <a class="edit-btn" @click="isModalBug = true">
                   <!-- <i class="iconfont icon-addNew"></i> -->
                   选择
@@ -32,7 +47,7 @@
               </div>
               <div class="form__block">
                 <label class="input-label" for="扫描方式">扫描方式</label>
-                <select class="input">
+                <select v-model="form.sacnType" class="input">
                   <option value>请选择扫描方式</option>
                   <option value="1">基础扫描</option>
                   <option value="2">组合扫描</option>
@@ -41,7 +56,7 @@
               </div>
               <div class="form__block">
                 <label class="input-label" for="报表模板">报表模板</label>
-                <select class="input">
+                <select v-model="form.reportTemplate" class="input">
                   <option value>请选择报表模板</option>
                   <option value="0">基础模板</option>
                   <option value="1">自定义扫描1</option>
@@ -52,9 +67,13 @@
 
               <div class="form__block">
                 <label class="input-label" for="desc">任务描述</label>
-                <textarea style="height: 150px; width: 60%;" class="input" placeholder="请输入任务描述"></textarea>
+                <textarea
+                  v-model="form.desc"
+                  style="height: 150px; width: 60%;"
+                  class="input"
+                  placeholder="请输入任务描述"
+                ></textarea>
               </div>
-
               <div class="form__block" style="margin-top: 32px;">
                 <a class="button" @click="createTask">新建任务</a>
                 <a class="button">重置</a>
@@ -65,45 +84,28 @@
       </div>
 
       <div class="col-6">
-        <div class="panel" style="height:500px;">
+        <div class="panel" style="height: 100%;">
           <h1>扫描历史</h1>
           <div class="panel__body">
-            <ul>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
-              <li>【2019年8月31日】创建任务【每月巡检任务】</li>
+            <ul class="list">
+              <template v-for="(hisTask, index) in hisTaskList">
+                <li :key="index">{{ hisTask.createTime }}&nbsp;创建任务&nbsp;{{ hisTask.taskName }}</li>
+              </template>
             </ul>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- 提示框开始 -->
+    <Dialog :show.sync="dialog.show" :ok="dialog.ok">{{ dialog.text }}</Dialog>
+    <!-- 提示框结束 -->
+
     <!-- 弹出窗开始 -->
     <div class="modal">
       <transition name="bounce">
         <div v-if="isModal" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="paenl__title--border">选择</h1>
+          <h1 class="panel__title--border">选择</h1>
           <div class="panel__body">
             <baseTable ref="assetModal" :fields="fields" baseURL="/api/asset"></baseTable>
           </div>
@@ -121,7 +123,7 @@
     <div class="modal">
       <transition name="bounce">
         <div v-if="isModalBug" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="paenl__title--border">选择</h1>
+          <h1 class="panel__title--border">选择</h1>
           <div class="panel__body">
             <baseTable ref="bugModal" :fields="bugFileds" baseURL="/api/bug"></baseTable>
           </div>
@@ -138,15 +140,33 @@
 </template>
 
 <script>
-import router from '@/router'
+var df = require('date-formatter')
 export default {
   name: 'taskCreate',
   data () {
     return {
 
-      assetIds: '',
+      dialog: {
+        show: false,
+        title: '提示',
+        text: '是否跳转到列表页面?',
+        ok: () => {
+          this.dialog.show = false
+          this.$router.push({
+            path: '/task/task-table'
+          })
+        }
+      },
 
-      bugIds: '',
+      form: {
+        taskName: '',
+        bugs: '',
+        assets: '',
+        cycle: '0',
+        sacnType: '1',
+        reportTemplate: '0',
+        desc: ''
+      },
 
       isModal: false,
 
@@ -224,16 +244,31 @@ export default {
           name: '备注',
           type: 'textarea'
         }
-      ]
+      ],
+
+      hisTaskList: []
 
     }
   },
 
   methods: {
     createTask () {
-      router.push({
-        path: '/task/task-table'
-      })
+      this
+        .$post('/api/task/execCreateTask', this.form)
+        .then(data => {
+          if (data.success) {
+            this.dialog.text = '是否跳转到列表页面?'
+            this.dialog.show = true
+          } else {
+            this.dialog.text = data.msg
+            this.dialog.show = true
+          }
+        })
+        .catch(() => {
+          // this.$router.push({
+          //   path: '/login'
+          // })
+        })
     },
 
     assetModalClick () {
@@ -243,7 +278,7 @@ export default {
       for (let i = 0; i < selectedRowArr.length; i++) {
         resultArr.push(selectedRowArr[i].assetId)
       }
-      this.assetIds = resultArr.join(',')
+      this.form.assets = resultArr.join(',')
       this.isModal = false
     },
 
@@ -254,9 +289,31 @@ export default {
       for (let i = 0; i < selectedRowArr.length; i++) {
         resultArr.push(selectedRowArr[i].bugId)
       }
-      this.bugIds = resultArr.join(',')
+      this.form.bugs = resultArr.join(',')
       this.isModalBug = false
+    },
+
+    generateTaskName () {
+      const date = new Date()
+      const dateStr = df(date, 'YYYY-MM-DD hh:mm:ss')
+      const taskName = '[' + dateStr + ']日常任务'
+      this.form.taskName = taskName
+      this.form.desc = taskName
+    },
+
+    getHisTaskList () {
+      this.$post('/api/task/queryPage', {}).then(data => {
+        if (data.rows != null) {
+          this.hisTaskList = data.rows
+        }
+      }).catch(e => {
+        console.log(e)
+      })
     }
+  },
+
+  created () {
+    this.getHisTaskList()
   }
 }
 </script>

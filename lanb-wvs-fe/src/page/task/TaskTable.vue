@@ -62,6 +62,14 @@ export default {
         {
           title: '关联资产',
           icon: 'icon-guanlian'
+        },
+        {
+          title: '任务信息',
+          icon: 'icon-xiangqing'
+        },
+        {
+          title: '开始任务',
+          icon: 'icon-saomiao'
         }
       ]
     }

@@ -10,11 +10,23 @@
 
         <div class="login__inner">
           <div class="form__block">
-            <input type="text" v-model="user.userName" class="input" placeholder="用户名" />
+            <label class="iconfont icon-yonghu input-icon"></label>
+            <input
+              type="text"
+              v-model="user.userName"
+              class="input"
+              placeholder="用户名"
+            />
           </div>
 
           <div class="form__block">
-            <input type="password" v-model="user.password" class="input" placeholder="密码" />
+            <label class="iconfont icon-Group- input-icon"></label>
+            <input
+              type="password"
+              v-model="user.password"
+              class="input"
+              placeholder="密码"
+            />
           </div>
 
           <div class="btn-group">
@@ -91,7 +103,7 @@ export default {
     login () {
       this.loading.isLoading = true
       const param = {
-        userName: this.user.userName,
+        userId: this.user.userName,
         password: md5(this.user.password)
       }
       this.$post('/api/user/loginCheck', param).then(data => {
@@ -138,7 +150,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .login {
   /* background: #f5f5f5; */
   /* background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%); */
@@ -150,7 +162,7 @@ export default {
   justify-content: center;
 }
 
-.login .iconfont {
+.login .icon-saomiao {
   display: inline-block;
   padding: 10px;
   margin-bottom: 16px;
@@ -186,6 +198,11 @@ export default {
   z-index: 10002;
   height: 300px;
   min-height: 300px;
+  overflow: hidden;
+
+  .panel__body {
+    overflow: hidden;
+  }
 }
 
 .login__title {
@@ -209,6 +226,20 @@ export default {
 
 .form__block {
   margin-top: 16px;
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    left: 70px;
+    width: 35px;
+    line-height: 35px;
+    font-size: 16px;
+    color: #d2d2d2 !important;
+  }
+
+  .input {
+    padding-left: 35px;
+  }
 }
 
 .btn-group {

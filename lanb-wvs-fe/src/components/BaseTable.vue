@@ -4,7 +4,8 @@
     <div class="modal">
       <transition name="bounce">
         <div v-if="isModal" class="modal__inner panel">
-          <h1 class="paenl__title--border">{{ actionTitle }}</h1>
+          <!-- <h1 class="panel__title--border">{{ actionTitle }}</h1> -->
+          <h1>{{ actionTitle }}</h1>
           <div class="panel__body">
             <form class="form modal__body">
               <template v-for="(field, index) in fields">
@@ -67,18 +68,12 @@
         </div>
       </transition>
     </div>
-    <div class="mask" v-show="isModal"></div>
+    <div class="mask" v-if="isModal"></div>
 
     <!-- 提示框 -->
-    <div class="dialog" v-show="isDialog">
-      <div class="dialog__inner">
-        <h1>提示</h1>
-        <div class="dialog__body">操作成功</div>
-        <div class="button-group">
-          <a @click="isDialog = false" class="button">确定</a>
-        </div>
-      </div>
-    </div>
+    <Dialog :show.sync="isDialog">
+      {{ dialogMsg }}
+    </Dialog>
 
     <div class="panel">
       <form class="form panel__body">
@@ -172,7 +167,7 @@
                   <input v-model="row.checked" class="checkbox" type="checkbox" />
                 </td>
                 <template v-for="(field, fieldIndex) in fields">
-                  <td v-if="!field.hidden" @click="row.checked = true" :key="fieldIndex">
+                  <td v-if="!field.hidden" :key="fieldIndex">
                     <template v-if="field.formatter != null">
                       <div v-html="field.formatter(cellFormatter(field, row))"></div>
                     </template>
@@ -298,7 +293,8 @@ export default {
         },
         opacity: 0,
         color: 'rgb(0, 123, 255)'
-      }
+      },
+      dialogMsg: '操作成功'
     }
   },
 
@@ -362,11 +358,13 @@ export default {
           .$post(this.baseURL + this.api.save, tmpParam)
           .then(data => {
             if (data.success) {
+              this.dialogMsg = '保存成功'
               this.isDialog = true
               this.isModal = false
               this.getList()
             } else {
-              alert(data.msg)
+              this.dialogMsg = data.msg
+              this.isDialog = true
             }
           })
           .catch(() => {
@@ -380,10 +378,12 @@ export default {
           .then(data => {
             if (data.success) {
               this.isModal = false
+              this.dialogMsg = '更新成功'
               this.isDialog = true
               this.getList()
             } else {
-              alert(data.msg)
+              this.dialogMsg = data.msg
+              this.isDialog = true
             }
           })
           .catch(() => {
@@ -428,7 +428,8 @@ export default {
     deleteHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        alert('请选择一行数据!')
+        this.dialogMsg = '请选择一行数据!'
+        this.isDialog = true
         return
       }
       this.show = false
@@ -438,12 +439,14 @@ export default {
         .$post(this.baseURL + this.api.delete, row)
         .then(data => {
           if (data.success) {
+            this.dialogMsg = '删除成功'
             this.isDialog = true
             this.checkbox.checked = false
             this.show = true
             this.getList()
           } else {
-            alert(data.msg)
+            this.dialogMsg = data.msg
+            this.isDialog = true
           }
         })
         .catch(() => {
@@ -456,7 +459,8 @@ export default {
     updateHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        alert('请选中一行数据!')
+        this.dialogMsg = '请选中一行数据!'
+        this.isDialog = true
         return
       }
       /**
@@ -587,7 +591,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form .input {
-  margin-top: 8px;
+  // margin-top: 8px;
   margin-right: 8px;
 }
 

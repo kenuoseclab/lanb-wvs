@@ -6,6 +6,7 @@
 
 <script>
 import '@/assets/scss/all.scss'
+import '@/assets/scss/list.scss'
 // import '@/assets/scss/reset.scss'
 import '@/assets/scss/layout.scss'
 import '@/assets/scss/modal.scss'
@@ -59,7 +60,7 @@ export default {
 </script>
 
 <style>
-@import url(//at.alicdn.com/t/font_727264_x2hy4y6pxk.css);
+@import url(//at.alicdn.com/t/font_727264_34y9a5inkjq.css);
 #app {
   height: 100vh;
   display: flex;

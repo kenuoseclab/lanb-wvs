@@ -57,7 +57,7 @@
                 </tr>
                 <tr>
                   <td>基于框架</td>
-                  <td>LANB-WEB</td>
+                  <td>LANB WEB</td>
                 </tr>
                 <tr>
                   <td>讨论</td>

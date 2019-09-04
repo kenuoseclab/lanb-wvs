@@ -81,7 +81,7 @@
             <li class="tab-item">系统设置</li>
             <li class="tab-item">角色管理</li>
             <li class="tab-item">日志管理</li>
-          </ul>-->
+          </ul> -->
 
           <!-- 采用组件切换的模式 -->
           <template v-if="!isRouter">
@@ -161,6 +161,8 @@ export default {
         this.subMenus = []
       } else if (menu.children !== null) {
         this.subMenus = menu.children
+      } else {
+        this.subMenus = []
       }
       for (let index = 0; index < this.subMenus.length; index++) {
         const element = this.subMenus[index]
@@ -368,22 +370,25 @@ export default {
 .left-tabs {
   position: absolute;
   left: 0px;
-  background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
-  color: #ffffff;
+  // background-color: #ffffff;
+  color: #333333;
+  // background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
+  // color: #ffffff;
   text-align: center;
   list-style: none;
   z-index: 10001;
   width: 50px;
   .tab-item {
+    background-color: #ffffff;
     padding: 16px;
-    color: #ffffff;
+    color: #333333;
     cursor: pointer;
     &:hover {
-      background-color: rgba(0, 0, 0, 0.15);
+      background-color: #f5f5f5;
     }
   }
   .tab-item--active {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
   }
 }
 

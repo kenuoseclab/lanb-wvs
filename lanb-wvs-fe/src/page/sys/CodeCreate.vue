@@ -31,7 +31,7 @@
       <div class="panel" style="height: 300px;">
         <h1>代码生成历史</h1>
         <div class="panel__body">
-          <ul>
+          <ul class="list">
             <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
             <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>
             <li>【2019年8月31日】生成包名【com.colodoo.manager.test】表名【test】</li>

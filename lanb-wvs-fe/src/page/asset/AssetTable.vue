@@ -1,14 +1,53 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/asset" :btns="btns"></baseTable>
+  <div>
+    <baseTable :fields="fields" baseURL="/api/asset" :btns="btns"></baseTable>
+
+    <Modal :show.sync="assetInfo.show">
+      <AssetInfo></AssetInfo>
+    </Modal>
+
+    <Modal :show.sync="portScan.show">
+      端口扫描
+    </Modal>
+
+    <Modal :show.sync="assetDiscovery.show">
+      <ul class="list">
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+        <li>资产1&nbsp;http://qq.com/a.html</li>
+      </ul>
+    </Modal>
+
+  </div>
 </template>
 
 <script>
+import AssetInfo from './AssetInfo'
 export default {
 
   name: 'assetTable',
 
   data () {
     return {
+
+      // 资产信息
+      assetInfo: {
+        show: false
+      },
+
+      // 端口扫描
+      portScan: {
+        show: false
+      },
+
+      // 资产发现
+      assetDiscovery: {
+        show: false
+      },
 
       fields: [
         {
@@ -27,6 +66,11 @@ export default {
         },
         {
           field: 'createUserId',
+          name: '创建人',
+          hidden: true
+        },
+        {
+          field: 'createUserName',
           name: '创建人'
         },
         {
@@ -36,6 +80,11 @@ export default {
         },
         {
           field: 'updateUserId',
+          name: '更新人',
+          hidden: true
+        },
+        {
+          field: 'updateUserName',
           name: '更新人'
         },
         {
@@ -47,18 +96,31 @@ export default {
       btns: [
         {
           title: '资产信息',
-          icon: 'icon-chazhao'
+          icon: 'icon-chazhao',
+          click: () => {
+            this.assetInfo.show = true
+          }
         },
         {
           title: '端口扫描',
-          icon: 'icon-chazhao'
+          icon: 'icon-chazhao',
+          click: () => {
+            this.portScan.show = true
+          }
         },
         {
           title: '资产发现',
-          icon: 'icon-chazhao'
+          icon: 'icon-chazhao',
+          click: () => {
+            this.assetDiscovery.show = true
+          }
         }
       ]
     }
+  },
+
+  components: {
+    AssetInfo
   }
 }
 

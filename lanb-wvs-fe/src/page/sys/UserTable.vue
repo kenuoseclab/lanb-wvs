@@ -5,7 +5,7 @@
     <div class="modal">
       <transition name="bounce">
         <div v-if="isModal" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="paenl__title--border">选择</h1>
+          <h1 class="panel__title--border">选择</h1>
           <div class="panel__body">
             <baseTable :fields="roleFiled" baseURL="/api/role"></baseTable>
           </div>
@@ -70,8 +70,7 @@ export default {
       fields: [
         {
           field: 'userId',
-          name: '用户ID',
-          hidden: true
+          name: '用户ID'
         },
         {
           field: 'userName',
