@@ -5,6 +5,7 @@
 	<select id="getTaskAttrList" resultType="com.colodoo.manager.task.taskAttr.model.TaskAttr" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttrVO">
 		select
 			a.`task_attr_id` as `taskAttrId`,
+			a.`task_id` as `taskId`,
 			a.`task_attr_key` as `taskAttrKey`,
 			a.`task_attr_value` as `taskAttrValue`,
 			a.`create_time` as `createTime`,
@@ -18,6 +19,9 @@
 			<trim suffixOverrides="and">
 				<if test="taskAttrId != null and taskAttrId !=''">
 				     a.`task_attr_id` = #{taskAttrId} and
+				</if>
+				<if test="taskId != null and taskId !=''">
+				     a.`task_id` = #{taskId} and
 				</if>
 				<if test="taskAttrKey != null and taskAttrKey !=''">
 				     a.`task_attr_key` = #{taskAttrKey} and

@@ -1,8 +1,8 @@
-package com.colodoo.manager.task.taskAttr.action;
+package com.colodoo.manager.test.action;
 
-import com.colodoo.manager.task.taskAttr.model.TaskAttr;
-import com.colodoo.manager.task.taskAttr.model.TaskAttrVO;
-import com.colodoo.manager.task.taskAttr.service.TaskAttrService;
+import com.colodoo.manager.test.model.Test;
+import com.colodoo.manager.test.model.TestVO;
+import com.colodoo.manager.test.service.TestService;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,16 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-9-3 15:44:00
+* @date 2019-8-31 11:38:32
 * @description
 */
 @Controller
-@RequestMapping(value = "/taskAttr")
+@RequestMapping(value = "/test")
 @CrossOrigin
-public class TaskAttrAction {
+public class TestAction {
 
     @Autowired
-    TaskAttrService taskAttrService;
+    TestService testService;
 
 	/**
 	 * 新增数据
@@ -36,9 +36,9 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Map<String, Object> save(@RequestBody TaskAttr model) {
+    public Map<String, Object> save(@RequestBody Test model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskAttrService.saveTaskAttr(model);
+        int ret = testService.saveTest(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -55,9 +55,9 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, Object> delete(@RequestBody TaskAttr model) {
+    public Map<String, Object> delete(@RequestBody Test model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskAttrService.deleteTaskAttr(model);
+        int ret = testService.deleteTest(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -74,9 +74,9 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map<String, Object> update(@RequestBody TaskAttr model) {
+    public Map<String, Object> update(@RequestBody Test model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        int ret = taskAttrService.updateTaskAttr(model);
+        int ret = testService.updateTest(model);
         if(ret > 0) {
             rspMap.put("success", true);
         } else {
@@ -93,9 +93,9 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/queryById")
     @ResponseBody
-    public Map<String, Object> queryById(@RequestBody TaskAttr model) {
+    public Map<String, Object> queryById(@RequestBody Test model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        rspMap.put("rows", taskAttrService.queryById(model));
+        rspMap.put("rows", testService.queryById(model));
         return rspMap;
     }
 
@@ -107,8 +107,8 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<TaskAttr> query(@RequestBody TaskAttrVO model) {
-        return taskAttrService.query(model);
+    public List<Test> query(@RequestBody TestVO model) {
+        return testService.query(model);
     }
 
 	/**
@@ -119,9 +119,9 @@ public class TaskAttrAction {
 	 */
     @RequestMapping(value = "/queryPage")
     @ResponseBody
-    public Map<String, Object> queryPage(@RequestBody TaskAttrVO model) {
+    public Map<String, Object> queryPage(@RequestBody TestVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<TaskAttr> info = taskAttrService.query(model.getPage(), model);
+        PageInfo<Test> info = testService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;

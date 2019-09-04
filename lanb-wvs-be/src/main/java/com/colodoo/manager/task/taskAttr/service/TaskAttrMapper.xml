@@ -3,6 +3,7 @@
 <mapper namespace="com.colodoo.manager.task.taskAttr.service.TaskAttrMapper">
   <resultMap id="BaseResultMap" type="com.colodoo.manager.task.taskAttr.model.TaskAttr">
     <id column="task_attr_id" jdbcType="VARCHAR" property="taskAttrId" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
     <result column="task_attr_key" jdbcType="VARCHAR" property="taskAttrKey" />
     <result column="task_attr_value" jdbcType="VARCHAR" property="taskAttrValue" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -70,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    task_attr_id, task_attr_key, task_attr_value, create_time, create_user_id, update_time, 
-    update_user_id, remark
+    task_attr_id, task_id, task_attr_key, task_attr_value, create_time, create_user_id, 
+    update_time, update_user_id, remark
   </sql>
   <select id="selectByExample" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttrExample" resultMap="BaseResultMap">
     select
@@ -104,18 +105,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttr">
-    insert into task_attr (task_attr_id, task_attr_key, task_attr_value, 
-      create_time, create_user_id, update_time, 
-      update_user_id, remark)
-    values (#{taskAttrId,jdbcType=VARCHAR}, #{taskAttrKey,jdbcType=VARCHAR}, #{taskAttrValue,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{updateUserId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+    insert into task_attr (task_attr_id, task_id, task_attr_key, 
+      task_attr_value, create_time, create_user_id, 
+      update_time, update_user_id, remark
+      )
+    values (#{taskAttrId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{taskAttrKey,jdbcType=VARCHAR}, 
+      #{taskAttrValue,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttr">
     insert into task_attr
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="taskAttrId != null">
         task_attr_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
       </if>
       <if test="taskAttrKey != null">
         task_attr_key,
@@ -142,6 +148,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="taskAttrId != null">
         #{taskAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="taskAttrKey != null">
         #{taskAttrKey,jdbcType=VARCHAR},
@@ -178,6 +187,9 @@
       <if test="record.taskAttrId != null">
         task_attr_id = #{record.taskAttrId,jdbcType=VARCHAR},
       </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=VARCHAR},
+      </if>
       <if test="record.taskAttrKey != null">
         task_attr_key = #{record.taskAttrKey,jdbcType=VARCHAR},
       </if>
@@ -207,6 +219,7 @@
   <update id="updateByExample" parameterType="map">
     update task_attr
     set task_attr_id = #{record.taskAttrId,jdbcType=VARCHAR},
+      task_id = #{record.taskId,jdbcType=VARCHAR},
       task_attr_key = #{record.taskAttrKey,jdbcType=VARCHAR},
       task_attr_value = #{record.taskAttrValue,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -221,6 +234,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttr">
     update task_attr
     <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
       <if test="taskAttrKey != null">
         task_attr_key = #{taskAttrKey,jdbcType=VARCHAR},
       </if>
@@ -247,7 +263,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.colodoo.manager.task.taskAttr.model.TaskAttr">
     update task_attr
-    set task_attr_key = #{taskAttrKey,jdbcType=VARCHAR},
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      task_attr_key = #{taskAttrKey,jdbcType=VARCHAR},
       task_attr_value = #{taskAttrValue,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_user_id = #{createUserId,jdbcType=VARCHAR},

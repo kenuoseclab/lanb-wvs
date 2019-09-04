@@ -56,12 +56,12 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        String userId = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         //查找用户
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserNameEqualTo(username);
+        userExample.createCriteria().andUserIdEqualTo(userId);
         List<User> users = userMapper.selectByExample(userExample);
         User user = null;
         if (users.size() > 0) {

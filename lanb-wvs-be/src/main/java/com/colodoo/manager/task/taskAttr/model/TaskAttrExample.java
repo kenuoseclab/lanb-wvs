@@ -22,7 +22,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public TaskAttrExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -30,7 +30,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -38,7 +38,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -46,7 +46,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -54,7 +54,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public boolean isDistinct() {
         return distinct;
@@ -62,7 +62,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -70,7 +70,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -78,7 +78,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -88,7 +88,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -100,7 +100,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -109,7 +109,7 @@ public class TaskAttrExample {
 
     /**
      *
-     * @mbg.generated 2019-04-25
+     * @mbg.generated 2019-09-03
      */
     public void clear() {
         oredCriteria.clear();
@@ -118,7 +118,7 @@ public class TaskAttrExample {
     }
 
     /**
-     * task_attr 2019-04-25
+     * task_attr 2019-09-03
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -228,6 +228,76 @@ public class TaskAttrExample {
 
         public Criteria andTaskAttrIdNotBetween(String value1, String value2) {
             addCriterion("task_attr_id not between", value1, value2, "taskAttrId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIsNull() {
+            addCriterion("task_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIsNotNull() {
+            addCriterion("task_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdEqualTo(String value) {
+            addCriterion("task_id =", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotEqualTo(String value) {
+            addCriterion("task_id <>", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdGreaterThan(String value) {
+            addCriterion("task_id >", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdGreaterThanOrEqualTo(String value) {
+            addCriterion("task_id >=", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdLessThan(String value) {
+            addCriterion("task_id <", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdLessThanOrEqualTo(String value) {
+            addCriterion("task_id <=", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdLike(String value) {
+            addCriterion("task_id like", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotLike(String value) {
+            addCriterion("task_id not like", value, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdIn(List<String> values) {
+            addCriterion("task_id in", values, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotIn(List<String> values) {
+            addCriterion("task_id not in", values, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdBetween(String value1, String value2) {
+            addCriterion("task_id between", value1, value2, "taskId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskIdNotBetween(String value1, String value2) {
+            addCriterion("task_id not between", value1, value2, "taskId");
             return (Criteria) this;
         }
 
@@ -713,7 +783,7 @@ public class TaskAttrExample {
     }
 
     /**
-     * task_attr 2019-04-25
+     * task_attr 2019-09-03
      */
     public static class Criterion {
         private String condition;

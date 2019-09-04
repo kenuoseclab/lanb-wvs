@@ -47,7 +47,7 @@ public class UserAction {
 			if (sessionObject != null && sessionObject.getUser() != null) {
 				msg.setSuccess(true);
 				model.setPassword(null);
-				model.setUserName(sessionObject.getUser().getUserName());
+				model.setUserName(sessionObject.getUser().getUserId());
 				msg.setData(model);
 				msg.setMsg(Contants.LOGINED);
 			} else {
@@ -55,11 +55,9 @@ public class UserAction {
 				msg = userService.loginCheck(model, request);
 				if (msg.isSuccess()) {
 					Subject subject = SecurityUtils.getSubject();
-					UsernamePasswordToken token = new UsernamePasswordToken(model.getUserName(), model.getPassword());
+					UsernamePasswordToken token = new UsernamePasswordToken(model.getUserId(), model.getPassword());
 					subject.login(token);
 					msg.setMsg(Contants.LOGIN_SUCCESS);
-					model.setPassword(null);
-					msg.setData(model);
 				} else {// 登录失败
 					msg.setSuccess(false);
 					msg.setMsg(Contants.LOGIN_FAIL);

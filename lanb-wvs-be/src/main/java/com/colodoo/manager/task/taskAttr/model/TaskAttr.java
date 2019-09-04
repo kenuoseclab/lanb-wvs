@@ -11,6 +11,11 @@ public class TaskAttr {
     private String taskAttrId;
 
     /**
+     * 任务ID
+     */
+    private String taskId;
+
+    /**
      * 任务属性名
      */
     private String taskAttrKey;
@@ -63,6 +68,22 @@ public class TaskAttr {
      */
     public void setTaskAttrId(String taskAttrId) {
         this.taskAttrId = taskAttrId == null ? null : taskAttrId.trim();
+    }
+
+    /**
+     * 任务ID
+     * @return task_id 任务ID
+     */
+    public String getTaskId() {
+        return taskId;
+    }
+
+    /**
+     * 任务ID
+     * @param taskId 任务ID
+     */
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 
     /**
@@ -176,4 +197,23 @@ public class TaskAttr {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+	public TaskAttr(String taskAttrId, String taskId, String taskAttrKey, String taskAttrValue, Date createTime,
+			String createUserId, Date updateTime, String updateUserId, String remark) {
+		super();
+		this.taskAttrId = taskAttrId;
+		this.taskId = taskId;
+		this.taskAttrKey = taskAttrKey;
+		this.taskAttrValue = taskAttrValue;
+		this.createTime = createTime;
+		this.createUserId = createUserId;
+		this.updateTime = updateTime;
+		this.updateUserId = updateUserId;
+		this.remark = remark;
+	}
+
+	public TaskAttr() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

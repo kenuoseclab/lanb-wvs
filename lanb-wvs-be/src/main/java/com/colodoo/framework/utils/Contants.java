@@ -17,7 +17,7 @@ public class Contants {
     
     /*返回信息键值设置*/
     public static final String MSG_KEY_SUCCESS = "success";
-    public static final String MSG_KEY_SMG = "msg";
+    public static final String MSG_KEY_MSG = "msg";
 
     /*登录参数相关*/
     //最大登录次数

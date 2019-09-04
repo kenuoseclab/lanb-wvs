@@ -1,5 +1,6 @@
 package com.colodoo.framework.manager.user.service;
 
+import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.common.Msg;
 import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.manager.log.model.Log;
@@ -27,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends BaseService<User> {
 
 	@Autowired
 	UserMapper userMapper;
@@ -39,7 +40,7 @@ public class UserService {
 	LogService logService;
 
 	public int save(User model) {
-		model.setUserId(StringUtil.uuid());
+		model.setUserId(model.getUserId());
 		model.setCreateDate(new Date());
 		model.setLastDate(new Date());
 		return userMapper.insert(model);
@@ -77,15 +78,14 @@ public class UserService {
 		Msg msg = new Msg();
 		Log log = new Log();
 		// 是否存在空参数
-		if (model.getUserName() == null || "".equals(model.getUserName()) || model.getPassword() == null || "".equals(model.getPassword())) {
+		if (model.getUserId() == null || "".equals(model.getUserId()) || model.getPassword() == null || "".equals(model.getPassword())) {
 			msg.setSuccess(false);
 			return msg;
 		}
 		UserExample example = new UserExample();
-		example.createCriteria().andUserNameEqualTo(model.getUserName()).andPasswordEqualTo(model.getPassword()).andEnableEqualTo(Contants.TRUE);
+		example.createCriteria().andUserIdEqualTo(model.getUserId()).andPasswordEqualTo(model.getPassword()).andEnableEqualTo(Contants.TRUE);
 		List<User> users = userMapper.selectByExample(example);
 		if (users.size() == 1) {
-			msg.setSuccess(true);
 			SessionObject sessionObject = new SessionObject();
 			// 成功以后填充sessionObject
 			User user = users.get(0);
@@ -98,7 +98,11 @@ public class UserService {
 			log.setLogSource(RequestUtils.getRemoteAddress(request));
 			log.setLogType("LOGIN_SUCCESS");
 			log.setLogContent(user.getUserName() + " 登陆成功");
+			log.setCreateTime(new Date());
 			logService.saveLog(log);
+			msg.setSuccess(true);
+			user.setPassword(null);
+			msg.setData(user);
 			return msg;
 		} else {
 			this.failLogin(model, request);
@@ -153,7 +157,7 @@ public class UserService {
 
 	public boolean saveRegister(User model) throws Exception {
 		// 先判断信息的完整性
-		if (model.getUserName() == null || "".equals(model.getUserName()) || model.getPassword() == null || "".equals(model.getPassword())) {
+		if (model.getUserId() == null || "".equals(model.getUserId()) || model.getPassword() == null || "".equals(model.getPassword())) {
 			return false;
 		}
 		// 防止恶意注册,进行数据的二次验证
