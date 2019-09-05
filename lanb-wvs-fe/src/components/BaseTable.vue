@@ -549,15 +549,9 @@ export default {
       if (typeof btn.click !== 'undefined') {
         btn.click(this.getSelectedRows(), this)
       }
-    }
-  },
+    },
 
-  created () {
-    this.initEditForm()
-    this.initSearchForm()
-    this.getList()
-
-    document.onkeydown = (event) => {
+    keydownHandle (event) {
       var e = event || window.e
       var keyCode = e.keyCode || e.which
       switch (keyCode) {
@@ -566,6 +560,17 @@ export default {
           break
       }
     }
+  },
+
+  created () {
+    this.initEditForm()
+    this.initSearchForm()
+    this.getList()
+    document.addEventListener('keydown', this.keydownHandle)
+  },
+
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.keydownHandle)
   },
 
   watch: {

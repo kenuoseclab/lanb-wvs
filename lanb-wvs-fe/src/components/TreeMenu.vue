@@ -3,16 +3,20 @@
     <li
       :key="index"
       v-for="(item, index) in folder"
-      :class="{'menu__item': true, 'menu__item--selected': item.children === null && item.checked}"
+      :class="{'menu__item': true, 'menu__item--selected': item.selected}"
       @click.stop="changeMenu(item)"
-      @mouseenter="item.checked = true"
-      @mouseout="item.checked = false"
+      @mouseover="item.selected = true"
+      @mouseout="item.selected = false"
     >
-      {{item.text}}
+      <div
+        :class="{'menu-item__body': true}"
+        :style="paddingLeft"
+      >{{item.text}}</div>
       <tree-menu
         v-if="item.children && item.children != null"
         :folder="item.children"
         :callback="callback"
+        :level="level + 1"
       ></tree-menu>
     </li>
   </ul>
@@ -24,6 +28,11 @@ export default {
   name: 'treeMenu',
 
   props: {
+
+    level: {
+      type: Number,
+      default: 0
+    },
 
     folder: {
       type: Array,
@@ -38,11 +47,22 @@ export default {
     }
   },
 
+  computed: {
+    paddingLeft () {
+      return 'padding-left:' + (20 + (this.level * 10)) + 'px'
+    }
+  },
+
   methods: {
+
+    hoverIn () {
+
+    },
+
     changeMenu (menu, list) {
-      if (menu.children !== null) {
-        return
-      }
+      // if (menu.children !== null) {
+      //   return
+      // }
       // if (typeof (list) === 'undefined') {
       //   list = this.folder
       // }

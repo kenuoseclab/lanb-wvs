@@ -3,28 +3,38 @@
   list-style: none;
   /* height: 100%; */
   /* border-right: 1px solid #dcdee2; */
+
+  .menu__item {
+    // padding: 0 16px;
+    // padding-left: 12px;
+    font-size: 12px;
+    line-height: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .menu-item__body {
+      width: 100%;
+    }
+
+    .menu__item--selected {
+      background-color: #f2f3f7;
+      color: blue;
+      /* border-right: 2px solid rgb(68, 126, 255); */
+    }
+  }
 }
 
-.menu .menu__item {
-  padding: 0 16px;
-  font-size: 14px;
-  line-height: 50px;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+// .menu__item:hover > .menu-item__body {
+//   background-color: #f2f3f7;
+//   color: blue;
+//   /* border-right: 2px solid rgb(68, 126, 255); */
+// }
 
 /* .menu .menu__item:hover {
   color: blue;
 } */
-
-.menu .menu__item--selected {
-  background-color: #f2f3f7;
-  color: blue;
-  /* border-right: 2px solid rgb(68, 126, 255); */
-}
-
 
 .sub-menu {
   list-style: none;

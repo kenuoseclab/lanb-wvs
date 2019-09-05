@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-3">
+      <div>
         <transition name="fade">
           <tree-menu
             v-if="treeMenus.length > 0"
             class="panel"
             :folder="treeMenus"
             :callback="callback"
-          ></tree-menu>
+        ></tree-menu>
         </transition>
       </div>
       <div class="col-9">
