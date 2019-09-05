@@ -47,7 +47,11 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/user/register", "anon");
 		// 用户，需要角色权限 “user”
 		filterChainDefinitionMap.put("/menu/**", "roles[user]");
+
+		// 管理员，需要角色权限“admin”
 		filterChainDefinitionMap.put("/user/**", "roles[admin]");
+		filterChainDefinitionMap.put("/role/**", "roles[admin]");
+
 		// 动态载入权限
 		// ...
 		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
