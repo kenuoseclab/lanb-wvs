@@ -6,6 +6,13 @@ const sysRouter = {
   name: 'Sys',
   component: IndexZui,
   children: [
+    // 系统配置管理
+    {
+      path: 'config-table',
+      components: {
+        content: require('@/page/sys/ConfigTable').default
+      }
+    },
     // 菜单管理
     {
       path: 'menu-table',

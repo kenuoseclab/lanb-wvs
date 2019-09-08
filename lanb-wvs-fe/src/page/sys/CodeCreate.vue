@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-6">
-      <div class="panel" style="height: 300px;">
+      <div class="panel" style="height: 100%;">
         <h1>代码生成管理</h1>
         <div class="panel__body">
           <form class="form">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-6">
-      <div class="panel" style="height: 300px;">
+      <div class="panel" style="height: 100%;">
         <h1>代码生成历史</h1>
         <div class="panel__body">
           <ul class="list">

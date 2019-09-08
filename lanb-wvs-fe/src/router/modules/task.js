@@ -6,6 +6,12 @@ const TaskRouter = {
   component: IndexZui,
   children: [
     {
+      path: 'task-info-page',
+      components: {
+        content: require('@/page/task/TaskInfoPage').default
+      }
+    },
+    {
       path: 'task-table',
       components: {
         content: require('@/page/task/TaskTable').default

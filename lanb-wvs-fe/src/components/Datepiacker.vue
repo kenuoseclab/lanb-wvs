@@ -220,6 +220,5 @@ table.tup-table {
   height: 35px;
   width: 16px;
   line-height: 35px;
-  cursor: pointer;
 }
 </style>

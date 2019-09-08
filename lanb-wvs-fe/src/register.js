@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import './components/dialog/index.js'
 
 const requireComponent = require.context(
   // 其组件目录的相对路径

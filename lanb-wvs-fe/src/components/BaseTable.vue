@@ -75,6 +75,11 @@
       {{ dialogMsg }}
     </Dialog>
 
+    <!-- 删除确认框 -->
+    <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">
+      {{ deleteAction.dialogMsg }}
+    </Dialog>
+
     <div class="panel">
       <form class="form panel__body">
         <template v-for="(field, index) in fields">
@@ -294,7 +299,16 @@ export default {
         opacity: 0,
         color: 'rgb(0, 123, 255)'
       },
-      dialogMsg: '操作成功'
+      dialogMsg: '操作成功',
+
+      // 删除操作确认框
+      deleteAction: {
+        isDialog: false,
+        dialogMsg: '确认删除该行?',
+        ok: () => {
+
+        }
+      }
     }
   },
 
@@ -432,28 +446,37 @@ export default {
         this.isDialog = true
         return
       }
-      this.show = false
-      const row = rows[0]
-      delete row.checked
-      this
-        .$post(this.baseURL + this.api.delete, row)
-        .then(data => {
-          if (data.success) {
-            this.dialogMsg = '删除成功'
-            this.isDialog = true
-            this.checkbox.checked = false
-            this.show = true
-            this.getList()
-          } else {
-            this.dialogMsg = data.msg
-            this.isDialog = true
-          }
-        })
-        .catch(() => {
-          this.$router.push({
-            path: '/login'
+
+      // 弹出一个删除确认框
+      this.deleteAction.isDialog = true
+
+      this.deleteAction.ok = () => {
+        this.show = false
+        const row = rows[0]
+        delete row.checked
+        this
+          .$post(this.baseURL + this.api.delete, row)
+          .then(data => {
+            if (data.success) {
+              this.dialogMsg = '删除成功'
+              this.isDialog = true
+              this.deleteAction.isDialog = false
+              this.checkbox.checked = false
+              this.show = true
+              this.getList()
+            } else {
+              this.dialogMsg = data.msg
+              this.isDialog = true
+              this.deleteAction.isDialog = false
+              this.getList()
+            }
           })
-        })
+          .catch(() => {
+            this.$router.push({
+              path: '/login'
+            })
+          })
+      }
     },
 
     updateHandle () {

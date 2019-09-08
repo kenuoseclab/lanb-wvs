@@ -37,9 +37,9 @@
                 <li>
                   <i class="iconfont icon-gerenshezhi"></i>个人设置
                 </li>
-                <li>
+                <router-link class="exit-btn" tag="li" to="/sys/config-table">
                   <i class="iconfont icon-shezhi"></i>系统设置
-                </li>
+                </router-link>
                 <li>
                   <i class="iconfont icon-qunliao"></i>QQ群:82667033
                 </li>
@@ -81,7 +81,7 @@
             <li class="tab-item">系统设置</li>
             <li class="tab-item">角色管理</li>
             <li class="tab-item">日志管理</li>
-          </ul> -->
+          </ul>-->
 
           <!-- 采用组件切换的模式 -->
           <template v-if="!isRouter">

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 // import router from '../router'
 
 axios.defaults.timeout = 5000
@@ -99,3 +100,8 @@ export function put (url, data = {}) {
       })
   })
 }
+
+Vue.prototype.$post = post
+Vue.prototype.$fetch = fetch
+Vue.prototype.$patch = patch
+Vue.prototype.$put = put
