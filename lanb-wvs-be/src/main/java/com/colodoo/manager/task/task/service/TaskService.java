@@ -108,7 +108,7 @@ public class TaskService extends BaseService<Task> {
 			// 删除关联的任务属性
 			TaskAttrExample taskAttrExample = new TaskAttrExample();
 			taskAttrExample.createCriteria().andTaskIdEqualTo(model.getTaskId());
-			ret = taskAttrMapper.deleteByExample(taskAttrExample);
+			taskAttrMapper.deleteByExample(taskAttrExample);
 		} catch (DAOException e) {
 			log.error(e.getMsg());
 			throw new AppException(e.getMsg());

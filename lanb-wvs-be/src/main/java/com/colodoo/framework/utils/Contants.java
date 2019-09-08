@@ -32,10 +32,16 @@ public class Contants {
     /*接口提示相关*/
     //保存失败
     public static final String MSG_SAVE_FAIL = "保存失败";
+    //保存成功
+    public static final String MSG_SAVE_SUCCESS = "保存成功";
     //删除失败
     public static final String MSG_DELETE_FAIL = "删除失败";
+    //删除成功
+    public static final String MSG_DELETE_SUCCESS = "删除成功";
     //更新失败
     public static final String MSG_UPDATE_FAIL = "更新失败";
+    //更新成功
+    public static final String MSG_UPDATE_SUCCESS = "更新成功";
 
     /*登录相关*/
     //登录成功

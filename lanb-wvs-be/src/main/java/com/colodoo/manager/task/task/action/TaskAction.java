@@ -7,6 +7,7 @@ import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.manager.task.task.service.TaskService;
 import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.utils.Contants;
+import com.github.pagehelper.Constant;
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,14 +70,10 @@ public class TaskAction {
 	@ResponseBody
 	public Map<String, Object> delete(@RequestBody Task model) {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
-		int ret;
 		try {
-			ret = taskService.deleteTask(model);
-			if (ret > 0) {
-				rspMap.put("success", true);
-			} else {
-				rspMap.put("msg", Contants.MSG_DELETE_FAIL);
-			}
+			taskService.deleteTask(model);
+			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
+			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_DELETE_SUCCESS);
 		} catch (AppException e) {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_DELETE_FAIL);
@@ -95,14 +92,10 @@ public class TaskAction {
 	@ResponseBody
 	public Map<String, Object> update(@RequestBody Task model) {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
-		int ret;
 		try {
-			ret = taskService.updateTask(model);
-			if (ret > 0) {
-				rspMap.put(Contants.MSG_KEY_SUCCESS, true);
-			} else {
-				rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_UPDATE_FAIL);
-			}
+			taskService.updateTask(model);
+			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
+			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_UPDATE_SUCCESS);
 		} catch (AppException e) {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_UPDATE_FAIL);
@@ -122,7 +115,7 @@ public class TaskAction {
 	public Map<String, Object> queryById(@RequestBody Task model) {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 		try {
-			rspMap.put("rows", taskService.queryById(model));
+			rspMap.put(Contants.TABLE_ROWS, taskService.queryById(model));
 		} catch (AppException e) {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 		}
@@ -204,4 +197,5 @@ public class TaskAction {
 
 		return rspMap;
 	}
+
 }
