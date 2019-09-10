@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="modal">
+  <div v-show="show">
+    <div class="modal" :style="{width: width, height: height}">
       <transition name="bounce">
-        <div v-if="show" class="modal__inner panel">
+        <div v-if="show" class="modal__inner panel" :style="{width: '100%', height: '100%'}">
           <h1 v-if="title != ''" class="panel__title--border">{{ title }}</h1>
           <div class="panel__body">
             <slot></slot>
@@ -32,8 +32,13 @@ export default {
     },
 
     height: {
-      type: Number,
-      default: 500
+      type: String,
+      default: '500px'
+    },
+
+    width: {
+      type: String,
+      default: '80%'
     },
 
     title: {

@@ -58,6 +58,14 @@ export default {
             console.log(rows)
             console.log(handle)
           }
+        },
+        {
+          title: '漏洞信息',
+          icon: 'icon-guanlian',
+          click: function (rows, handle) {
+            console.log(rows)
+            console.log(handle)
+          }
         }
       ]
     }

@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-6">
-        <div class="panel" style="height: 100%;">
+        <div class="panel" style="height: 600px;">
           <h1>新建扫描任务</h1>
           <div class="panel__body">
             <form class="form">
@@ -74,17 +74,21 @@
                   placeholder="请输入任务描述"
                 ></textarea>
               </div>
-              <div class="form__block" style="margin-top: 32px;">
+              <!-- <div class="form__block" style="margin-top: 32px;">
                 <a class="button" @click="createTask">新建任务</a>
                 <a class="button">重置</a>
-              </div>
+              </div> -->
             </form>
+          </div>
+          <div class="button-group">
+            <a class="button" @click="createTask">新建任务</a>
+            <a class="button">重置</a>
           </div>
         </div>
       </div>
 
       <div class="col-6">
-        <div class="panel" style="height: 100%;">
+        <div class="panel" style="height: 600px;">
           <h1>扫描历史</h1>
           <div class="panel__body">
             <ul class="list">
@@ -259,6 +263,7 @@ export default {
           if (data.success) {
             this.dialog.text = '是否跳转到列表页面?'
             this.dialog.show = true
+            this.getHisTaskList()
           } else {
             this.dialog.text = data.msg
             this.dialog.show = true
@@ -302,7 +307,7 @@ export default {
     },
 
     getHisTaskList () {
-      this.$post('/api/task/queryPage', {}).then(data => {
+      this.$post('/api/task/queryPage', { page: { rows: -1, page: 1 } }).then(data => {
         if (data.rows != null) {
           this.hisTaskList = data.rows
         }

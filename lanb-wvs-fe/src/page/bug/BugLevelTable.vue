@@ -30,7 +30,7 @@ export default {
           name: '创建人'
         },
         {
-          field: 'createTime',
+          field: 'updateTime',
           name: '更新时间',
           type: 'date'
         },

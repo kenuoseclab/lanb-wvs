@@ -13,8 +13,7 @@ export default {
       fields: [
         {
           field: 'taskId',
-          name: '任务ID',
-          hidden: true
+          name: '任务ID'
         },
         {
           field: 'taskName',
