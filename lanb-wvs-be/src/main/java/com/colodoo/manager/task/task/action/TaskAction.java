@@ -46,12 +46,9 @@ public class TaskAction {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 		int ret;
 		try {
-			ret = taskService.saveTask(model);
-			if (ret > 0) {
-				rspMap.put(Contants.MSG_KEY_SUCCESS, true);
-			} else {
-				rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_SAVE_FAIL);
-			}
+			taskService.saveTask(model);
+			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
+			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_SAVE_SUCCESS);
 		} catch (AppException e) {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 			rspMap.put(Contants.MSG_KEY_MSG, Contants.MSG_SAVE_FAIL);
