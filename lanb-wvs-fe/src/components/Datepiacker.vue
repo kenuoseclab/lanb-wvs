@@ -131,7 +131,14 @@ export default {
   },
   created () {
     this.initData()
+  },
+
+  watch: {
+    'day': function (newVal, oldVal) {
+      this.$emit('update:day', newVal)
+    }
   }
+
 }
 </script>
 
