@@ -2,7 +2,7 @@
   <div>
     <div class="dialog">
       <transition name="bounce" @after-leave="afterLeave">
-        <div class="dialog__inner" v-if="show">
+        <div class="dialog__inner" v-show="show">
           <h1>{{ title }}</h1>
           <div class="dialog__body">{{ text }}</div>
           <div class="button-group">
@@ -25,7 +25,7 @@ export default {
 
   data () {
     return {
-      show: true,
+      show: false,
       title: '提示',
       text: '提示内容',
       ok: null
@@ -38,6 +38,9 @@ export default {
     },
     afterLeave () {
       this.$destroy()
+    },
+    display () {
+      this.show = true
     }
   },
 
@@ -47,5 +50,3 @@ export default {
 }
 
 </script>
-<style lang='scss' scoped>
-</style>

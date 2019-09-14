@@ -43,7 +43,7 @@ export default {
         {
           title: '菜单复制',
           icon: 'icon-fuzhi',
-          click: function (rows, handle) {
+          click: (rows, handle) => {
             if (rows.length === 1) {
               const row = rows[0]
               const tmpRow = JSON.parse(JSON.stringify(row))
@@ -51,7 +51,13 @@ export default {
               handle.action = 'save'
               handle.isModal = true
             } else {
-              alert('请选择一个菜单')
+              this.$dialog({
+                text: '请选择一个菜单'
+              }).display()
+
+              // console.log(this.$dialog({
+              //   text: '请选择一个菜单'
+              // }))
             }
           }
         }

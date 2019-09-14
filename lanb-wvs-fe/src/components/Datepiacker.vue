@@ -101,7 +101,7 @@ export default {
     },
     selectDay: function (date) {
       if (!this.isThisMonth(date)) return
-      this.$emit('update:day', df(date, 'YYYY-MM-DD'))
+      this.$emit('update:day', df(date, 'YYYY-MM-DD') + ' 00:00:00')
       this.show = false
     },
     isThisMonth (date) {

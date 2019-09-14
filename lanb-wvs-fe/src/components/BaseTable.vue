@@ -71,16 +71,12 @@
     <div class="mask" v-if="isModal"></div>
 
     <!-- 提示框 -->
-    <Dialog :show.sync="isDialog">
-      {{ dialogMsg }}
-    </Dialog>
+    <Dialog :show.sync="isDialog">{{ dialogMsg }}</Dialog>
 
     <!-- 删除确认框 -->
-    <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">
-      {{ deleteAction.dialogMsg }}
-    </Dialog>
+    <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog>
 
-    <div class="panel">
+    <div class="panel" v-if="isSearch">
       <form class="form panel__body">
         <template v-for="(field, index) in fields">
           <!-- 是否为下拉 -->
@@ -123,7 +119,7 @@
 
     <div class="panel">
       <div>
-        <div class="tool-bar">
+        <div class="tool-bar" v-if="isToolbar">
           <template v-if="isDefaultBtn">
             <a @click="saveHandle" class="button">
               <i class="iconfont icon-addNew"></i>
@@ -147,42 +143,47 @@
           </template>
         </div>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th v-if="checkbox.show">
-                <input
-                  v-model="checkbox.checked"
-                  @click="selectToggle"
-                  class="checkbox"
-                  type="checkbox"
-                />
-              </th>
+        <transition name="fade">
+          <div v-show="show" style="padding: 0px 8px;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th v-if="checkbox.show" style="text-align: center;">
+                    <input
+                      v-model="checkbox.checked"
+                      @click="selectToggle"
+                      class="checkbox"
+                      type="checkbox"
+                    />
+                  </th>
 
-              <template v-for="(field, index) in fields">
-                <th v-show="!field.hidden" :key="index">{{field.name}}</th>
-              </template>
-            </tr>
-          </thead>
+                  <template v-for="(field, index) in fields">
+                    <th v-show="!field.hidden" :key="index">{{field.name}}</th>
+                  </template>
+                </tr>
+              </thead>
 
-          <transition name="fade">
-            <tbody v-show="show">
-              <tr :key="index" v-for="(row, index) in rows">
-                <td v-if="checkbox.show">
-                  <input v-model="row.checked" class="checkbox" type="checkbox" />
-                </td>
-                <template v-for="(field, fieldIndex) in fields">
-                  <td v-if="!field.hidden" :key="fieldIndex">
-                    <template v-if="field.formatter != null">
-                      <div v-html="field.formatter(cellFormatter(field, row))"></div>
-                    </template>
-                    <template v-else>{{cellFormatter(field, row)}}</template>
+              <tbody>
+                <tr :key="index" v-for="(row, index) in rows">
+                  <td v-if="checkbox.show" style="text-align: center;">
+                    <input v-model="row.checked" class="checkbox" type="checkbox" />
                   </td>
-                </template>
-              </tr>
-            </tbody>
-          </transition>
-        </table>
+                  <template v-for="(field, fieldIndex) in fields">
+                    <td v-if="!field.hidden" :key="fieldIndex">
+                      <template v-if="field.formatter != null">
+                        <div v-html="field.formatter(cellFormatter(field, row))"></div>
+                      </template>
+                      <template v-else>{{cellFormatter(field, row)}}</template>
+                    </td>
+                  </template>
+                </tr>
+                <tr v-if="rows.length === 0">
+                  <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </transition>
 
         <div class="pagination">
           <a @click="pageChange(-1)" class="button">上一页</a>
@@ -222,6 +223,18 @@ export default {
   name: 'baseTable',
 
   props: {
+
+    // 是否显示搜索条件
+    isSearch: {
+      type: Boolean,
+      default: true
+    },
+
+    // 是否显示工具栏
+    isToolbar: {
+      type: Boolean,
+      default: true
+    },
 
     // 字段配置
     fields: {
@@ -327,6 +340,20 @@ export default {
         return '编辑表单'
       }
       return '表单'
+    },
+
+    noDataColspan () {
+      let colspan = 0
+      for (let index = 0; index < this.fields.length; index++) {
+        const field = this.fields[index]
+        if (!field.hidden) {
+          colspan++
+        }
+      }
+      if (this.checkbox.show) {
+        colspan++
+      }
+      return colspan
     }
   },
 

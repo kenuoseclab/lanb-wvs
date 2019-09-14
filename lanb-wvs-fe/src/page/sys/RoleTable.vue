@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/role"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/role" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -37,6 +37,16 @@ export default {
           field: 'createTime',
           name: '创建时间',
           type: 'date'
+        }
+      ],
+
+      btns: [
+        {
+          title: '角色菜单',
+          icon: 'icon-fuzhi',
+          click: () => {
+
+          }
         }
       ]
     }

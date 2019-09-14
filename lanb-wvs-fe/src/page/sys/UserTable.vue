@@ -1,23 +1,9 @@
 <template>
   <div>
     <baseTable :fields="fields" baseURL="/api/user" :api="api" :btns="btns"></baseTable>
-    <!-- 弹出窗开始 -->
-    <div class="modal">
-      <transition name="bounce">
-        <div v-if="isModal" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="panel__title--border">选择</h1>
-          <div class="panel__body">
-            <baseTable :fields="roleFiled" baseURL="/api/role"></baseTable>
-          </div>
-          <div class="button-group">
-            <a class="button">确定</a>
-            <a @click="isModal = false" class="button">取消</a>
-          </div>
-        </div>
-      </transition>
-    </div>
-    <div class="mask" v-show="isModal"></div>
-    <!-- 弹出框结束 -->
+    <Modal :show.sync="isModal">
+      <baseTable :fields="roleFiled" baseURL="/api/role"></baseTable>
+    </Modal>
   </div>
 </template>
 
@@ -103,9 +89,11 @@ export default {
         {
           title: '角色授权',
           icon: 'icon-shouquan',
-          click: (rows) => {
-            console.log(rows)
-            console.log(this)
+          click: (rows, handle) => {
+            for (let index = 0; index < rows.length; index++) {
+              const row = rows[index]
+              console.log(row)
+            }
             this.isModal = true
           }
         }
