@@ -48,12 +48,11 @@ public class ShiroConfig {
 		// 用户，需要角色权限 “user”
 		filterChainDefinitionMap.put("/menu/**", "roles[user]");
 
-		System.out.println("shiro");
-
 		// 管理员，需要角色权限“admin”
 		filterChainDefinitionMap.put("/user/**", "roles[admin]");
 		filterChainDefinitionMap.put("/role/**", "roles[admin]");
 		filterChainDefinitionMap.put("/creater/**", "roles[admin]");
+		filterChainDefinitionMap.put("/config/**", "roles[admin]");
 
 		// 动态载入权限
 		// ...

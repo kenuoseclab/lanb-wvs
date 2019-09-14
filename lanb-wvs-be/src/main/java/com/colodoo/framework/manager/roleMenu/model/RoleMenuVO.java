@@ -19,6 +19,9 @@ public class RoleMenuVO extends RoleMenu implements Serializable {
     
     private Page page;
 
+    private String roleName;
+    private String menuName;
+
     public Page getPage() {
 		return page;
 	}
@@ -46,4 +49,20 @@ public class RoleMenuVO extends RoleMenu implements Serializable {
     public RoleMenuVO() {
 		this.page = new Page();
 	}
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
 }

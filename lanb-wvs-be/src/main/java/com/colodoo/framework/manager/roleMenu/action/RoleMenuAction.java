@@ -1,5 +1,6 @@
 package com.colodoo.framework.manager.roleMenu.action;
 
+import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.manager.roleMenu.model.RoleMenu;
 import com.colodoo.framework.manager.roleMenu.model.RoleMenuVO;
 import com.colodoo.framework.manager.roleMenu.service.RoleMenuService;
@@ -107,7 +108,7 @@ public class RoleMenuAction {
 	 */
     @RequestMapping(value = "/query")
     @ResponseBody
-    public List<RoleMenu> query(@RequestBody RoleMenuVO model) {
+    public List<RoleMenuVO> query(@RequestBody RoleMenuVO model) {
         return roleMenuService.query(model);
     }
 
@@ -121,9 +122,25 @@ public class RoleMenuAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody RoleMenuVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        PageInfo<RoleMenu> info = roleMenuService.query(model.getPage(), model);
+        PageInfo<RoleMenuVO> info = roleMenuService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
+        return rspMap;
+    }
+
+    @RequestMapping(value = "/loadRoleMenu")
+    @ResponseBody
+    public Map<String, Object> loadRoleMenu() {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        PageInfo<RoleMenu> info = null;
+        try {
+            roleMenuService.loadRoleMenu();
+            rspMap.put("success", true);
+            rspMap.put("msg", "操作成功");
+        } catch (AppException e) {
+            rspMap.put("success", false);
+            rspMap.put("msg", "操作失败");
+        }
         return rspMap;
     }
 }

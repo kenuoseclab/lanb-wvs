@@ -121,7 +121,7 @@ public class UserService extends BaseService<User> {
 		// 插入一条失败登录失败日志
 		Log log = new Log();
 		log.setCreateTime(new Date());
-		log.setLogContent(model.getUserName() + " 登录失败");
+		log.setLogContent(model.getUserId() + " 登录失败");
 		log.setLogSource(RequestUtils.getRemoteAddress(request));
 		log.setLogType("LOGIN_FAILD");
 		logService.saveLog(log);
