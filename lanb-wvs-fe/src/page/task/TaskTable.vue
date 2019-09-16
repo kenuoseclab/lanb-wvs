@@ -55,6 +55,13 @@ export default {
 
       btns: [
         {
+          title: '新建任务',
+          icon: 'icon-addNew',
+          click: () => {
+            this.$router.push('/task/task-create')
+          }
+        },
+        {
           title: '关联漏洞',
           icon: 'icon-guanlian'
         },

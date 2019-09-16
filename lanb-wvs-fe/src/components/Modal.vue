@@ -1,7 +1,7 @@
 <template>
-  <div v-show="show">
+  <div v-show="wrapperShow">
     <div class="modal" :style="{width: width, height: height}">
-      <transition name="bounce">
+      <transition name="bounce" @after-leave="afterLeave" @before-enter="beforeEnter">
         <div v-if="show" class="modal__inner panel" :style="{width: '100%', height: '100%'}">
           <h1 v-if="title != ''" class="panel__title--border">{{ title }}</h1>
           <div class="panel__body">
@@ -48,12 +48,21 @@ export default {
   },
   data () {
     return {
+      wrapperShow: false
     }
   },
 
   methods: {
     close () {
       this.$emit('update:show', false)
+    },
+
+    afterLeave () {
+      this.wrapperShow = false
+    },
+
+    beforeEnter () {
+      this.wrapperShow = true
     }
   }
 }
