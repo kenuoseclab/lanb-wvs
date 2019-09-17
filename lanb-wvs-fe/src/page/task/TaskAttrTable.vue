@@ -12,9 +12,12 @@ export default {
 
       fields: [
         {
-          field: 'taskAattrId',
-          name: '任务属性ID',
-          hidden: true
+          field: 'taskAttrId',
+          name: '任务属性ID'
+        },
+        {
+          field: 'taskId',
+          name: '任务ID'
         },
         {
           field: 'taskAttrKey',

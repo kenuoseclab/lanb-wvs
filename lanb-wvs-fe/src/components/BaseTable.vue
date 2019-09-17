@@ -76,129 +76,138 @@
     <!-- 删除确认框 -->
     <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog>
 
-    <div class="panel" v-if="isSearch">
-      <form class="form panel__body">
-        <template v-for="(field, index) in fields">
-          <!-- 是否为下拉 -->
-          <template v-if="field.type === 'select'">
-            <select
-              :key="index"
-              class="input"
-              v-model="form[field.field]"
-              :placeholder="field.name"
-            >
-              <option value>请选择{{ field.name }}</option>
-              <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+    <div class="row">
+      <div class="col-12">
+        <div class="panel" v-if="isSearch">
+          <form class="form panel__body">
+            <template v-for="(field, index) in fields">
+              <!-- 是否为下拉 -->
+              <template v-if="field.type === 'select'">
+                <select
+                  :key="index"
+                  class="input"
+                  v-model="form[field.field]"
+                  :placeholder="field.name"
+                >
+                  <option value>请选择{{ field.name }}</option>
+                  <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                    <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+                  </template>
+                </select>
               </template>
-            </select>
-          </template>
-          <!-- 是否为日期类型 -->
-          <template v-else-if="field.type === 'date'">
-            <datepiacker
-              style="margin-top: 8px; margin-right: 8px;"
-              :key="index"
-              :day.sync="form[field.field]"
-            ></datepiacker>
-          </template>
-          <!-- 否则输入框 -->
-          <template v-else>
-            <input :key="index" class="input" v-model="form[field.field]" :placeholder="field.name" />
-          </template>
-        </template>
-        <a @click="search" class="button">
-          <i class="iconfont icon-chazhao"></i>
-          查询
-        </a>
-        <a @click="formReset" class="button">
-          <i class="iconfont icon-zhongzhi"></i>
-          重置
-        </a>
-      </form>
-    </div>
-
-    <div class="panel">
-      <div>
-        <div class="tool-bar" v-if="isToolbar">
-          <template v-if="isDefaultBtn">
-            <a @click="saveHandle" class="button">
-              <i class="iconfont icon-addNew"></i>
-              新增
+              <!-- 是否为日期类型 -->
+              <template v-else-if="field.type === 'date'">
+                <datepiacker
+                  style="margin-top: 8px; margin-right: 8px;"
+                  :key="index"
+                  :day.sync="form[field.field]"
+                ></datepiacker>
+              </template>
+              <!-- 否则输入框 -->
+              <template v-else>
+                <input
+                  :key="index"
+                  class="input"
+                  v-model="form[field.field]"
+                  :placeholder="field.name"
+                />
+              </template>
+            </template>
+            <a @click="search" class="button">
+              <i class="iconfont icon-chazhao"></i>
+              查询
             </a>
-            <a @click="deleteHandle" class="button">
-              <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
-              删除
+            <a @click="formReset" class="button">
+              <i class="iconfont icon-zhongzhi"></i>
+              重置
             </a>
-            <a @click="updateHandle" class="button">
-              <i style="font-size: 14px;" class="iconfont icon-edit"></i>
-              修改
-            </a>
-          </template>
-
-          <template v-for="(btn, index) in btns">
-            <a :key="index" @click="btnClick(btn)" class="button">
-              <i :key="index" v-if="btn.icon != null" :class="'iconfont ' + btn.icon"></i>
-              {{ btn.title }}
-            </a>
-          </template>
+          </form>
         </div>
 
-        <transition name="fade">
-          <div v-show="show" style="padding: 0px 8px;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th v-if="checkbox.show" style="text-align: center;">
-                    <input
-                      v-model="checkbox.checked"
-                      @click="selectToggle"
-                      class="checkbox"
-                      type="checkbox"
-                    />
-                  </th>
+        <div class="panel">
+          <div>
+            <div class="tool-bar" v-if="isToolbar">
+              <template v-if="isDefaultBtn">
+                <a @click="saveHandle" class="button">
+                  <i class="iconfont icon-addNew"></i>
+                  新增
+                </a>
+                <a @click="deleteHandle" class="button">
+                  <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
+                  删除
+                </a>
+                <a @click="updateHandle" class="button">
+                  <i style="font-size: 14px;" class="iconfont icon-edit"></i>
+                  修改
+                </a>
+              </template>
 
-                  <template v-for="(field, index) in fields">
-                    <th v-show="!field.hidden" :key="index">{{field.name}}</th>
-                  </template>
-                </tr>
-              </thead>
+              <template v-for="(btn, index) in btns">
+                <a :key="index" @click="btnClick(btn)" class="button">
+                  <i :key="index" v-if="btn.icon != null" :class="'iconfont ' + btn.icon"></i>
+                  {{ btn.title }}
+                </a>
+              </template>
+            </div>
 
-              <tbody>
-                <tr :key="index" v-for="(row, index) in rows">
-                  <td v-if="checkbox.show" style="text-align: center;">
-                    <input v-model="row.checked" class="checkbox" type="checkbox" />
-                  </td>
-                  <template v-for="(field, fieldIndex) in fields">
-                    <td v-if="!field.hidden" :key="fieldIndex">
-                      <template v-if="field.formatter != null">
-                        <div v-html="field.formatter(cellFormatter(field, row))"></div>
+            <transition name="fade">
+              <div v-show="show" style="padding: 0px 8px;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th v-if="checkbox.show" style="text-align: center;">
+                        <input
+                          v-model="checkbox.checked"
+                          @click="selectToggle"
+                          class="checkbox"
+                          type="checkbox"
+                        />
+                      </th>
+
+                      <template v-for="(field, index) in fields">
+                        <th v-show="!field.hidden" :key="index"  :width="field.width">{{field.name}}</th>
                       </template>
-                      <template v-else>{{cellFormatter(field, row)}}</template>
-                    </td>
-                  </template>
-                </tr>
-                <tr v-if="rows.length === 0">
-                  <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </transition>
+                    </tr>
+                  </thead>
 
-        <div class="pagination">
-          <a @click="pageChange(-1)" class="button">上一页</a>
-          <input type="number" v-model="pageInfo.page" @change="getList" class="input" />
-          <a @click="pageChange(1)" class="button">下一页</a>
+                  <tbody>
+                    <tr :key="index" v-for="(row, index) in rows">
+                      <td v-if="checkbox.show" style="text-align: center;">
+                        <input v-model="row.checked" class="checkbox" type="checkbox" />
+                      </td>
+                      <template v-for="(field, fieldIndex) in fields">
+                        <td v-if="!field.hidden" :key="fieldIndex" :width="field.width">
+                          <template v-if="field.formatter != null">
+                            <div v-html="field.formatter(cellFormatter(field, row))"></div>
+                          </template>
+                          <template v-else>{{cellFormatter(field, row)}}</template>
+                        </td>
+                      </template>
+                    </tr>
+                    <tr v-if="rows.length === 0">
+                      <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </transition>
 
-          <div class="rows">
-            <label for="rows">每页</label>
-            <input
-              type="number"
-              class="input"
-              placeholder
-              v-model="pageInfo.rows"
-              @change="getList"
-            />
+            <div class="pagination">
+              <a @click="pageChange(-1)" class="button">上一页</a>
+              <input type="number" v-model="pageInfo.page" @change="getList" class="input" />
+              <a @click="pageChange(1)" class="button">下一页</a>
+
+              <div class="rows">
+                <label for="rows">每页</label>
+                <input
+                  type="number"
+                  class="input"
+                  placeholder
+                  v-model="pageInfo.rows"
+                  @change="getList"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -6,6 +6,9 @@ $bg-color: #ebecf0;
   // border-bottom: 1px solid #dcdee3;
   border: 1px solid #dcdee3;
   text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .table thead tr {
@@ -24,6 +27,7 @@ $bg-color: #ebecf0;
   text-align: center;
   border-collapse: collapse;
   background-color: #ffffff;
+  table-layout:fixed;
 }
 
 .table tr th {

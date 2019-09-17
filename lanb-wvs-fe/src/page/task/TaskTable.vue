@@ -75,7 +75,16 @@ export default {
         },
         {
           title: '开始任务',
-          icon: 'icon-saomiao'
+          icon: 'icon-saomiao',
+          click: (rows, handle) => {
+            if (rows.length === 1) {
+            } else {
+              this.$dialog({
+                text: '请选择一个任务'
+              }).display()
+            }
+            // console.log(handle)
+          }
         }
       ]
     }
