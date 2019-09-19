@@ -195,4 +195,31 @@ public class TaskAction {
 		return rspMap;
 	}
 
+	/**
+	 * 开始任务
+	 *
+	 * @param task
+	 * @return
+	 */
+	@RequestMapping(value = "/startTask")
+	@ResponseBody
+	public Map<String, Object> startTask(@RequestBody Task task) {
+		Map<String, Object> rspMap = new HashMap<String, Object>();
+
+		try {
+			taskService.startTask(task);
+			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
+			rspMap.put(Contants.MSG_KEY_MSG, "任务开始成功!");
+		} catch (AppException e) {
+			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
+			rspMap.put(Contants.MSG_KEY_MSG, e.getMsg());
+		} catch (Exception e) {
+			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
+			e.printStackTrace();
+			rspMap.put(Contants.MSG_KEY_MSG, "系统异常,请联系管理员！");
+		}
+
+		return rspMap;
+	}
+
 }

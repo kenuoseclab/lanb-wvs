@@ -6,16 +6,19 @@ import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.quartz.JobClass;
 import com.colodoo.framework.utils.Contants;
+import com.colodoo.manager.asset.service.AssetService;
 import com.colodoo.manager.task.task.model.CreateTaskVO;
 import com.colodoo.manager.task.task.model.DashboardVO;
 import com.colodoo.manager.task.task.model.Task;
 import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.framework.easyui.Page;
+import com.colodoo.manager.task.taskAttr.model.TaskAttrVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.quartz.*;
 import org.springframework.stereotype.Service;
 
 import com.colodoo.manager.task.task.service.mapper.TaskSQLMapper;
@@ -25,15 +28,6 @@ import com.colodoo.manager.task.taskAttr.service.TaskAttrMapper;
 import com.colodoo.manager.task.taskAttr.service.TaskAttrService;
 
 import org.apache.tomcat.jni.Thread;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
@@ -67,6 +61,9 @@ public class TaskService extends BaseService<Task> {
 
     @Autowired
     TaskAttrMapper taskAttrMapper;
+
+    @Autowired
+    AssetService assetService;
 
     /**
      * 新增数据
@@ -285,4 +282,86 @@ public class TaskService extends BaseService<Task> {
 
     }
 
+    /**
+     * 开始任务
+     *
+     * @param task
+     */
+    public void startTask(Task task) throws AppException, SchedulerException {
+
+        // 获取任务编号
+        String taskId = task.getTaskId();
+        if (taskId == null || "".equals(taskId)) {
+            throw new AppException("任务编号为空!");
+        }
+        if (!this.isLogin()) {
+            throw new AppException("当前用户未登录!");
+        }
+
+        // 获取用户名,用于分组
+        String userId = this.getSessionObject().getUser().getUserId();
+        if (userId == null || "".equals(userId)) {
+            throw new AppException("当前用户未登录!");
+        }
+
+        // 获取任务属性
+        TaskAttrVO TaskAttr = new TaskAttrVO();
+        List<TaskAttr> taskAttrs = taskAttrService.query(TaskAttr);
+
+        // 转换成map对象,方便读取
+        Map<String, String> taskAttrMap = new HashMap<>();
+        for (int i = 0; i < taskAttrs.size(); i++) {
+            TaskAttr taskAttr = taskAttrs.get(i);
+            if (taskAttr != null) {
+                taskAttrMap.put(taskAttr.getTaskAttrKey(), taskAttr.getTaskAttrValue());
+            }
+        }
+
+        // 验证周期
+        String cycle = taskAttrMap.get("cycle");
+        if (cycle == null || "".equals(cycle)) {
+            throw new AppException("任务缺少周期属性,请及时维护!");
+        }
+        // 周期转换器
+        // ...
+
+        // 创建任务
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        Trigger trigger = null;
+        JobDetail jobDetail = JobBuilder.newJob(JobClass.class).withIdentity(taskId, userId).build();
+
+        // 获取资产列表
+        // ...
+
+        // 获取漏洞列表
+        // ...
+
+        // 参数传递
+        JobDataMap jobDataMap = jobDetail.getJobDataMap();
+        jobDataMap.put("taskAttrMap", taskAttrMap);
+        jobDataMap.put("task", task);
+
+        // 开启任务
+        // SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0).withIntervalInSeconds(1);
+        // CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
+        // trigger = TriggerBuilder.newTrigger().startAt(new Date()).withIdentity(taskId, userId).withSchedule(scheduleBuilder).build();
+        // scheduler.scheduleJob(jobDetail, trigger);
+
+        // 判断是否为单次执行
+        if ("0".equals(cycle)) {
+            trigger = TriggerBuilder.newTrigger()
+                    .withIdentity(taskId, userId)
+                    .startAt(new Date())
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                                    .withIntervalInSeconds(1)
+                                    .withRepeatCount(0)).build();
+        }
+
+
+        scheduler.scheduleJob(jobDetail, trigger);
+
+        // 修改任务状态
+        // ..
+    }
 }
