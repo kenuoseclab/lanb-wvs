@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/task" :btns="btns"></baseTable>
+  <baseTable :fields="fields" :baseURL="baseURL" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -9,6 +9,8 @@ export default {
 
   data () {
     return {
+
+      baseURL: '/api/task',
 
       fields: [
         {
@@ -78,6 +80,14 @@ export default {
           icon: 'icon-saomiao',
           click: (rows, handle) => {
             if (rows.length === 1) {
+              const row = rows[0]
+              this
+                .$post(this.baseURL + '/startTask', row)
+                .then(data => {
+                  this.$dialog({
+                    text: data.msg
+                  }).display()
+                })
             } else {
               this.$dialog({
                 text: '请选择一个任务'
