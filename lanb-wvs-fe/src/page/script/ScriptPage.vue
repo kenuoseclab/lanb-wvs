@@ -7,12 +7,12 @@
         <form class="form">
           <div class="form__block">
             <label class="input-label" for="参数">参数</label>
-            <input class="input" placeholder="请输入参数">
+            <input class="input" placeholder="请输入参数" />
             <label class="add-btn" @click="isModal = true">+</label>
           </div>
           <div class="form__block">
             <label class="input-label" for="头部">头部</label>
-            <input class="input" placeholder="请输入头部">
+            <input class="input" placeholder="请输入头部" />
             <label class="add-btn" @click="isModal = true">+</label>
           </div>
           <!-- <div class="form__block">
@@ -33,8 +33,8 @@
         <form class="form modal__body">
           <div :key="index" v-for="(attr, index) in attrs" class="form__block">
             <label class="input-label" for="参数">参数</label>
-            <input class="input" v-model="attr.key" placeholder="请输入参数名">
-            <input class="input" v-model="attr.value" placeholder="请输入参数值">
+            <input class="input" v-model="attr.key" placeholder="请输入参数名" />
+            <input class="input" v-model="attr.value" placeholder="请输入参数值" />
             <label class="add-btn" @click="delAttr(index)">-</label>
           </div>
 
@@ -58,11 +58,16 @@
         <form class="form">
           <div class="form__block">
             <label class="input-label" for="脚本名称">脚本名称</label>
-            <input class="input" placeholder="请输入脚本名称">
+            <input class="input" placeholder="请输入脚本名称" />
           </div>
           <div class="form__block">
             <label style="margin-bottom: 16px;" class="input-label" for="脚本内容">脚本内容</label>
-            <textarea style="width: 80%; height: 300px;" class="input" placeholder="请输入脚本内容..."></textarea>
+            <textarea
+              style="width: 80%; height: 300px;"
+              class="input"
+              v-model="scriptContent"
+              placeholder="请输入脚本内容..."
+            ></textarea>
           </div>
           <div class="form__block">
             <a class="button">保存</a>
@@ -82,7 +87,8 @@ export default {
       attrs: [{
         key: '',
         value: ''
-      }]
+      }],
+      scriptContent: ''
     }
   },
 

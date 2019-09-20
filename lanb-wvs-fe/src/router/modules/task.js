@@ -18,6 +18,12 @@ const TaskRouter = {
       }
     },
     {
+      path: 'task-log-table',
+      components: {
+        content: require('@/page/task/TaskLogTable').default
+      }
+    },
+    {
       path: 'task-attr-table',
       components: {
         content: require('@/page/task/TaskAttrTable').default

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 模态框 -->
-    <div class="modal">
+    <div class="modal" :style="{transform: transform}">
       <transition name="bounce">
         <div v-if="isModal" class="modal__inner panel">
           <!-- <h1 class="panel__title--border">{{ actionTitle }}</h1> -->
@@ -626,6 +626,21 @@ export default {
     this.initSearchForm()
     this.getList()
     document.addEventListener('keydown', this.keydownHandle)
+    const width = document.body.clientWidth
+    const height = document.body.clientHeight
+    if (width % 2 !== 0) {
+      this.transformX = 'calc(-50% + 0.5px)'
+    } else {
+      this.transformX = '-50%'
+    }
+
+    if (height % 2 !== 0) {
+      this.transformY = 'calc(-50% + 0.5px)'
+    } else {
+      this.transformY = '-50%'
+    }
+
+    this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
   },
 
   beforeDestroy () {

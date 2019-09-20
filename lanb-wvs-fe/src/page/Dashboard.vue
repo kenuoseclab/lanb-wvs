@@ -14,13 +14,13 @@
             <div class="row">
               <div class="col-6">
                 <div class="panel item color--red">
-                  未处理
+                  待处理漏洞
                   <span class="item-num">{{ dashboardData.allCount }}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--yellow">
-                  待确认
+                  待处理报告
                   <span class="item-num">{{ dashboardData.runningCount }}</span>
                 </div>
               </div>
@@ -28,13 +28,13 @@
             <div class="row">
               <div class="col-6">
                 <div class="panel item color--blue">
-                  待扫描
+                  已扫描结果
                   <span class="item-num">{{ dashboardData.allCount }}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--green">
-                  扫描总数
+                  已完成
                   <span class="item-num">{{ dashboardData.allCount }}</span>
                 </div>
               </div>

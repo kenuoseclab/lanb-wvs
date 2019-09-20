@@ -1,7 +1,7 @@
 <template>
   <div v-show="wrapperShow">
-    <div class="modal" :style="{width: width, height: height}">
-      <transition name="bounce" @after-leave="afterLeave" @before-enter="beforeEnter">
+    <div ref="modal" class="modal" :style="{width: width, height: height, transform: transform}">
+      <transition name="bounce" @after-enter="afterEnter" @after-leave="afterLeave" @before-enter="beforeEnter">
         <div v-if="show" class="modal__inner panel" :style="{width: '100%', height: '100%'}">
           <!-- <h1 v-if="title != ''" class="panel__title--border">{{ title }}</h1> -->
           <h1 v-if="title != ''">{{ title }}</h1>
@@ -39,7 +39,7 @@ export default {
 
     width: {
       type: String,
-      default: '80%'
+      default: '600px'
     },
 
     title: {
@@ -49,7 +49,8 @@ export default {
   },
   data () {
     return {
-      wrapperShow: false
+      wrapperShow: false,
+      transform: ''
     }
   },
 
@@ -64,6 +65,25 @@ export default {
 
     beforeEnter () {
       this.wrapperShow = true
+    },
+    afterEnter () {
+      const modal = this.$refs.modal
+      const width = modal.offsetWidth
+      const height = modal.offsetHeight
+      // 如果不是是偶数,则加0.5px
+      if (width % 2 !== 0) {
+        this.transformX = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformX = '-50%'
+      }
+
+      if (height % 2 !== 0) {
+        this.transformY = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformY = '-50%'
+      }
+
+      this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
     }
   }
 }
