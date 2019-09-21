@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
-// import router from '../router'
+import router from '../router'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = ''
@@ -18,9 +18,9 @@ axios.interceptors.response.use(
   error => {
     if (error.response.status === 401) {
       alert(error.response.data.msg)
-      // router.push({
-      //   path: '/login'
-      // })
+      router.push({
+        path: '/login'
+      })
     }
     return Promise.reject(error)
   }

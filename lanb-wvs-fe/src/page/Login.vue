@@ -11,22 +11,12 @@
         <div class="login__inner">
           <div class="form__block">
             <label class="iconfont icon-yonghu input-icon"></label>
-            <input
-              type="text"
-              v-model="user.userName"
-              class="input"
-              placeholder="用户名"
-            />
+            <input type="text" v-model="user.userName" class="input" placeholder="用户名" />
           </div>
 
           <div class="form__block">
             <label class="iconfont icon-Group- input-icon"></label>
-            <input
-              type="password"
-              v-model="user.password"
-              class="input"
-              placeholder="密码"
-            />
+            <input type="password" v-model="user.password" class="input" placeholder="密码" />
           </div>
 
           <div class="btn-group">

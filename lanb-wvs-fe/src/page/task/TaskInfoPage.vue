@@ -4,22 +4,25 @@
       <div class="panel col-12">
         <h1 class="panel__title--border">任务基本信息</h1>
         <div class="panel__body">
-          <table>
+          <table class="table">
             <tbody>
               <tr>
-                <td>当前版本</td>
-                <td>v0.1</td>
+                <td>资产名称</td>
+                <td>文思海辉金信</td>
+                <td>资产等级</td>
+                <td>重要</td>
               </tr>
               <tr>
-                <td>基于框架</td>
-                <td>LANB WEB</td>
+                <td>子资产数</td>
+                <td>100</td>
+                <td>资产任务数</td>
+                <td>10</td>
               </tr>
               <tr>
-                <td>讨论</td>
-                <td>
-                  QQ群：82667033
-                  <br />QQ：425343603
-                </td>
+                <td>未处理漏洞数</td>
+                <td>1</td>
+                <td>可导出报告数</td>
+                <td>15</td>
               </tr>
             </tbody>
           </table>

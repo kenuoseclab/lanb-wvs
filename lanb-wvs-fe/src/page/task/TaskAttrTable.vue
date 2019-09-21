@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/taskAttr"></baseTable>
+  <baseTable :fields="fields" baseURL="/api/taskAttr" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -48,6 +48,18 @@ export default {
         {
           field: 'remark',
           name: '备注'
+        }
+      ],
+
+      btns: [
+        {
+          title: '任务属性配置',
+          icon: 'icon-shezhi',
+          click: () => {
+            this.$dialog({
+              text: '暂未开发'
+            }).display()
+          }
         }
       ]
     }

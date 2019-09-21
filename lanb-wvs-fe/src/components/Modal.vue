@@ -5,10 +5,10 @@
         <div v-if="show" class="modal__inner panel" :style="{width: '100%', height: '100%'}">
           <!-- <h1 v-if="title != ''" class="panel__title--border">{{ title }}</h1> -->
           <h1 v-if="title != ''">{{ title }}</h1>
-          <div class="panel__body">
+          <div class="panel__body" style="background: #f5f5f5;">
             <slot></slot>
           </div>
-          <div class="button-group">
+          <div class="button-group" style="background: #fff;">
             <a class="button" @click="ok">确定</a>
             <a @click="close" class="button">取消</a>
           </div>

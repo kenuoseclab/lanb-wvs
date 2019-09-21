@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" :baseURL="baseURL"></baseTable>
+  <baseTable :fields="fields" :baseURL="baseURL" :where="where"></baseTable>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
       fields: [
         {
           field: 'taskLogId',
-          name: '任务ID'
+          name: '任务日志ID'
         },
         {
           field: 'taskId',
@@ -39,17 +39,35 @@ export default {
           field: 'taskLogStatus',
           name: '任务状态',
           type: 'select',
-          codeType: 'taskStatus'
+          codeType: 'taskStatus',
+          formatter (val) {
+            return '<span class="tag">' + val + '</span>'
+          }
         },
         {
           field: 'remark',
           name: '备注'
         }
-      ]
+      ],
+
+      where: null
     }
   },
 
-  methods: {}
+  created () {
+    const taskId = this.$route.query.taskId
+    if (taskId !== null && typeof (taskId) !== 'undefined') {
+      this.where.taskId = taskId
+    }
+
+    const taskLogId = this.$route.query.taskLogId
+    if (taskLogId !== null && typeof (taskLogId) !== 'undefined') {
+      this.where = {
+        taskLogId: taskLogId
+      }
+    }
+  }
+
 }
 
 </script>

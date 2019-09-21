@@ -20,6 +20,7 @@ import '@/assets/scss/table.scss'
 import '@/assets/scss/input.scss'
 import '@/assets/scss/color.scss'
 import '@/assets/scss/dialog.scss'
+import '@/assets/scss/tag.scss'
 export default {
   name: 'App',
 

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- 模态框 -->
-    <div class="modal" :style="{transform: transform}">
-      <transition name="bounce">
+    <div class="modal" :style="{transform: transform}" ref="modal">
+      <transition name="bounce" @after-enter="afterEnter">
         <div v-if="isModal" class="modal__inner panel">
           <!-- <h1 class="panel__title--border">{{ actionTitle }}</h1> -->
           <h1>{{ actionTitle }}</h1>
@@ -165,7 +165,7 @@
                       </th>
 
                       <template v-for="(field, index) in fields">
-                        <th v-show="!field.hidden" :key="index"  :width="field.width">{{field.name}}</th>
+                        <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
                       </template>
                     </tr>
                   </thead>
@@ -232,6 +232,12 @@ export default {
   name: 'baseTable',
 
   props: {
+
+    // 条件
+    where: {
+      type: Object,
+      default: null
+    },
 
     // 是否显示搜索条件
     isSearch: {
@@ -330,7 +336,9 @@ export default {
         ok: () => {
 
         }
-      }
+      },
+
+      transform: ''
     }
   },
 
@@ -560,10 +568,6 @@ export default {
             this.show = true
             this.initCheckbox()
           })
-        }).catch(() => {
-          this.$router.push({
-            path: '/login'
-          })
         })
     },
 
@@ -618,6 +622,46 @@ export default {
           this.getList()
           break
       }
+    },
+
+    afterEnter () {
+      const modal = this.$refs.modal
+      const width = modal.offsetWidth
+      const height = modal.offsetHeight
+      // 如果不是是偶数,则加0.5px
+      if (width % 2 !== 0) {
+        this.transformX = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformX = '-50%'
+      }
+
+      if (height % 2 !== 0) {
+        this.transformY = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformY = '-50%'
+      }
+
+      this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
+    },
+
+    // 初始化where条件存在情况
+    initWhereForm () {
+      console.log(this.where)
+      if (this.where != null) {
+        for (const whereKey in this.where) {
+          if (this.where.hasOwnProperty(whereKey)) {
+            const whereItem = this.where[whereKey]
+            // 遍历条件,满足则填充
+            for (const formKey in this.form) {
+              if (this.form.hasOwnProperty(formKey)) {
+                if (whereKey === formKey) {
+                  this.form[formKey] = whereItem
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
 
@@ -626,21 +670,8 @@ export default {
     this.initSearchForm()
     this.getList()
     document.addEventListener('keydown', this.keydownHandle)
-    const width = document.body.clientWidth
-    const height = document.body.clientHeight
-    if (width % 2 !== 0) {
-      this.transformX = 'calc(-50% + 0.5px)'
-    } else {
-      this.transformX = '-50%'
-    }
-
-    if (height % 2 !== 0) {
-      this.transformY = 'calc(-50% + 0.5px)'
-    } else {
-      this.transformY = '-50%'
-    }
-
-    this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
+    // where条件初始化存在情况
+    this.initWhereForm()
   },
 
   beforeDestroy () {

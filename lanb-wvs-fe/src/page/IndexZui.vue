@@ -2,7 +2,9 @@
   <div class="wrapper">
     <div class="container">
       <div class="header">
-        <router-link tag="div" class="header-logo" to="/">LANB WVS</router-link>
+        <router-link tag="div" class="header-logo" to="/">
+          <i class="iconfont icon-saomiao"></i>LANB WVS
+        </router-link>
         <ul class="nav-bar">
           <li
             v-for="(item, index) in menus"
@@ -253,6 +255,25 @@ export default {
   margin-left: 40px;
   font-size: 20px;
   font-weight: 400;
+  padding: 0px 16px;
+
+  i {
+    transition: transform 0.5s;
+    margin-right: 8px;
+    font-size: 20px;
+    font-weight: 550;
+  }
+
+  &:hover {
+
+    cursor: pointer;
+    // background-color: rgba(0, 0, 0, 0.1);
+
+    // i {
+    //   transform: rotate(360deg);
+    // }
+
+  }
 }
 
 .header-bar {
