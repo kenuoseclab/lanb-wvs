@@ -1,5 +1,6 @@
 package com.colodoo.manager.task.task.service;
 
+import com.alibaba.fastjson.JSON;
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.exception.AppException;
@@ -13,6 +14,8 @@ import com.colodoo.manager.task.task.model.Task;
 import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.framework.easyui.Page;
 import com.colodoo.manager.task.taskAttr.model.TaskAttrVO;
+import com.colodoo.manager.task.taskLog.model.TaskLog;
+import com.colodoo.manager.task.taskLog.service.TaskLogService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -52,18 +55,16 @@ public class TaskService extends BaseService<Task> {
 
     @Autowired
     TaskSQLMapper sqlMapper;
-
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
-
     @Autowired
     TaskAttrService taskAttrService;
-
     @Autowired
     TaskAttrMapper taskAttrMapper;
-
     @Autowired
     AssetService assetService;
+    @Autowired
+    TaskLogService taskLogService;
 
     /**
      * 新增数据
@@ -286,8 +287,11 @@ public class TaskService extends BaseService<Task> {
      * 开始任务
      *
      * @param task
+     * @return
+     * @throws AppException
+     * @throws SchedulerException
      */
-    public void startTask(Task task) throws AppException, SchedulerException {
+    public TaskLog startTask(Task task) throws AppException, SchedulerException {
 
         // 获取任务编号
         String taskId = task.getTaskId();
@@ -325,6 +329,13 @@ public class TaskService extends BaseService<Task> {
         // 周期转换器
         // ...
 
+        // 生成一个任务日志
+        TaskLog taskLog = new TaskLog();
+        taskLog.setTaskId(taskId);
+        taskLog.setTaskLogStatus("1");
+        taskLog.setCreateUserId(userId);
+        taskLogService.saveTaskLog(taskLog);
+
         // 创建任务
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         Trigger trigger = null;
@@ -340,6 +351,7 @@ public class TaskService extends BaseService<Task> {
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
         jobDataMap.put("taskAttrMap", taskAttrMap);
         jobDataMap.put("task", task);
+        jobDataMap.put("taskLog", taskLog);
 
         // 开启任务
         // SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0).withIntervalInSeconds(1);
@@ -357,11 +369,16 @@ public class TaskService extends BaseService<Task> {
                                     .withIntervalInSeconds(1)
                                     .withRepeatCount(0)).build();
         }
-
+        // 其他方式
+        // ...
 
         scheduler.scheduleJob(jobDetail, trigger);
 
         // 修改任务状态
-        // ..
+        taskLog.setTaskLogStatus("2");
+        taskLogService.updateTaskLog(taskLog);
+
+        return taskLog;
+
     }
 }

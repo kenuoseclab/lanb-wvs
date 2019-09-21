@@ -7,6 +7,7 @@ import com.colodoo.manager.task.task.model.TaskVO;
 import com.colodoo.manager.task.task.service.TaskService;
 import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.utils.Contants;
+import com.colodoo.manager.task.taskLog.model.TaskLog;
 import com.github.pagehelper.Constant;
 import com.github.pagehelper.PageInfo;
 
@@ -207,8 +208,9 @@ public class TaskAction {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 
 		try {
-			taskService.startTask(task);
+			TaskLog taskLog = taskService.startTask(task);
 			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
+			rspMap.put("data", taskLog);
 			rspMap.put(Contants.MSG_KEY_MSG, "任务开始成功!");
 		} catch (AppException e) {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
