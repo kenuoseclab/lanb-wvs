@@ -254,14 +254,6 @@ public class TaskService extends BaseService<Task> {
         TaskAttr cycleTaskAttr = new TaskAttr(this.uuid(), taskId, "cycle", createTaskVO.getCycle(), date, userId, date,
                 userId, null);
         taskAttrService.saveTaskAttr(cycleTaskAttr);
-        // 关联资产
-        TaskAttr assetsTaskAttr = new TaskAttr(this.uuid(), taskId, "assets", createTaskVO.getAssets(), date, userId,
-                date, userId, null);
-        taskAttrService.saveTaskAttr(assetsTaskAttr);
-        // 关联漏洞
-        TaskAttr bugsTaskAttr = new TaskAttr(this.uuid(), taskId, "bugs", createTaskVO.getAssets(), date, userId, date,
-                userId, null);
-        taskAttrService.saveTaskAttr(bugsTaskAttr);
         // 扫描方式
         TaskAttr scanTypeTaskAttr = new TaskAttr(this.uuid(), taskId, "scan_type", createTaskVO.getAssets(), date,
                 userId, date, userId, null);
@@ -270,6 +262,29 @@ public class TaskService extends BaseService<Task> {
         TaskAttr reportTaskAttr = new TaskAttr(this.uuid(), taskId, "report_template", createTaskVO.getReportTemplate(),
                 date, userId, date, userId, null);
         taskAttrService.saveTaskAttr(reportTaskAttr);
+
+        // 资产和漏洞取出来遍历新增
+        // 关联资产
+        String assets = createTaskVO.getAssets();
+        if (!"".equals(assets)) {
+            String[] assetArr = assets.split(",");
+            for (String asset : assetArr) {
+                TaskAttr assetsTaskAttr = new TaskAttr(this.uuid(), taskId, "asset", asset, date, userId,
+                        date, userId, null);
+                taskAttrService.saveTaskAttr(assetsTaskAttr);
+            }
+        }
+
+        // 关联漏洞
+        String bugs = createTaskVO.getAssets();
+        if (!"".equals(bugs)) {
+            String[] bugArr = bugs.split(",");
+            for (String bug : bugArr) {
+                TaskAttr bugsTaskAttr = new TaskAttr(this.uuid(), taskId, "bug", bug, date, userId, date,
+                        userId, null);
+                taskAttrService.saveTaskAttr(bugsTaskAttr);
+            }
+        }
 
         // 初始化任务信息
         Task task = new Task(taskId, createTaskVO.getTaskName(), createTaskVO.getDesc(), "1", date, userId, date,
@@ -342,16 +357,24 @@ public class TaskService extends BaseService<Task> {
         JobDetail jobDetail = JobBuilder.newJob(JobClass.class).withIdentity(taskId, userId).build();
 
         // 获取资产列表
-        // ...
+        TaskAttrVO assetListTastAttr = new TaskAttrVO();
+        assetListTastAttr.setTaskId(taskId);
+        assetListTastAttr.setTaskAttrKey("asset");
+        List<TaskAttr> assetList = taskAttrService.query(assetListTastAttr);
 
         // 获取漏洞列表
-        // ...
+        TaskAttrVO bugListTastAttr = new TaskAttrVO();
+        bugListTastAttr.setTaskId(taskId);
+        bugListTastAttr.setTaskAttrKey("bug");
+        List<TaskAttr> bugList = taskAttrService.query(bugListTastAttr);
 
         // 参数传递
         JobDataMap jobDataMap = jobDetail.getJobDataMap();
         jobDataMap.put("taskAttrMap", taskAttrMap);
         jobDataMap.put("task", task);
         jobDataMap.put("taskLog", taskLog);
+        jobDataMap.put("assets", assetList);
+        jobDataMap.put("bugs", bugList);
 
         // 开启任务
         // SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0).withIntervalInSeconds(1);
