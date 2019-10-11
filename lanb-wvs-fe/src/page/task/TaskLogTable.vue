@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" :baseURL="baseURL" :where="where"></baseTable>
+  <baseTable :fields="fields" :baseURL="baseURL" :where="where" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -50,7 +50,13 @@ export default {
         }
       ],
 
-      where: null
+      where: null,
+
+      btns: [
+        {
+          title: '漏洞报告'
+        }
+      ]
     }
   },
 
