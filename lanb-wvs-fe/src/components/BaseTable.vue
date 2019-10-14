@@ -180,7 +180,9 @@
                           <template v-if="field.formatter != null">
                             <div v-html="field.formatter(cellFormatter(field, row))"></div>
                           </template>
-                          <template v-else>{{cellFormatter(field, row)}}</template>
+                          <template v-else>
+                            <div :title="cellFormatter(field, row)">{{cellFormatter(field, row)}}</div>
+                          </template>
                         </td>
                       </template>
                     </tr>
