@@ -1,5 +1,10 @@
 <template>
-  <baseTable :fields="fields" baseURL="/api/bug" :btns="btns"></baseTable>
+  <div>
+    <baseTable :fields="fields" baseURL="/api/bug" :btns="btns"></baseTable>
+    <Modal :show.sync="linkScript.isShow">
+      <h1 slot="header">关联脚本</h1>
+    </Modal>
+  </div>
 </template>
 
 <script>
@@ -50,11 +55,16 @@ export default {
         }
       ],
 
+      linkScript: {
+        isShow: false
+      },
+
       btns: [
         {
           title: '关联脚本',
           icon: 'icon-guanlian',
-          click: function (rows, handle) {
+          click: (rows, handle) => {
+            this.linkScript.isShow = true
             console.log(rows)
             console.log(handle)
           }

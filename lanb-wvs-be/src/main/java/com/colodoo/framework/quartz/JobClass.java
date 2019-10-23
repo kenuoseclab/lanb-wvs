@@ -58,6 +58,7 @@ public class JobClass implements Job {
                 // ...
                 // 根据脚本扫描
                 // ...
+                successCount++;
             }
         }
 

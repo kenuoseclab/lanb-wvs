@@ -2,6 +2,8 @@ package com.colodoo.framework.creater.action;
 
 import com.colodoo.framework.creater.model.*;
 import com.colodoo.framework.creater.service.CreaterService;
+import com.colodoo.framework.utils.Contants;
+import com.github.pagehelper.PageInfo;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +23,16 @@ public class CreaterAction {
 
     @Autowired
     CreaterService createrService;
+
+    @RequestMapping(value = "/getTables")
+    @ResponseBody
+    public Map<String, Object> getTables(@RequestBody TablesVO TablesVO) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+        PageInfo<Tables> info = createrService.getTables(TablesVO.getPage());
+        rspMap.put(Contants.TABLE_ROWS, info.getList());
+        rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
+        return rspMap;
+    }
 
     /**
      * 生成查询语句
@@ -42,7 +55,7 @@ public class CreaterAction {
     @RequestMapping(value = "/getSelectQueryByTemplate")
     @ResponseBody
     public Map getSelectQueryByTemplate(String tableName) {
-    	Map rspMap = new HashMap();
+        Map rspMap = new HashMap();
         try {
             String result = createrService.getSelectQueryByTemplate(tableName);
             rspMap.put("result", result);
@@ -169,8 +182,8 @@ public class CreaterAction {
             String result = createrService.createServiceString(serviceParm);
             rspMap.put("result", result);
         } catch (Exception e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
         return rspMap;
     }
 

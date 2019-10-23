@@ -178,7 +178,7 @@
                       <template v-for="(field, fieldIndex) in fields">
                         <td v-if="!field.hidden" :key="fieldIndex" :width="field.width">
                           <template v-if="field.formatter != null">
-                            <div v-html="field.formatter(cellFormatter(field, row))"></div>
+                            <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
                           </template>
                           <template v-else>
                             <div :title="cellFormatter(field, row)">{{cellFormatter(field, row)}}</div>

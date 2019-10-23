@@ -82,6 +82,13 @@ const sysRouter = {
       components: {
         content: require('@/page/sys/CodeCreate').default
       }
+    },
+    // 代码生成表格
+    {
+      path: 'code-create-table',
+      components: {
+        content: require('@/page/sys/CodeCreateTable').default
+      }
     }
   ]
 }
