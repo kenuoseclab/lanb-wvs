@@ -2,14 +2,11 @@
   <div>
     <div class="row">
       <div>
-        <transition name="fade">
           <tree-menu
-            v-if="treeMenus.length > 0"
             class="panel"
             :folder="treeMenus"
             :callback="callback"
         ></tree-menu>
-        </transition>
       </div>
       <div class="col-9">
         <base-form :fields="fields" :data="formData"></base-form>
