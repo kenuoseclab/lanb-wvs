@@ -23,7 +23,7 @@
 				     a.`asset_id` = #{assetId} and
 				</if>
 				<if test="assetName != null and assetName !=''">
-				     a.`asset_name` = #{assetName} and
+					a.`asset_name` like CONCAT(CONCAT('%', #{assetName}), '%') and
 				</if>
 				<if test="createTime != null and createTime !=''">
 				     a.`create_time` = #{createTime} and
