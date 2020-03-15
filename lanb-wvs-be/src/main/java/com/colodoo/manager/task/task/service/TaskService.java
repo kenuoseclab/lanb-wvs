@@ -354,7 +354,8 @@ public class TaskService extends BaseService<Task> {
         // 创建任务
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         Trigger trigger = null;
-        JobDetail jobDetail = JobBuilder.newJob(JobClass.class).withIdentity(taskId, userId).build();
+        JobDetail jobDetail = null;
+        jobDetail = JobBuilder.newJob((Class <? extends Job>) this.getApplicationContext().getBean("jobClass").getClass()).withIdentity(taskId, userId).build();
 
         // 获取资产列表
         TaskAttrVO assetListTastAttr = new TaskAttrVO();

@@ -2,7 +2,7 @@
   <div>
     <baseTable :fields="fields" baseURL="/api/asset" :btns="btns"></baseTable>
 
-    <Modal :show.sync="assetInfo.show" title="资产信息" width="98%" height="600px">
+    <Modal :isEsc="true" :show.sync="assetInfo.show" title="资产信息" width="90%" height="600px">
       <AssetInfo></AssetInfo>
     </Modal>
 

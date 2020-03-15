@@ -301,7 +301,7 @@ public abstract class BaseService<M> {
      *
      * @return
      */
-    private ApplicationContext getApplicationContext() {
+    public ApplicationContext getApplicationContext() {
         return SpringContextsUtil.getApplicationContext();
     }
 

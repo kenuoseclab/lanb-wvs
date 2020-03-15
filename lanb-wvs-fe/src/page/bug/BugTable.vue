@@ -76,6 +76,20 @@ export default {
             console.log(rows)
             console.log(handle)
           }
+        },
+        {
+          title: '漏洞批量导入',
+          click: function (rows, handle) {
+            console.log(rows)
+            console.log(handle)
+          }
+        },
+        {
+          title: '漏洞导入模板',
+          click: function (rows, handle) {
+            console.log(rows)
+            console.log(handle)
+          }
         }
       ]
     }

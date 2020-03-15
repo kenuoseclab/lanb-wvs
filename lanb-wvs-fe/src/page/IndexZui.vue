@@ -1,9 +1,10 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <div class="header">
+      <div class="header noselect">
         <router-link tag="div" class="header-logo" to="/">
-          <i class="iconfont icon-saomiao"></i>LANB WVS
+          <!-- <i class="iconfont icon-saomiao"></i> -->
+          LANB WVS
         </router-link>
         <ul class="nav-bar">
           <li
@@ -53,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="sub-header">
+      <div class="sub-header noselect">
         <!-- 面包屑 -->
         <!-- <ul style="margin-left: 20px;" class="nav-bar">
           <li>首页</li><span style="margin-left: 5px; color: gray;">/</span>

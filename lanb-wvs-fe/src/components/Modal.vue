@@ -1,7 +1,12 @@
 <template>
   <div v-show="wrapperShow">
     <div ref="modal" class="modal" :style="{width: width, height: height, transform: transform}">
-      <transition name="bounce" @after-enter="afterEnter" @after-leave="afterLeave" @before-enter="beforeEnter">
+      <transition
+        name="bounce"
+        @after-enter="afterEnter"
+        @after-leave="afterLeave"
+        @before-enter="beforeEnter"
+      >
         <div v-if="show" class="modal__inner panel" :style="{width: '100%', height: '100%'}">
           <!-- <h1 v-if="title != ''" class="panel__title--border">{{ title }}</h1> -->
           <h1 v-if="title != ''">{{ title }}</h1>
@@ -46,12 +51,30 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+
+    isEsc: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       wrapperShow: false,
       transform: ''
+    }
+  },
+
+  mounted () {
+    let self = this
+    if (this.isEsc) {
+      this.$nextTick(() => {
+        document.addEventListener('keyup', function (e) {
+          if (e.keyCode === 27) {
+            self.close()
+          }
+        })
+      })
     }
   },
 

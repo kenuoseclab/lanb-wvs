@@ -11,6 +11,7 @@ import com.colodoo.manager.task.taskLog.model.TaskLog;
 import com.github.pagehelper.Constant;
 import com.github.pagehelper.PageInfo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/task")
 @CrossOrigin
+@Slf4j
 public class TaskAction {
 
 	@Autowired
@@ -186,9 +188,11 @@ public class TaskAction {
 			rspMap.put(Contants.MSG_KEY_SUCCESS, true);
 			rspMap.put(Contants.MSG_KEY_MSG, "创建任务成功");
 		} catch (AppException e) {
+			log.error("创建任务失败", e);
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 			rspMap.put(Contants.MSG_KEY_MSG, "创建任务失败");
 		} catch (Exception e) {
+			log.error("系统异常,请联系管理员！", e);
 			rspMap.put(Contants.MSG_KEY_SUCCESS, false);
 			rspMap.put(Contants.MSG_KEY_MSG, "系统异常,请联系管理员！");
 		}

@@ -58,16 +58,16 @@ export default {
         {
           field: 'remark',
           name: '备注'
-        },
-        {
-          field: 'status',
-          name: '状态',
-          type: 'select',
-          codeType: 'taskStatus',
-          formatter (val) {
-            return '<span class="tag">' + val + '</span>'
-          }
         }
+        // {
+        //   field: 'status',
+        //   name: '状态',
+        //   type: 'select',
+        //   codeType: 'taskStatus',
+        //   formatter (val) {
+        //     return '<span class="tag">' + val + '</span>'
+        //   }
+        // }
       ],
 
       dialog: null,

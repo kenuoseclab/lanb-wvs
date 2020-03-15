@@ -150,6 +150,7 @@
               </template>
             </div>
 
+            <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 100vh;"></div>
             <transition name="fade">
               <div v-show="show" style="padding: 0px 8px;">
                 <table class="table">
@@ -171,6 +172,12 @@
                   </thead>
 
                   <tbody>
+                    <!-- <input
+                      class="input"
+                      v-model="input.text"
+                      v-show="input.show"
+                      :style="'transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
+                    /> -->
                     <tr :key="index" v-for="(row, index) in rows">
                       <td v-if="checkbox.show" style="text-align: center;">
                         <input v-model="row.checked" class="checkbox" type="checkbox" />
@@ -181,7 +188,10 @@
                             <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
                           </template>
                           <template v-else>
-                            <div :title="cellFormatter(field, row)">{{cellFormatter(field, row)}}</div>
+                            <div
+                              @dblclick="cellDbclick($event, cellFormatter(field, row))"
+                              :title="cellFormatter(field, row)"
+                            >{{cellFormatter(field, row)}}</div>
                           </template>
                         </td>
                       </template>
@@ -340,7 +350,13 @@ export default {
         }
       },
 
-      transform: ''
+      transform: '',
+      input: {
+        offsetTop: '0px',
+        offsetLeft: '0px',
+        text: '',
+        show: false
+      }
     }
   },
 
@@ -378,8 +394,40 @@ export default {
 
   methods: {
 
+    getElementLeft (element) {
+      var actualLeft = element.offsetLeft
+      var current = element.offsetParent
+      while (current !== null) {
+        actualLeft += (current.offsetLeft + current.clientLeft)
+        current = current.offsetParent
+      }
+      return actualLeft
+    },
+
+    getElementTop (element) {
+      var actualTop = element.offsetTop
+      var current = element.offsetParent
+      while (current !== null) {
+        actualTop += (current.offsetTop + current.clientTop)
+        current = current.offsetParent
+      }
+      return actualTop
+    },
+
+    // 单元格双击事件
+    cellDbclick (event) {
+      this.input.show = true
+      let offsetTop = this.getElementTop(event.srcElement) + 'px'
+      let offsetLeft = this.getElementLeft(event.srcElement) + 'px'
+      let text = event.target.innerText
+
+      this.input.offsetTop = offsetTop
+      this.input.offsetLeft = offsetLeft
+      this.input.text = text
+    },
+
     // 取得代码类型列表
-    getCodeTypeMap (field) {
+    getCodeTypeMap  (field) {
       return this.$store.state.cache.codeInfo[field.codeType]
     },
 
@@ -565,6 +613,7 @@ export default {
         .then(data => {
           this.rows = data.rows
           this.total = data.total
+
           // 强制刷新dom,防止checkbox出现问题
           this.$nextTick(() => {
             this.show = true
@@ -648,7 +697,6 @@ export default {
 
     // 初始化where条件存在情况
     initWhereForm () {
-      console.log(this.where)
       if (this.where != null) {
         for (const whereKey in this.where) {
           if (this.where.hasOwnProperty(whereKey)) {

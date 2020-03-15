@@ -11,10 +11,12 @@ import org.quartz.JobExecutionException;
 
 import com.colodoo.manager.task.task.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class JobClass implements Job {
 
     @Autowired
