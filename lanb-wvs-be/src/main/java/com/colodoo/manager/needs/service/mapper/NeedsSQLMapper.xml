@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.needs.service.mapper.NeedsSQLMapper">
+
+	<select id="getNeedsList" resultType="com.colodoo.manager.needs.model.Needs" parameterType="com.colodoo.manager.needs.model.NeedsVO">
+		select
+			a.`needs_id` as `needsId`,
+			a.`needs_name` as `needsName`,
+			a.`needs_content` as `needsContent`,
+			a.`needs_status` as `needsStatus`,
+			a.`needs_step` as `needsStep`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`update_time` as `updateTime`,
+			a.`update_user_id` as `updateUserId`,
+			a.`remark` as `remark`
+		from
+		    needs a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="needsId != null and needsId !=''">
+					a.`needs_id` like CONCAT(CONCAT('%', #{needsId}), '%') and
+				</if>
+				<if test="needsName != null and needsName !=''">
+					a.`needs_name` like CONCAT(CONCAT('%', #{needsName}), '%') and
+				</if>
+				<if test="needsContent != null">
+					a.`needs_content` = #{needsContent} and
+				</if>
+				<if test="needsStatus != null and needsStatus !=''">
+					a.`needs_status` like CONCAT(CONCAT('%', #{needsStatus}), '%') and
+				</if>
+				<if test="needsStep != null and needsStep !=''">
+					a.`needs_step` like CONCAT(CONCAT('%', #{needsStep}), '%') and
+				</if>
+				<if test="createTime != null">
+					a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+					a.`create_user_id` like CONCAT(CONCAT('%', #{createUserId}), '%') and
+				</if>
+				<if test="updateTime != null">
+					a.`update_time` = #{updateTime} and
+				</if>
+				<if test="updateUserId != null and updateUserId !=''">
+					a.`update_user_id` like CONCAT(CONCAT('%', #{updateUserId}), '%') and
+				</if>
+				<if test="remark != null and remark !=''">
+					a.`remark` like CONCAT(CONCAT('%', #{remark}), '%') and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

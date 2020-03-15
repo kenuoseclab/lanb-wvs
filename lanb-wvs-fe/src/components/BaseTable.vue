@@ -76,7 +76,15 @@
     <!-- 删除确认框 -->
     <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog>
 
-    <div class="row">
+    <!-- 文字提示框 -->
+    <!-- <input
+      class="input"
+      v-model="input.text"
+      v-show="input.show"
+      :style="'z-index: 9999; transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
+    /> -->
+
+    <div class="row" @click="input.show = false">
       <div class="col-12">
         <div class="panel" v-if="isSearch">
           <form class="form panel__body">
@@ -172,12 +180,6 @@
                   </thead>
 
                   <tbody>
-                    <!-- <input
-                      class="input"
-                      v-model="input.text"
-                      v-show="input.show"
-                      :style="'transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
-                    /> -->
                     <tr :key="index" v-for="(row, index) in rows">
                       <td v-if="checkbox.show" style="text-align: center;">
                         <input v-model="row.checked" class="checkbox" type="checkbox" />

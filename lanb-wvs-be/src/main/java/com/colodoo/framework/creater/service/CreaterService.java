@@ -239,7 +239,7 @@ public class CreaterService {
         resultStr = writer.toString();
         writer.close();
         writer1.close();
-        System.out.println(resultStr);
+        // System.out.println(resultStr);
         return resultStr;
     }
 

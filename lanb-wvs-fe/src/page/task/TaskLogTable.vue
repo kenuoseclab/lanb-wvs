@@ -54,7 +54,7 @@ export default {
 
       btns: [
         {
-          title: '漏洞报告'
+          title: '扫描报告'
         }
       ]
     }

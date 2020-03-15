@@ -1,11 +1,9 @@
 package com.colodoo.manager.task.task.service;
 
-import com.alibaba.fastjson.JSON;
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.exception.DAOException;
-import com.colodoo.framework.quartz.JobClass;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.manager.asset.service.AssetService;
 import com.colodoo.manager.task.task.model.CreateTaskVO;
@@ -30,19 +28,14 @@ import com.colodoo.manager.task.taskAttr.model.TaskAttrExample;
 import com.colodoo.manager.task.taskAttr.service.TaskAttrMapper;
 import com.colodoo.manager.task.taskAttr.service.TaskAttrService;
 
-import org.apache.tomcat.jni.Thread;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
-import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author colodoo
@@ -355,7 +348,7 @@ public class TaskService extends BaseService<Task> {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         Trigger trigger = null;
         JobDetail jobDetail = null;
-        jobDetail = JobBuilder.newJob((Class <? extends Job>) this.getApplicationContext().getBean("jobClass").getClass()).withIdentity(taskId, userId).build();
+        jobDetail = JobBuilder.newJob((Class <? extends Job>) this.getApplicationContext().getBean("simpleScanJob").getClass()).withIdentity(taskId, userId).build();
 
         // 获取资产列表
         TaskAttrVO assetListTastAttr = new TaskAttrVO();
