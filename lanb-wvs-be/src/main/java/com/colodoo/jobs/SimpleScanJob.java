@@ -1,4 +1,4 @@
-package com.colodoo.framework.quartz;
+package com.colodoo.jobs;
 
 import com.alibaba.fastjson.JSON;
 import com.colodoo.manager.task.taskAttr.model.TaskAttr;
@@ -69,7 +69,8 @@ public class SimpleScanJob implements Job {
                     // ...
                     // 插入一条任务日志详情
                     TaskLogDet taskLogDet = new TaskLogDet();
-                    taskLogDet.setTaskLogDetKey("");
+                    taskLogDet.setTaskLogDetKey("bugId");
+                    taskLogDet.setTaskLogDetKey(bugId);
                     taskLogDet.setTaskLogId(taskLog.getTaskLogId());
                     taskLogDetService.saveTaskLogDet(taskLogDet);
                     successCount++;

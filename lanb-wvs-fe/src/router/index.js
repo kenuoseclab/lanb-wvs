@@ -69,6 +69,15 @@ export default new Router({
       path: '*',
       name: 'BlankPage',
       component: require('@/page/page/BlankPage.vue').default
+      // component: IndexZui,
+      // children: [
+      //   {
+      //     path: '',
+      //     components: {
+      //       content: require('@/page/page/BlankPage.vue').default
+      //     }
+      //   }
+      // ]
     }
   ]
 })

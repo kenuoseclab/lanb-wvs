@@ -145,6 +145,10 @@ export default {
   /* background: #f5f5f5; */
   /* background: #1183fb linear-gradient(-90deg, #0a48d1 0, #1183fb 100%); */
   background: #4398e0 linear-gradient(-90deg, #4398e0 0, #64aae8 100%);
+  // background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584380083579&di=1c4d0bf72d75682828c96011fbac6252&imgtype=jpg&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2017-12-12%2F5a2f424ee5072.jpg);
+  // background-image: url(http://file03.16sucai.com/2017/1100/16sucai_p20161118018_09f.JPG);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -180,9 +184,9 @@ export default {
   padding-bottom: 50px; */
   /* padding-left: 30px;
   padding-right: 30px; */
-  width: 400px;
+  width: 350px;
   /* border: 1px solid #dcdee2; */
-  /* border-radius: 5px; */
+  border-radius: 5px;
   box-shadow: 1px 1px 10px rgba(0, 21, 41, 0.08);
   margin-bottom: 0px !important;
   z-index: 10002;
@@ -220,7 +224,7 @@ export default {
 
   .input-icon {
     position: absolute;
-    left: 70px;
+    left: 40px;
     width: 35px;
     line-height: 35px;
     font-size: 16px;
