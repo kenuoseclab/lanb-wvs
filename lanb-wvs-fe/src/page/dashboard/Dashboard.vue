@@ -15,27 +15,27 @@
               <div class="col-6">
                 <div class="panel item color--red">
                   待处理漏洞
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
+                  <span class="item-num">10</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--yellow">
                   待处理报告
-                  <span class="item-num">{{ dashboardData.runningCount }}</span>
+                  <span class="item-num">2</span>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-6">
                 <div class="panel item color--blue">
-                  已扫描结果
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
+                  正在扫描任务
+                  <span class="item-num">3</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--green">
                   已完成
-                  <span class="item-num">{{ dashboardData.allCount }}</span>
+                  <span class="item-num">7</span>
                 </div>
               </div>
             </div>
@@ -76,13 +76,13 @@
     <div class="row">
       <div class="col-6">
         <div class="panel">
-          <h1>图表1</h1>
+          <h1>待处理漏洞</h1>
           <div id="echart1" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
         <div class="panel">
-          <h1>图表2</h1>
+          <h1>资产漏洞数</h1>
           <div id="echart2" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
@@ -98,8 +98,8 @@
 
 <script>
 import G2 from '@antv/g2'
-import FastItems from './dashboard/FastItems'
-var df = require('date-formatter')
+import FastItems from './FastItems'
+// var df = require('date-formatter')
 
 export default {
   name: 'dashboard',
@@ -120,49 +120,42 @@ export default {
   mounted () {
     // 初始化图表
     this.renderCharts('echart1')
-    this.renderCharts('echart2')
+    this.render2Charts('echart2')
     // this.renderCharts('echart3')
 
     // 取首页仪表盘数据
-    const parms = {
-      dateFrom: df(new Date(), 'YYYY-MM-DD')
-    }
-    this
-      .$post('/api/task/getDashboardData', parms)
-      .then(data => {
-        if (data.length === 1) {
-          this.dashboardData = data[0]
-        }
-      })
-      .catch(() => {
-        this.$router.push({
-          path: '/login'
-        })
-      })
+    // const parms = {
+    //   dateFrom: df(new Date(), 'YYYY-MM-DD')
+    // }
+    // this
+    //   .$post('/api/task/getDashboardData', parms)
+    //   .then(data => {
+    //     if (data.length === 1) {
+    //       this.dashboardData = data[0]
+    //     }
+    //   })
+    //   .catch(() => {
+    //     this.$router.push({
+    //       path: '/login'
+    //     })
+    //   })
   },
 
   methods: {
+
     renderCharts (id) {
-      var data = [{
-        item: '事例一',
-        count: 40,
-        percent: 0.4
-      }, {
-        item: '事例二',
+      var data = [ {
+        item: '低危漏洞',
         count: 21,
         percent: 0.21
       }, {
-        item: '事例三',
+        item: '中危漏洞',
         count: 17,
         percent: 0.17
       }, {
-        item: '事例四',
+        item: '高危漏洞',
         count: 13,
         percent: 0.13
-      }, {
-        item: '事例五',
-        count: 9,
-        percent: 0.09
       }]
       var chart = new G2.Chart({
         container: id,
@@ -189,7 +182,76 @@ export default {
       // 辅助文本
       chart.guide().html({
         position: ['50%', '50%'],
-        html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">主机<br><span style="color:#8c8c8c;font-size:20px">200</span>台</div>',
+        html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">漏洞<br><span style="color:#8c8c8c;font-size:20px">10</span>例</div>',
+        alignX: 'middle',
+        alignY: 'middle'
+      })
+      var interval = chart.intervalStack().position('percent').color('item', ['#3AA1FF', '#FBD437', '#F47F92']).label('percent', {
+        formatter: function formatter (val, item) {
+          return item.point.item + ': ' + val
+        }
+      }).tooltip('item*percent', function (item, percent) {
+        percent = percent * 100 + '%'
+        return {
+          name: item,
+          value: percent
+        }
+      }).style({
+        lineWidth: 1,
+        stroke: '#fff'
+      })
+      chart.render()
+      interval.setSelected(data[0])
+    },
+
+    render2Charts (id) {
+      var data = [{
+        item: '福建省移动',
+        count: 40,
+        percent: 0.4
+      }, {
+        item: '福建绿盟科技',
+        count: 21,
+        percent: 0.21
+      }, {
+        item: '海峡金桥保险',
+        count: 17,
+        percent: 0.17
+      }, {
+        item: '福建省农信',
+        count: 13,
+        percent: 0.13
+      }, {
+        item: '福建省农信-分行',
+        count: 13,
+        percent: 0.13
+      }]
+      var chart = new G2.Chart({
+        container: id,
+        forceFit: true,
+        height: 350,
+        animate: false
+      })
+      chart.source(data, {
+        percent: {
+          formatter: function formatter (val) {
+            val = val * 100 + '%'
+            return val
+          }
+        }
+      })
+      chart.coord('theta', {
+        radius: 0.75,
+        innerRadius: 0.6
+      })
+      chart.tooltip({
+        showTitle: false,
+        itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+      })
+      // 辅助文本
+      chart.guide().html({
+        position: ['50%', '50%'],
+        html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">资产</div>',
         alignX: 'middle',
         alignY: 'middle'
       })
@@ -244,6 +306,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 }
 

@@ -25,7 +25,7 @@ export default new Router({
         {
           path: 'dashboard',
           components: {
-            content: require('@/page/Dashboard').default
+            content: require('@/page/dashboard/Dashboard').default
           }
         },
         {
