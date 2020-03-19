@@ -1,4 +1,4 @@
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 
 const TaskRouter = {
   path: '/task',
@@ -8,31 +8,31 @@ const TaskRouter = {
     {
       path: 'task-info-page',
       components: {
-        content: require('@/page/task/TaskInfoPage').default
+        content: require('@/views/task/TaskInfoPage').default
       }
     },
     {
       path: 'task-table',
       components: {
-        content: require('@/page/task/TaskTable').default
+        content: require('@/views/task/TaskTable').default
       }
     },
     {
       path: 'task-log-table',
       components: {
-        content: require('@/page/task/TaskLogTable').default
+        content: require('@/views/task/TaskLogTable').default
       }
     },
     {
       path: 'task-attr-table',
       components: {
-        content: require('@/page/task/TaskAttrTable').default
+        content: require('@/views/task/TaskAttrTable').default
       }
     },
     {
       path: 'task-create',
       components: {
-        content: require('@/page/task/TaskCreate').default
+        content: require('@/views/task/TaskCreate').default
       }
     }
   ]

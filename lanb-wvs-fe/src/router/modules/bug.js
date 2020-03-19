@@ -1,4 +1,4 @@
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 
 const bugRouter = {
   path: '/bug',
@@ -8,13 +8,13 @@ const bugRouter = {
     {
       path: 'bug-table',
       components: {
-        content: require('@/page/bug/BugTable').default
+        content: require('@/views/bug/BugTable').default
       }
     },
     {
       path: 'bug-level-table',
       components: {
-        content: require('@/page/bug/BugLevelTable').default
+        content: require('@/views/bug/BugLevelTable').default
       }
     }
   ]

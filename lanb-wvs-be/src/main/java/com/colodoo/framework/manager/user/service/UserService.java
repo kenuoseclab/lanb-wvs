@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -89,6 +90,7 @@ public class UserService extends BaseService<User> {
 			SessionObject sessionObject = new SessionObject();
 			// 成功以后填充sessionObject
 			User user = users.get(0);
+			user.setPassword(null);
 			sessionObject.setUser(user);
 			RoleUserExample roleUserExample = new RoleUserExample();
 			roleUserExample.createCriteria().andUserIdEqualTo(user.getUserId());
@@ -101,8 +103,7 @@ public class UserService extends BaseService<User> {
 			log.setCreateTime(new Date());
 			logService.saveLog(log);
 			msg.setSuccess(true);
-			user.setPassword(null);
-			msg.setData(user);
+			msg.setData(sessionObject);
 			return msg;
 		} else {
 			this.failLogin(model, request);

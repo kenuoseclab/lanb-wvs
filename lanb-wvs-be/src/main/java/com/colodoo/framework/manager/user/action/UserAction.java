@@ -51,9 +51,7 @@ public class UserAction {
 			// 已经登录
 			if (sessionObject != null && sessionObject.getUser() != null) {
 				msg.setSuccess(true);
-				model.setPassword(null);
-				model.setUserName(sessionObject.getUser().getUserId());
-				msg.setData(model);
+				msg.setData(sessionObject);
 				msg.setMsg(Contants.LOGINED);
 			} else {
 				// 登录成功

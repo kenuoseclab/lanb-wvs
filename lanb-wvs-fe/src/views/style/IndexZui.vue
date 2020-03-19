@@ -35,7 +35,7 @@
               <ul>
                 <li>
                   <i class="iconfont icon-yonghu"></i>
-                  {{ $store.state.user.userInfo.userName }}
+                  {{ $store.state.user.userInfo.user.userName }}
                 </li>
                 <li>
                   <i class="iconfont icon-gerenshezhi"></i>个人设置

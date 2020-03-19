@@ -1,4 +1,4 @@
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 
 const assetRouter = {
   path: '/asset',
@@ -8,13 +8,13 @@ const assetRouter = {
     {
       path: 'asset-table',
       components: {
-        content: require('@/page/asset/AssetTable').default
+        content: require('@/views/asset/AssetTable').default
       }
     },
     {
       path: '*',
       components: {
-        content: require('@/page/page/BlankPage.vue').default
+        content: require('@/views/common/BlankPage.vue').default
       }
     }
   ]

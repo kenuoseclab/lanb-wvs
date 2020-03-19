@@ -1,4 +1,4 @@
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 
 const scriptRouter = {
   path: '/script',
@@ -8,7 +8,7 @@ const scriptRouter = {
     {
       path: 'script-page',
       components: {
-        content: require('@/page/script/ScriptPage').default
+        content: require('@/views/script/ScriptPage').default
       }
     }
   ]

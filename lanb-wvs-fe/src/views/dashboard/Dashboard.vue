@@ -118,6 +118,8 @@ export default {
   },
 
   mounted () {
+    console.log(this.$store.state.user)
+
     // 初始化图表
     this.renderCharts('echart1')
     this.render2Charts('echart2')

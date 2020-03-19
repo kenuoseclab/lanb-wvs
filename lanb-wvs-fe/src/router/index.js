@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 import SystemRouter from './modules/system'
 import BugRouter from './modules/bug'
 import TaskRouter from './modules/task'
@@ -25,13 +25,13 @@ export default new Router({
         {
           path: 'dashboard',
           components: {
-            content: require('@/page/dashboard/Dashboard').default
+            content: require('@/views/dashboard/Dashboard').default
           }
         },
         {
           path: '*',
           components: {
-            content: require('@/page/page/BlankPage.vue').default
+            content: require('@/views/common/BlankPage.vue').default
           }
         }
       ]
@@ -53,28 +53,28 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: require('@/page/Login').default
+      component: require('@/views/Login').default
     },
     {
       path: '/index-ice',
       name: 'IndexIce',
-      component: require('@/page/IndexIce.vue').default
+      component: require('@/views/style/IndexIce.vue').default
     },
     {
       path: '/index-zui',
       name: 'IndexZui',
-      component: require('@/page/IndexZui.vue').default
+      component: require('@/views/style/IndexZui.vue').default
     },
     {
       path: '*',
       name: 'BlankPage',
-      component: require('@/page/page/BlankPage.vue').default
+      component: require('@/views/common/BlankPage.vue').default
       // component: IndexZui,
       // children: [
       //   {
       //     path: '',
       //     components: {
-      //       content: require('@/page/page/BlankPage.vue').default
+      //       content: require('@/views/common/BlankPage.vue').default
       //     }
       //   }
       // ]
