@@ -69,10 +69,21 @@
           >{{item.text}}</li>
         </ul>
         <div class="sub-header__item" style="margin-right: 20px;">
-          <a class="button" @click="refresh">
+          <!-- <a class="button" @click="refresh">
             <i data-v-5154d0fd class="iconfont icon-zhongzhi"></i>
             刷新
-          </a>
+          </a>-->
+          <!-- <Button
+            icon="ios-refresh"
+            :loading="freshLoading"
+            shape="circle"
+            type="primary"
+            @click="refresh"
+          ></Button> -->
+          <a @click="refresh" class="button">
+              <i class="iconfont icon-zhongzhi"></i>
+              刷新
+            </a>
         </div>
       </div>
       <div class="main">
@@ -122,6 +133,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
   data () {
     return {
+
+      freshLoading: false,
 
       currPage: 'dashboard',
 
@@ -198,8 +211,12 @@ export default {
 
     refresh () {
       this.refreshFlag = false
+      this.freshLoading = true
       this.$nextTick(() => {
         this.refreshFlag = true
+        setTimeout(() => {
+          this.freshLoading = false
+        }, 300)
       })
     }
   },
@@ -266,14 +283,12 @@ export default {
   }
 
   &:hover {
-
     cursor: pointer;
     // background-color: rgba(0, 0, 0, 0.1);
 
     // i {
     //   transform: rotate(360deg);
     // }
-
   }
 }
 

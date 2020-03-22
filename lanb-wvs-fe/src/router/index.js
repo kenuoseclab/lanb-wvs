@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexZui from '@/views/style/IndexZui'
+import Index from '@/views/style/IndexZui'
 import SystemRouter from './modules/system'
 import BugRouter from './modules/bug'
 import TaskRouter from './modules/task'
@@ -19,7 +19,7 @@ export default new Router({
       path: '/main',
       name: 'Main',
       redirect: '/main/dashboard',
-      component: IndexZui,
+      component: Index,
       children: [
         // 首页
         {
@@ -63,7 +63,7 @@ export default new Router({
     {
       path: '/index-zui',
       name: 'IndexZui',
-      component: require('@/views/style/IndexZui.vue').default
+      component: Index
     },
     {
       path: '*',

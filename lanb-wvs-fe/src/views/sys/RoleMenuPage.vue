@@ -62,18 +62,7 @@ export default {
 
   methods: {
     callback: function (menu) {
-      console.log(menu)
-      let item = menu.item
-      let id = item.id
-      this.formData.menuId = item.id
-      this.$post('/api/menu/query', {
-        menuId: id
-      }).then(data => {
-        if (data.length === 1) {
-          this.formData = data[0]
-          console.log(data[0])
-        }
-      })
+      this.formData = menu.item.attributes
     }
   },
 

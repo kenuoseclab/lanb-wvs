@@ -1,41 +1,7 @@
 <template>
   <div class="panel">
-    <h1>基础表单</h1>
-    <div class="panel__inner">
-      <!-- <form class="form">
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <label class="input-label" for="测试">测试</label>
-          <input class="input" placeholder="请输入测试">
-        </div>
-        <div class="form__block">
-          <a class="button">保存</a>
-          <a class="button">重置</a>
-        </div>
-      </form>-->
+    <h1>{{title}}</h1>
+    <div class="panel__bdoy" style="padding-left: 16px;">
       <form class="form">
         <div v-for="(field, index) in fields" :key="index" class="form__block">
           <label class="input-label" :for="field.name">{{ field.name }}</label>
@@ -68,6 +34,11 @@ export default {
         return {}
       },
       type: Object
+    },
+
+    title: {
+      default: '基础表单',
+      type: String
     }
 
   },

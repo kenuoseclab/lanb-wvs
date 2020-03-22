@@ -9,8 +9,10 @@ public class Tree {
     private String text;
     private String state;
     private boolean checked = false;
-    private HashMap attributes;
+    private Object attributes;
     private List<Tree> children;
+    private String title;
+    private String label;
 
     public String getId() {
         return id;
@@ -44,11 +46,11 @@ public class Tree {
         this.checked = checked;
     }
 
-    public HashMap getAttributes() {
+    public Object getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(HashMap attributes) {
+    public void setAttributes(Object attributes) {
         this.attributes = attributes;
     }
 
@@ -58,5 +60,21 @@ public class Tree {
 
     public void setChildren(List<Tree> children) {
         this.children = children;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

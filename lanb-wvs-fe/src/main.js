@@ -6,6 +6,14 @@ import router from './router'
 import './register.js'
 import store from './store'
 import './api/requests'
+// iviewui
+// import ViewUI from 'view-design'
+// import 'view-design/dist/styles/iview.css'
+// Vue.use(ViewUI)
+// elementui
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 

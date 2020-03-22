@@ -3,7 +3,7 @@
     <div class="panel">
       <h1>配置脚本管理</h1>
 
-      <div class="panel__inner">
+      <div class="panel__body">
         <form class="form">
           <div class="form__block">
             <label class="input-label" for="参数">参数</label>
@@ -54,7 +54,7 @@
     <div class="panel">
       <h1>自定义脚本代码</h1>
 
-      <div class="panel__inner">
+      <div class="panel__body">
         <form class="form">
           <div class="form__block">
             <label class="input-label" for="脚本名称">脚本名称</label>
