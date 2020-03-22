@@ -221,6 +221,8 @@ public class TaskService extends BaseService<Task> {
      * @return
      */
     public List<DashboardVO> getDashboardData(TaskVO model) {
+        String userId = this.getSessionObject().getUser().getUserId();
+        model.setCreateUserId(userId);
         return sqlMapper.getDashboardData(model);
     }
 
@@ -269,7 +271,7 @@ public class TaskService extends BaseService<Task> {
         }
 
         // 关联漏洞
-        String bugs = createTaskVO.getAssets();
+        String bugs = createTaskVO.getBugs();
         if (!"".equals(bugs)) {
             String[] bugArr = bugs.split(",");
             for (String bug : bugArr) {
@@ -369,6 +371,7 @@ public class TaskService extends BaseService<Task> {
         jobDataMap.put("taskLog", taskLog);
         jobDataMap.put("assets", assetList);
         jobDataMap.put("bugs", bugList);
+        jobDataMap.put("sessionObject", this.getSessionObject());
 
         // 开启任务
         // SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0).withIntervalInSeconds(1);

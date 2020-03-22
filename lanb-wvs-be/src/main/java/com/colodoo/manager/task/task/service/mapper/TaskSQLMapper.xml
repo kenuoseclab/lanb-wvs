@@ -57,22 +57,54 @@
 	
 	<!-- 取首页仪表盘数据 -->
 	<select id="getDashboardData" resultType="com.colodoo.manager.task.task.model.DashboardVO" parameterType="com.colodoo.manager.task.task.model.TaskVO">
-		select 
-			  count(1) as `allCount`
-			, count( case when t.`status` = '2' then 1 else null end ) as `runningCount`
-			, count( case when t.`status` = '4' then 1 else null end ) as `errorCount`
-		from 
-			task t
-		<where>
-			<trim suffixOverrides="and">
-				<if test="dateFrom != null">
-				     t.`create_time` >= #{dateFrom} and
-				</if>
-				<if test="dateTo != null">
-				     t.`create_time` &lt;= #{dateTo} and
-				</if>
-			</trim>
-		</where>
+		select
+		IFNULL(sum(b.runningCount),0) as runningCount,
+		IFNULL(sum(b.finshedCount),0) as finshedCount,
+		IFNULL(sum(b.todoCount),0) as todoCount,
+		0 as reportCount
+		from (
+		select
+		case when a.task_log_status = '2' then 1 else 0
+		end runningCount,
+		case when a.task_log_status = '3' then 1 else 0
+		end finshedCount,
+		0 as todoCount
+		from task_log a
+		where 1=1
+		and (
+		a.task_log_status = '2'
+		or a.task_log_status = '3'
+		)
+		and a.create_user_id = #{createUserId}
+
+		union all
+
+		select
+		0 as runningCount,
+		0 as finshedCount,
+		count(1) as todoCount
+		from scan_result c
+		where 1=1
+		and (c.scan_result = '1' or c.scan_result = '0')
+		and c.create_user_id = #{createUserId}
+		) b
+
+		<!--		select -->
+<!--			  count(1) as `allCount`-->
+<!--			, count( case when t.`status` = '2' then 1 else null end ) as `runningCount`-->
+<!--			, count( case when t.`status` = '4' then 1 else null end ) as `errorCount`-->
+<!--		from -->
+<!--			task t-->
+<!--		<where>-->
+<!--			<trim suffixOverrides="and">-->
+<!--				<if test="dateFrom != null">-->
+<!--				     t.`create_time` >= #{dateFrom} and-->
+<!--				</if>-->
+<!--				<if test="dateTo != null">-->
+<!--				     t.`create_time` &lt;= #{dateTo} and-->
+<!--				</if>-->
+<!--			</trim>-->
+<!--		</where>-->
 	</select>
 
 </mapper>

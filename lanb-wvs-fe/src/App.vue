@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style>
-@import url(//at.alicdn.com/t/font_727264_34y9a5inkjq.css);
+@import url(//at.alicdn.com/t/font_727264_9qv3whkrw6.css);
 #app {
   height: 100vh;
   display: flex;

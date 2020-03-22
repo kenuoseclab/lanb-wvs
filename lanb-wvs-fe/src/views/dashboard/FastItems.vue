@@ -43,15 +43,15 @@
           </div>
           <div class="col-4">
             <div class="panel fastitem">
-              <div class="panel__body">
+              <router-link tag="div" class="panel__body" to="/scan/scan-result">
                 <i class="iconfont icon-kuaijieyingyon"></i>
                 漏洞台账
-              </div>
+              </router-link>
             </div>
           </div>
           <div class="col-4">
             <div class="panel fastitem">
-              <div class="panel__body">
+              <div class="panel__body" @click="clickFastItem">
                 <i class="iconfont icon-kuaijieyingyon"></i>
                 快捷方式
               </div>
@@ -70,7 +70,13 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    clickFastItem () {
+      this.$alert('暂未开发', '提示', {
+        confirmButtonText: '确定'
+      })
+    }
+  }
 }
 
 </script>

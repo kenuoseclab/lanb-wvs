@@ -15,13 +15,13 @@
               <div class="col-6">
                 <div class="panel item color--red">
                   待处理漏洞
-                  <span class="item-num">10</span>
+                  <span class="item-num">{{dashboardData.todoCount}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--yellow">
                   待处理报告
-                  <span class="item-num">2</span>
+                  <span class="item-num">{{dashboardData.reportCount}}</span>
                 </div>
               </div>
             </div>
@@ -29,13 +29,13 @@
               <div class="col-6">
                 <div class="panel item color--blue">
                   正在扫描任务
-                  <span class="item-num">3</span>
+                  <span class="item-num">{{dashboardData.runningCount}}</span>
                 </div>
               </div>
               <div class="col-6">
                 <div class="panel item color--green">
                   已完成
-                  <span class="item-num">7</span>
+                  <span class="item-num">{{dashboardData.finshedCount}}</span>
                 </div>
               </div>
             </div>
@@ -76,13 +76,19 @@
     <div class="row">
       <div class="col-6">
         <div class="panel">
-          <h1>待处理漏洞</h1>
+          <h1>
+            <i class="iconfont icon-tubiao"></i>
+            待处理漏洞
+          </h1>
           <div id="echart1" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
         <div class="panel">
-          <h1>资产漏洞数</h1>
+          <h1>
+            <i class="iconfont icon-tubiao"></i>
+            资产漏洞数
+          </h1>
           <div id="echart2" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
@@ -99,16 +105,17 @@
 <script>
 import G2 from '@antv/g2'
 import FastItems from './FastItems'
-// var df = require('date-formatter')
+var df = require('date-formatter')
 
 export default {
   name: 'dashboard',
   data () {
     return {
       dashboardData: {
-        allCount: 0,
+        finshedCount: 0,
         runningCount: 0,
-        errorCount: 0
+        todoCount: 0,
+        reportCount: 0
       }
     }
   },
@@ -126,27 +133,27 @@ export default {
     // this.renderCharts('echart3')
 
     // 取首页仪表盘数据
-    // const parms = {
-    //   dateFrom: df(new Date(), 'YYYY-MM-DD')
-    // }
-    // this
-    //   .$post('/api/task/getDashboardData', parms)
-    //   .then(data => {
-    //     if (data.length === 1) {
-    //       this.dashboardData = data[0]
-    //     }
-    //   })
-    //   .catch(() => {
-    //     this.$router.push({
-    //       path: '/login'
-    //     })
-    //   })
+    const parms = {
+      dateFrom: df(new Date(), 'YYYY-MM-DD')
+    }
+    this
+      .$post('/api/task/getDashboardData', parms)
+      .then(data => {
+        if (data.length === 1) {
+          this.dashboardData = data[0]
+        }
+      })
+      .catch(() => {
+        this.$router.push({
+          path: '/login'
+        })
+      })
   },
 
   methods: {
 
     renderCharts (id) {
-      var data = [ {
+      var data = [{
         item: '低危漏洞',
         count: 21,
         percent: 0.21

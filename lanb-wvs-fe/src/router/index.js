@@ -6,6 +6,7 @@ import BugRouter from './modules/bug'
 import TaskRouter from './modules/task'
 import AssetRouter from './modules/asset'
 import ScriptRouter from './modules/script'
+import ScanRouter from './modules/scan'
 
 Vue.use(Router)
 
@@ -49,6 +50,8 @@ export default new Router({
     AssetRouter,
     // 脚本管理
     ScriptRouter,
+    // 扫描管理
+    ScanRouter,
 
     {
       path: '/login',

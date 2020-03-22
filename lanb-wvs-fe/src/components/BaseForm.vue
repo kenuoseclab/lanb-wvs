@@ -8,8 +8,8 @@
           <input class="input" v-model="data[field.field]" :placeholder="'请输入' + field.name">
         </div>
         <div class="form__block">
-          <a class="button">保存</a>
-          <a class="button">重置</a>
+          <a class="button" @click="submit">保存</a>
+          <!-- <a class="button">重置</a> -->
         </div>
       </form>
     </div>
@@ -39,8 +39,12 @@ export default {
     title: {
       default: '基础表单',
       type: String
-    }
+    },
 
+    submit: {
+      default: function () {},
+      type: Function
+    }
   },
 
   data () {

@@ -1,6 +1,9 @@
 package com.colodoo.jobs;
 
 import com.alibaba.fastjson.JSON;
+import com.colodoo.framework.common.SessionObject;
+import com.colodoo.manager.scan.scanResult.model.ScanResult;
+import com.colodoo.manager.scan.scanResult.service.ScanResultService;
 import com.colodoo.manager.task.taskAttr.model.TaskAttr;
 import com.colodoo.manager.task.taskLog.model.TaskLog;
 import com.colodoo.manager.task.taskLog.service.TaskLogService;
@@ -27,6 +30,8 @@ public class SimpleScanJob implements Job {
     TaskLogService taskLogService;
     @Autowired
     TaskLogDetService taskLogDetService;
+    @Autowired
+    ScanResultService scanResultService;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -37,6 +42,8 @@ public class SimpleScanJob implements Job {
         TaskLog taskLog = (TaskLog) jobDataMap.get("taskLog");
         List<TaskAttr> assetList = (List<TaskAttr>) jobDataMap.get("assets");
         List<TaskAttr> bugList = (List<TaskAttr>) jobDataMap.get("bugs");
+        SessionObject sessionObject = (SessionObject) jobDataMap.get("sessionObject");
+        String userId = sessionObject.getUser().getUserId();
 
         try {
            log.info(JSON.toJSONString(task));
@@ -70,9 +77,20 @@ public class SimpleScanJob implements Job {
                     // 插入一条任务日志详情
                     TaskLogDet taskLogDet = new TaskLogDet();
                     taskLogDet.setTaskLogDetKey("bugId");
-                    taskLogDet.setTaskLogDetKey(bugId);
+                    taskLogDet.setTaskLogDetValue(bugId);
                     taskLogDet.setTaskLogId(taskLog.getTaskLogId());
+                    taskLogDet.setCreateUserId(userId);
                     taskLogDetService.saveTaskLogDet(taskLogDet);
+
+                    // 扫描结果
+                    ScanResult scanResult = new ScanResult();
+                    scanResult.setBugId(bugId);
+                    scanResult.setTaskLogId(taskLog.getTaskLogId());
+                    int randomStatus = (int)(Math.random()*(2-0));
+                    scanResult.setScanResult(String.valueOf(randomStatus));
+                    scanResult.setCreateUserId(userId);
+                    scanResultService.saveScanResult(scanResult);
+
                     successCount++;
                 }
             }
@@ -92,10 +110,11 @@ public class SimpleScanJob implements Job {
             taskLog.setRemark(taskLogRemark);
             taskLogService.updateTaskLog(taskLog);
         } catch (Exception e) {
+            log.error("扫描失败", e);
             // 更新任务状态
             taskLog.setTaskLogStatus("5");
             taskLog.setFinishedTime(new Date());
-            taskLog.setRemark("扫描失败");
+            taskLog.setRemark("扫描失败: " + e.getMessage());
             taskLogService.updateTaskLog(taskLog);
         }
 

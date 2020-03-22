@@ -27,7 +27,7 @@
       </el-col>
       <el-col :span="18">
         <div class="grid-content bg-purple">
-          <base-form :fields="fields" :data="formData" title="菜单编辑"></base-form>
+          <base-form :fields="fields" :data="formData" :submit="submit" title="菜单编辑"></base-form>
         </div>
       </el-col>
     </el-row>
@@ -39,6 +39,10 @@ export default {
   data () {
     return {
       data: [],
+
+      action: 'save',
+      baseURL: '/api/menu',
+
       fields: [
         {
           field: 'menuId',
@@ -79,24 +83,44 @@ export default {
   },
 
   mounted () {
-    this.$post('/api/menu/getTreeMenu', {}).then(data => {
-      const rows = data
-      const tmpMenus = rows
-      this.data = tmpMenus
-      console.log(this.data)
-    }).catch(error => {
-      console.log(error)
-    })
+    this.initMenu()
   },
 
   methods: {
 
+    submit () {
+      this.$post(this.baseURL + '/' + this.action, this.formData).then(data => {
+        if (data.success) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.initMenu()
+        } else {
+          this.$message.error('操作失败')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+    initMenu () {
+      this.$post('/api/menu/getTreeMenu', {}).then(data => {
+        const rows = data
+        const tmpMenus = rows
+        this.data = tmpMenus
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
     nodeClick (obj, node, comp) {
-      console.log(obj)
+      this.action = 'update'
       this.formData = obj.attributes
     },
 
     append (data) {
+      this.action = 'save'
       const itemData = data.attributes
       const menuId = itemData.menuId
       this.formData = {
@@ -115,10 +139,23 @@ export default {
     },
 
     remove (node, data) {
-      const parent = node.parent
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
-      children.splice(index, 1)
+      // const parent = node.parent
+      // const children = parent.data.children || parent.data
+      // const index = children.findIndex(d => d.id === data.id)
+      // children.splice(index, 1)
+      this.$post(this.baseURL + '/delete', data.attributes).then(data => {
+        if (data.success) {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.initMenu()
+        } else {
+          this.$message.error('删除失败')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

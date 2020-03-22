@@ -31,19 +31,25 @@
               </div>
               <div class="form__block">
                 <label class="input-label" for="资产列表">资产列表</label>
-                <input class="input" v-model="form.assets" placeholder="请选择资产列表" />
-                <a class="edit-btn" @click="isModal = true">
-                  <!-- <i class="iconfont icon-addNew"></i> -->
-                  选择
-                </a>
+                <input hidden class="input" v-model="form.assets" placeholder="请选择资产列表" />
+                <el-tag
+                  v-for="asset in form.assetArr"
+                  :key="asset"
+                  type="info"
+                  effect="plain"
+                >{{asset.assetName}}</el-tag>
+                <el-button class="button-new-tag" size="small" @click="isModal = true">+ 选择</el-button>
               </div>
               <div class="form__block">
                 <label class="input-label" for="漏洞列表">漏洞列表</label>
-                <input class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
-                <a class="edit-btn" @click="isModalBug = true">
-                  <!-- <i class="iconfont icon-addNew"></i> -->
-                  选择
-                </a>
+                <input hidden class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
+                <el-tag
+                  v-for="bug in form.bugArr"
+                  :key="bug"
+                  type="info"
+                  effect="plain"
+                >{{bug.bugName}}</el-tag>
+                <el-button class="button-new-tag" size="small" @click="isModalBug = true">+ 选择</el-button>
               </div>
               <div class="form__block">
                 <label class="input-label" for="扫描方式">扫描方式</label>
@@ -77,7 +83,7 @@
               <!-- <div class="form__block" style="margin-top: 32px;">
                 <a class="button" @click="createTask">新建任务</a>
                 <a class="button">重置</a>
-              </div> -->
+              </div>-->
             </form>
           </div>
           <div class="button-group">
@@ -165,7 +171,9 @@ export default {
       form: {
         taskName: '',
         bugs: '',
+        bugArr: [],
         assets: '',
+        assetArr: [],
         cycle: '0',
         sacnType: '1',
         reportTemplate: '0',
@@ -279,6 +287,7 @@ export default {
     assetModalClick () {
       const assetModal = this.$refs.assetModal
       const selectedRowArr = assetModal.getSelectedRows()
+      this.form.assetArr = selectedRowArr
       const resultArr = []
       for (let i = 0; i < selectedRowArr.length; i++) {
         resultArr.push(selectedRowArr[i].assetId)
@@ -295,6 +304,7 @@ export default {
         resultArr.push(selectedRowArr[i].bugId)
       }
       this.form.bugs = resultArr.join(',')
+      this.form.bugArr = selectedRowArr
       this.isModalBug = false
     },
 
@@ -337,5 +347,10 @@ export default {
   i {
     font-size: 9pt;
   }
+}
+
+.el-tag + .el-tag {
+  margin-right: 8px;
+  margin-top: 8px;
 }
 </style>

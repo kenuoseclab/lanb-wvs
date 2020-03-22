@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.scan.scanResult.service.mapper.ScanResultSQLMapper">
+
+	<select id="getScanResultList" resultType="com.colodoo.manager.scan.scanResult.model.ScanResult" parameterType="com.colodoo.manager.scan.scanResult.model.ScanResultVO">
+		select
+			a.`scan_result_id` as `scanResultId`,
+			a.`bug_id` as `bugId`,
+			a.`task_log_id` as `taskLogId`,
+			a.`scan_result` as `scanResult`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`update_time` as `updateTime`,
+			a.`remark` as `remark`
+		from
+		    scan_result a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="scanResultId != null and scanResultId !=''">
+					a.`scan_result_id` like CONCAT(CONCAT('%', #{scanResultId}), '%') and
+				</if>
+				<if test="bugId != null and bugId !=''">
+					a.`bug_id` like CONCAT(CONCAT('%', #{bugId}), '%') and
+				</if>
+				<if test="taskLogId != null and taskLogId !=''">
+					a.`task_log_id` like CONCAT(CONCAT('%', #{taskLogId}), '%') and
+				</if>
+				<if test="scanResult != null and scanResult !=''">
+					a.`scan_result` like CONCAT(CONCAT('%', #{scanResult}), '%') and
+				</if>
+				<if test="createTime != null">
+					a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+					a.`create_user_id` like CONCAT(CONCAT('%', #{createUserId}), '%') and
+				</if>
+				<if test="updateTime != null">
+					a.`update_time` = #{updateTime} and
+				</if>
+				<if test="remark != null and remark !=''">
+					a.`remark` like CONCAT(CONCAT('%', #{remark}), '%') and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>
