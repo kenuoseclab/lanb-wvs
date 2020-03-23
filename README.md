@@ -20,7 +20,7 @@
 ## 基础展示
 
 ### 首页
-![首页](./IMG/dashboard.png)
+![首页](./IMG/zcgcs/dashboard.png)
 
 ### 基础表格
 ![基础表格](./IMG/table.png)
@@ -38,7 +38,7 @@
 
 ### 安全管理员
 
-![首页](./IMG/dashboard.png)
+![首页](./IMG/zcgcs/dashboard.png)
 
 ## 基础展示
 
