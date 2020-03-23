@@ -23,6 +23,10 @@ export default {
           name: '漏洞ID'
         },
         {
+          field: 'assetId',
+          name: '资产ID'
+        },
+        {
           field: 'taskLogId',
           name: '任务日志ID'
         },

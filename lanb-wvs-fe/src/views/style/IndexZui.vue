@@ -33,11 +33,11 @@
             <div class="user-dropdown">
               <i class="arrow_white_up"></i>
               <ul>
-                <li>
+                <li @click="roleSetting">
                   <i class="iconfont icon-yonghu"></i>
                   {{ $store.state.user.userInfo.user.userName }}
                 </li>
-                <li>
+                <li @click="selfSetting">
                   <i class="iconfont icon-gerenshezhi"></i>个人设置
                 </li>
                 <router-link class="exit-btn" tag="li" to="/sys/config-table">
@@ -167,6 +167,19 @@ export default {
   },
 
   methods: {
+
+    roleSetting () {
+      this.$alert('暂未开发', '角色选择', {
+        confirmButtonText: '确定'
+      })
+    },
+
+    selfSetting () {
+      this.$alert('暂未开发', '提示', {
+        confirmButtonText: '确定'
+      })
+    },
+
     menuCallback (menu) {
       if (menu.attributes.menuUrl !== '') {
         this.currPage = menu.attributes.menuUrl

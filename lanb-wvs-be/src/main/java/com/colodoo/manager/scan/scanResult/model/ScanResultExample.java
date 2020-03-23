@@ -22,7 +22,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public ScanResultExample() {
         oredCriteria = new ArrayList<Criteria>();
@@ -30,7 +30,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -38,7 +38,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public String getOrderByClause() {
         return orderByClause;
@@ -46,7 +46,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -54,7 +54,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public boolean isDistinct() {
         return distinct;
@@ -62,7 +62,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -70,7 +70,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public void or(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -78,7 +78,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public Criteria or() {
         Criteria criteria = createCriteriaInternal();
@@ -88,7 +88,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -100,7 +100,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -109,7 +109,7 @@ public class ScanResultExample {
 
     /**
      *
-     * @mbg.generated 2020-03-22
+     * @mbg.generated 2020-03-23
      */
     public void clear() {
         oredCriteria.clear();
@@ -118,7 +118,7 @@ public class ScanResultExample {
     }
 
     /**
-     * scan_result 2020-03-22
+     * scan_result 2020-03-23
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -298,6 +298,76 @@ public class ScanResultExample {
 
         public Criteria andBugIdNotBetween(String value1, String value2) {
             addCriterion("bug_id not between", value1, value2, "bugId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdIsNull() {
+            addCriterion("asset_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdIsNotNull() {
+            addCriterion("asset_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdEqualTo(String value) {
+            addCriterion("asset_id =", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdNotEqualTo(String value) {
+            addCriterion("asset_id <>", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdGreaterThan(String value) {
+            addCriterion("asset_id >", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdGreaterThanOrEqualTo(String value) {
+            addCriterion("asset_id >=", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdLessThan(String value) {
+            addCriterion("asset_id <", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdLessThanOrEqualTo(String value) {
+            addCriterion("asset_id <=", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdLike(String value) {
+            addCriterion("asset_id like", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdNotLike(String value) {
+            addCriterion("asset_id not like", value, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdIn(List<String> values) {
+            addCriterion("asset_id in", values, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdNotIn(List<String> values) {
+            addCriterion("asset_id not in", values, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdBetween(String value1, String value2) {
+            addCriterion("asset_id between", value1, value2, "assetId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAssetIdNotBetween(String value1, String value2) {
+            addCriterion("asset_id not between", value1, value2, "assetId");
             return (Criteria) this;
         }
 
@@ -713,7 +783,7 @@ public class ScanResultExample {
     }
 
     /**
-     * scan_result 2020-03-22
+     * scan_result 2020-03-23
      */
     public static class Criterion {
         private String condition;

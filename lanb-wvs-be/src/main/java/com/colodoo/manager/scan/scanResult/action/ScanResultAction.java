@@ -1,12 +1,11 @@
 package com.colodoo.manager.scan.scanResult.action;
 
-import com.colodoo.framework.exception.AppException;
+import com.colodoo.manager.scan.scanResult.model.PieChartVO;
 import com.colodoo.manager.scan.scanResult.model.ScanResult;
 import com.colodoo.manager.scan.scanResult.model.ScanResultVO;
 import com.colodoo.manager.scan.scanResult.service.ScanResultService;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,13 +18,12 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2020-3-22 16:32:27
+* @date 2020-3-23 20:21:24
 * @description
 */
 @Controller
 @RequestMapping(value = "/scanResult")
 @CrossOrigin
-@Slf4j
 public class ScanResultAction {
 
     @Autowired
@@ -41,19 +39,12 @@ public class ScanResultAction {
     @ResponseBody
     public Map<String, Object> save(@RequestBody ScanResult model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        try {
-            int ret = scanResultService.saveScanResult(model);
-            if(ret > 0) {
-                rspMap.put("success", true);
-            } else {
-                rspMap.put("msg", Contants.MSG_SAVE_FAIL);
-            }
-        } catch (AppException e) {
-            log.error("新增扫描结果失败", e);
-        } catch (Exception e) {
-            log.error("系统异常,请联系管理员！");
+        int ret = scanResultService.saveScanResult(model);
+        if(ret > 0) {
+            rspMap.put("success", true);
+        } else {
+            rspMap.put("msg", Contants.MSG_SAVE_FAIL);
         }
-
         return rspMap;
     }
 
@@ -135,5 +126,30 @@ public class ScanResultAction {
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
+    }
+
+
+    /**
+     * 资产漏洞数
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/getAssetbugsCount")
+    @ResponseBody
+    public List<PieChartVO> getAssetbugsCount(@RequestBody ScanResultVO model) {
+        return scanResultService.getAssetbugsCount(model);
+    }
+
+    /**
+     * 待处理漏洞
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/getTodoBugCount")
+    @ResponseBody
+    public List<PieChartVO> getTodoBugCount(@RequestBody ScanResultVO model) {
+        return scanResultService.getTodoBugCount(model);
     }
 }

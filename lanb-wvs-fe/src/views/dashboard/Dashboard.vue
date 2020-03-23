@@ -13,10 +13,10 @@
           <div class="panel__body">
             <div class="row">
               <div class="col-6">
-                <div class="panel item color--red">
+                <router-link tag="div" class="panel item color--red" to="/scan/scan-result">
                   待处理漏洞
                   <span class="item-num">{{dashboardData.todoCount}}</span>
-                </div>
+                </router-link>
               </div>
               <div class="col-6">
                 <div class="panel item color--yellow">
@@ -27,16 +27,16 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <div class="panel item color--blue">
+                <router-link tag="div" class="panel item color--blue" to="/task/task-log-table">
                   正在扫描任务
                   <span class="item-num">{{dashboardData.runningCount}}</span>
-                </div>
+                </router-link>
               </div>
               <div class="col-6">
-                <div class="panel item color--green">
+                  <router-link tag="div" class="panel item color--green" to="/task/task-log-table">
                   已完成
                   <span class="item-num">{{dashboardData.finshedCount}}</span>
-                </div>
+                  </router-link>
               </div>
             </div>
           </div>
@@ -89,15 +89,11 @@
             <i class="iconfont icon-tubiao"></i>
             资产漏洞数
           </h1>
-          <div id="echart2" style="height: 350px; width: 100%;"></div>
+          <template>
+            <div id="echart2" style="height: 350px; width: 100%;"></div>
+          </template>
         </div>
       </div>
-      <!-- <div class="col-4">
-        <div class="panel">
-          <h1>图表3</h1>
-          <div id="echart3" style="height: 350px; width: 100%;"></div>
-        </div>
-      </div>-->
     </div>
   </div>
 </template>
@@ -116,7 +112,9 @@ export default {
         runningCount: 0,
         todoCount: 0,
         reportCount: 0
-      }
+      },
+      chartData: [],
+      chart2Data: []
     }
   },
 
@@ -125,13 +123,6 @@ export default {
   },
 
   mounted () {
-    console.log(this.$store.state.user)
-
-    // 初始化图表
-    this.renderCharts('echart1')
-    this.render2Charts('echart2')
-    // this.renderCharts('echart3')
-
     // 取首页仪表盘数据
     const parms = {
       dateFrom: df(new Date(), 'YYYY-MM-DD')
@@ -148,26 +139,47 @@ export default {
           path: '/login'
         })
       })
+
+    this.initAssetBugsCount()
+
+    this
+      .$post('/api/scanResult/getTodoBugCount', {})
+      .then(data => {
+        this.chartData = data
+        this.renderTodoBugCount()
+      })
+      .catch(() => {
+        this.$router.push({
+          path: '/login'
+        })
+      })
   },
 
   methods: {
 
-    renderCharts (id) {
-      var data = [{
-        item: '低危漏洞',
-        count: 21,
-        percent: 0.21
-      }, {
-        item: '中危漏洞',
-        count: 17,
-        percent: 0.17
-      }, {
-        item: '高危漏洞',
-        count: 13,
-        percent: 0.13
-      }]
+    initAssetBugsCount () {
+      this
+        .$post('/api/scanResult/getAssetbugsCount', {})
+        .then(data => {
+          this.chart2Data = data
+          this.renderAssetBugsCount()
+        })
+        .catch(() => {
+          this.$router.push({
+            path: '/login'
+          })
+        })
+    },
+
+    renderTodoBugCount () {
+      var data = this.chartData
+      var totalCount = 0
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index]
+        totalCount += element.count
+      }
       var chart = new G2.Chart({
-        container: id,
+        container: 'echart1',
         forceFit: true,
         height: 350,
         animate: false
@@ -191,7 +203,7 @@ export default {
       // 辅助文本
       chart.guide().html({
         position: ['50%', '50%'],
-        html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">漏洞<br><span style="color:#8c8c8c;font-size:20px">10</span>例</div>',
+        html: '<div style="color:#8c8c8c;font-size: 14px;text-align: center;width: 10em;">漏洞<br><span style="color:#8c8c8c;font-size:20px">' + totalCount + '</span>例</div>',
         alignX: 'middle',
         alignY: 'middle'
       })
@@ -213,30 +225,10 @@ export default {
       interval.setSelected(data[0])
     },
 
-    render2Charts (id) {
-      var data = [{
-        item: '福建省移动',
-        count: 40,
-        percent: 0.4
-      }, {
-        item: '福建绿盟科技',
-        count: 21,
-        percent: 0.21
-      }, {
-        item: '海峡金桥保险',
-        count: 17,
-        percent: 0.17
-      }, {
-        item: '福建省农信',
-        count: 13,
-        percent: 0.13
-      }, {
-        item: '福建省农信-分行',
-        count: 13,
-        percent: 0.13
-      }]
+    renderAssetBugsCount () {
+      var data = this.chart2Data
       var chart = new G2.Chart({
-        container: id,
+        container: 'echart2',
         forceFit: true,
         height: 350,
         animate: false

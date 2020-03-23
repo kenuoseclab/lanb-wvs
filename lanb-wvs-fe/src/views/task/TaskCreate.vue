@@ -350,7 +350,7 @@ export default {
 }
 
 .el-tag + .el-tag {
-  margin-right: 8px;
+  margin-left: 8px;
   margin-top: 8px;
 }
 </style>

@@ -1,4 +1,4 @@
-package com.colodoo.jobs;
+package com.colodoo.jobs.scan;
 
 import com.alibaba.fastjson.JSON;
 import com.colodoo.framework.common.SessionObject;
@@ -89,6 +89,7 @@ public class SimpleScanJob implements Job {
                     int randomStatus = (int)(Math.random()*(2-0));
                     scanResult.setScanResult(String.valueOf(randomStatus));
                     scanResult.setCreateUserId(userId);
+                    scanResult.setAssetId(assetId);
                     scanResultService.saveScanResult(scanResult);
 
                     successCount++;

@@ -6,6 +6,7 @@
 		select
 			a.`scan_result_id` as `scanResultId`,
 			a.`bug_id` as `bugId`,
+			a.`asset_id` as `assetId`,
 			a.`task_log_id` as `taskLogId`,
 			a.`scan_result` as `scanResult`,
 			a.`create_time` as `createTime`,
@@ -21,6 +22,9 @@
 				</if>
 				<if test="bugId != null and bugId !=''">
 					a.`bug_id` like CONCAT(CONCAT('%', #{bugId}), '%') and
+				</if>
+				<if test="assetId != null and assetId !=''">
+					a.`asset_id` like CONCAT(CONCAT('%', #{assetId}), '%') and
 				</if>
 				<if test="taskLogId != null and taskLogId !=''">
 					a.`task_log_id` like CONCAT(CONCAT('%', #{taskLogId}), '%') and
@@ -43,6 +47,36 @@
 			</trim>
 		</where>
 
+	</select>
+
+	<!-- 资产漏洞数 -->
+	<select id="getAssetbugsCount" resultType="com.colodoo.manager.scan.scanResult.model.PieChartVO" parameterType="com.colodoo.manager.scan.scanResult.model.ScanResultVO">
+		select
+			count(1) as count
+			,b.asset_id as assetId
+			,b.asset_name as item
+			,round((count(1) / c.totalCount), 2) as percent
+		from scan_result a
+		left join asset b on a.asset_id = b.asset_id,
+		(select count(1) as totalCount from scan_result where scan_result = '1' and create_user_id = #{createUserId}) c
+		where a.scan_result = '1'
+					and a.create_user_id = #{createUserId}
+		group by b.asset_id, b.asset_name
+	</select>
+
+
+	<!-- 待处理漏洞 -->
+	<select id="getTodoBugCount" resultType="com.colodoo.manager.scan.scanResult.model.PieChartVO" parameterType="com.colodoo.manager.scan.scanResult.model.ScanResultVO">
+		select
+			count(1) as count
+			,b.bug_name as item
+			,ROUND(count(1) / c.totalCount,2) as percent
+			from scan_result a
+			left join bug b on a.bug_id = b.bug_id,
+			(select count(1) as totalCount from scan_result where scan_result = '1' and create_user_id = #{createUserId}) c
+			where a.scan_result = '1'
+			and a.create_user_id = #{createUserId}
+			group by b.bug_id, b.bug_name
 	</select>
 
 </mapper>

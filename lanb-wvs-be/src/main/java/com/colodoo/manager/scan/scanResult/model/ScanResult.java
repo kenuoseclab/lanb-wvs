@@ -16,6 +16,11 @@ public class ScanResult {
     private String bugId;
 
     /**
+     * 资产ID
+     */
+    private String assetId;
+
+    /**
      * 任务日志ID
      */
     private String taskLogId;
@@ -79,6 +84,22 @@ public class ScanResult {
      */
     public void setBugId(String bugId) {
         this.bugId = bugId == null ? null : bugId.trim();
+    }
+
+    /**
+     * 资产ID
+     * @return asset_id 资产ID
+     */
+    public String getAssetId() {
+        return assetId;
+    }
+
+    /**
+     * 资产ID
+     * @param assetId 资产ID
+     */
+    public void setAssetId(String assetId) {
+        this.assetId = assetId == null ? null : assetId.trim();
     }
 
     /**

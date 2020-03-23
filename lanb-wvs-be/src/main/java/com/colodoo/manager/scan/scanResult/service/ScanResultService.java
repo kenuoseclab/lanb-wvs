@@ -1,10 +1,9 @@
 package com.colodoo.manager.scan.scanResult.service;
 
 import com.colodoo.framework.base.abs.BaseService;
-import com.colodoo.framework.common.SessionObject;
-import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
+import com.colodoo.manager.scan.scanResult.model.PieChartVO;
 import com.colodoo.manager.scan.scanResult.model.ScanResult;
 import com.colodoo.manager.scan.scanResult.model.ScanResultVO;
 import com.colodoo.framework.easyui.Page;
@@ -20,7 +19,7 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2020-3-22 16:32:27
+* @date 2020-3-23 20:21:24
 * @description 
 */
 @Service
@@ -36,17 +35,17 @@ public class ScanResultService extends BaseService<ScanResult> {
     * @param model
     * @return
     */
-    public int saveScanResult(ScanResult model) throws AppException {
+    public int saveScanResult(ScanResult model) {
         int ret = Contants.CODE_FAILED;
+        model.setScanResultId(uuid());
+        Date datetime = new Date();
+        model.setCreateTime(datetime);
+        model.setUpdateTime(datetime);
+        // model.setLastDate(new Date());
         try {
-            model.setScanResultId(uuid());
-            Date time = new Date();
-            model.setCreateTime(time);
-            model.setUpdateTime(time);
             ret = this.insert(model);
         } catch (DAOException e) {
-            log.error("新增失败!", e);
-            throw new AppException("新增失败!");
+            log.error(e.getMsg());
         }
         return ret;
     }
@@ -123,5 +122,30 @@ public class ScanResultService extends BaseService<ScanResult> {
         list = sqlMapper.getScanResultList(model);
         pageInfo = new PageInfo<ScanResult>(list);
         return pageInfo;
+    }
+
+    /**
+     * 资产漏洞数
+     *
+     * @return
+     */
+    public List<PieChartVO> getAssetbugsCount(ScanResultVO model) {
+        List<PieChartVO> list = null;
+        model.setCreateUserId(this.getSessionObject().getUser().getUserId());
+        list = sqlMapper.getAssetbugsCount(model);
+        return list;
+    }
+
+    /**
+     * 待处理漏洞
+     *
+     * @param model
+     * @return
+     */
+    public List<PieChartVO> getTodoBugCount(ScanResultVO model) {
+        List<PieChartVO> list = null;
+        model.setCreateUserId(this.getSessionObject().getUser().getUserId());
+        list = sqlMapper.getTodoBugCount(model);
+        return list;
     }
 }

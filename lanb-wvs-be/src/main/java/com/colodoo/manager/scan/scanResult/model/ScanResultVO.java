@@ -7,7 +7,7 @@ import com.colodoo.framework.easyui.Page;
 
 /**
 * @author colodoo
-* @date 2020-3-22 16:32:27
+* @date 2020-3-23 20:21:24
 * @description 
 */
 public class ScanResultVO extends ScanResult implements Serializable {
