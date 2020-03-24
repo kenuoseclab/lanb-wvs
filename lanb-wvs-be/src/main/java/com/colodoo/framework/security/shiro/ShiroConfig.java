@@ -45,6 +45,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/user/logout", "anon");
 		filterChainDefinitionMap.put("/user/loginCheck", "anon");
 		filterChainDefinitionMap.put("/user/register", "anon");
+		// 开放POC测试接口
+		filterChainDefinitionMap.put("/poc/**", "anon");
 		// 用户，需要角色权限 “user”
 		filterChainDefinitionMap.put("/menu/**", "roles[user]");
 

@@ -158,7 +158,7 @@
               </template>
             </div>
 
-            <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 100vh;"></div>
+            <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 50vh;"></div>
             <transition name="fade">
               <div v-show="show" style="padding: 0px 8px;">
                 <table class="table">

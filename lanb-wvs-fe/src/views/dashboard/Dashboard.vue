@@ -10,7 +10,7 @@
             <i class="iconfont icon-daibanshixiang"></i>
             待办事项
           </h1>
-          <div class="panel__body">
+          <div class="panel__body" v-loading="dashboardData.isLoading">
             <div class="row">
               <div class="col-6">
                 <router-link tag="div" class="panel item color--red" to="/scan/scan-result">
@@ -80,7 +80,7 @@
             <i class="iconfont icon-tubiao"></i>
             待处理漏洞
           </h1>
-          <div id="echart1" style="height: 350px; width: 100%;"></div>
+          <div id="echart1" v-loading="chartData.length === 0" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
@@ -90,7 +90,7 @@
             资产漏洞数
           </h1>
           <template>
-            <div id="echart2" style="height: 350px; width: 100%;"></div>
+            <div id="echart2" v-loading="chart2Data.length === 0" style="height: 350px; width: 100%;"></div>
           </template>
         </div>
       </div>
@@ -111,7 +111,8 @@ export default {
         finshedCount: 0,
         runningCount: 0,
         todoCount: 0,
-        reportCount: 0
+        reportCount: 0,
+        isLoading: true
       },
       chartData: [],
       chart2Data: []
@@ -132,6 +133,7 @@ export default {
       .then(data => {
         if (data.length === 1) {
           this.dashboardData = data[0]
+          this.dashboardData.isLoading = false
         }
       })
       .catch(() => {
