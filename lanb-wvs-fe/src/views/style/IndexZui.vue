@@ -69,21 +69,17 @@
           >{{item.text}}</li>
         </ul>
         <div class="sub-header__item" style="margin-right: 20px;">
-          <!-- <a class="button" @click="refresh">
-            <i data-v-5154d0fd class="iconfont icon-zhongzhi"></i>
-            刷新
-          </a>-->
-          <!-- <Button
-            icon="ios-refresh"
-            :loading="freshLoading"
-            shape="circle"
-            type="primary"
-            @click="refresh"
-          ></Button> -->
-          <a @click="refresh" class="button">
+          <!-- <a @click="refresh" class="button">
               <i class="iconfont icon-zhongzhi"></i>
               刷新
-            </a>
+          </a>-->
+          <el-button
+            type="primary"
+            :loading="!refreshFlag"
+            @click="refresh"
+            icon="el-icon-refresh"
+            size="mini"
+          >刷新</el-button>
         </div>
       </div>
       <div class="main">

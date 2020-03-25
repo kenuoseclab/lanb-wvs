@@ -82,111 +82,148 @@
       v-model="input.text"
       v-show="input.show"
       :style="'z-index: 9999; transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
-    />-->
+    /> -->
 
     <div class="row" @click="input.show = false">
       <div class="col-12">
-        <el-card shadow="never" v-if="isSearch" style="margin-bottom: 16px;">
-          <el-form
-            label-width="auto"
-            size="medium"
-            label-position="right"
-            :inline="true"
-            :model="form"
-            class="demo-form-inline"
-          >
-            <el-form-item v-for="(field, index) in fields" :key="index" :label="field.name">
-              <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-      <el-card shadow="never">
-        <div>
-          <div class="tool-bar" v-if="isToolbar">
-            <template v-if="isDefaultBtn">
-                <el-button type="primary" icon="el-icon-plus" @click="saveHandle">新增</el-button>
-                <el-button type="primary" icon="el-icon-edit" @click="updateHandle">修改</el-button>
-                <el-button type="primary" icon="el-icon-delete" @click="deleteHandle">删除</el-button>
+        <div class="panel" v-if="isSearch">
+          <form class="form panel__body">
+            <template v-for="(field, index) in fields">
+              <!-- 是否为下拉 -->
+              <template v-if="field.type === 'select'">
+                <select
+                  :key="index"
+                  class="input"
+                  v-model="form[field.field]"
+                  :placeholder="field.name"
+                >
+                  <option value>请选择{{ field.name }}</option>
+                  <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                    <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+                  </template>
+                </select>
+              </template>
+              <!-- 是否为日期类型 -->
+              <template v-else-if="field.type === 'date'">
+                <datepiacker
+                  style="margin-top: 8px; margin-right: 8px;"
+                  :key="index"
+                  :day.sync="form[field.field]"
+                ></datepiacker>
+              </template>
+              <!-- 否则输入框 -->
+              <template v-else>
+                <input
+                  :key="index"
+                  class="input"
+                  v-model="form[field.field]"
+                  :placeholder="field.name"
+                />
+              </template>
             </template>
+            <a @click="search" class="button">
+              <i class="iconfont icon-chazhao"></i>
+              查询
+            </a>
+            <a @click="formReset" class="button">
+              <i class="iconfont icon-zhongzhi"></i>
+              重置
+            </a>
+          </form>
+        </div>
 
-            <template v-for="(btn, index) in btns">
-              <el-button :key="index" type="primary" @click="btnClick(btn)">{{btn.title}}</el-button>
-            </template>
-          </div>
+        <div class="panel">
+          <div>
+            <div class="tool-bar" v-if="isToolbar">
+              <template v-if="isDefaultBtn">
+                <a @click="saveHandle" class="button">
+                  <i class="iconfont icon-addNew"></i>
+                  新增
+                </a>
+                <a @click="deleteHandle" class="button">
+                  <i style="font-size: 14px;" class="iconfont icon-shanchu"></i>
+                  删除
+                </a>
+                <a @click="updateHandle" class="button">
+                  <i style="font-size: 14px;" class="iconfont icon-edit"></i>
+                  修改
+                </a>
+              </template>
 
-          <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 50vh;"></div>
-          <transition name="fade">
-            <div v-show="show" style="padding: 0px 8px;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th v-if="checkbox.show" style="text-align: center;">
-                      <input
-                        v-model="checkbox.checked"
-                        @click="selectToggle"
-                        class="checkbox"
-                        type="checkbox"
-                      />
-                    </th>
-
-                    <template v-for="(field, index) in fields">
-                      <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
-                    </template>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr :key="index" v-for="(row, index) in rows">
-                    <td v-if="checkbox.show" style="text-align: center;">
-                      <input v-model="row.checked" class="checkbox" type="checkbox" />
-                    </td>
-                    <template v-for="(field, fieldIndex) in fields">
-                      <td v-if="!field.hidden" :key="fieldIndex" :width="field.width">
-                        <template v-if="field.formatter != null">
-                          <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
-                        </template>
-                        <template v-else>
-                          <div
-                            @dblclick="cellDbclick($event, cellFormatter(field, row))"
-                            :title="cellFormatter(field, row)"
-                          >{{cellFormatter(field, row)}}</div>
-                        </template>
-                      </td>
-                    </template>
-                  </tr>
-                  <tr v-if="rows.length === 0">
-                    <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
-                  </tr>
-                </tbody>
-              </table>
+              <template v-for="(btn, index) in btns">
+                <a :key="index" @click="btnClick(btn)" class="button">
+                  <i :key="index" v-if="btn.icon != null" :class="'iconfont ' + btn.icon"></i>
+                  {{ btn.title }}
+                </a>
+              </template>
             </div>
-          </transition>
 
-          <div class="pagination">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="getList"
-              :current-page="pageInfo.page"
-              :page-sizes="[10, 20, 30, 40]"
-              :page-size="pageInfo.rows"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="this.total">
-            </el-pagination>
+            <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 50vh;"></div>
+            <transition name="fade">
+              <div v-show="show" style="padding: 0px 8px;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th v-if="checkbox.show" style="text-align: center;">
+                        <input
+                          v-model="checkbox.checked"
+                          @click="selectToggle"
+                          class="checkbox"
+                          type="checkbox"
+                        />
+                      </th>
+
+                      <template v-for="(field, index) in fields">
+                        <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
+                      </template>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr :key="index" v-for="(row, index) in rows">
+                      <td v-if="checkbox.show" style="text-align: center;">
+                        <input v-model="row.checked" class="checkbox" type="checkbox" />
+                      </td>
+                      <template v-for="(field, fieldIndex) in fields">
+                        <td v-if="!field.hidden" :key="fieldIndex" :width="field.width">
+                          <template v-if="field.formatter != null">
+                            <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
+                          </template>
+                          <template v-else>
+                            <div
+                              @dblclick="cellDbclick($event, cellFormatter(field, row))"
+                              :title="cellFormatter(field, row)"
+                            >{{cellFormatter(field, row)}}</div>
+                          </template>
+                        </td>
+                      </template>
+                    </tr>
+                    <tr v-if="rows.length === 0">
+                      <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </transition>
+
+            <div class="pagination">
+              <a @click="pageChange(-1)" class="button">上一页</a>
+              <input type="number" v-model="pageInfo.page" @change="getList" class="input" />
+              <a @click="pageChange(1)" class="button">下一页</a>
+
+              <div class="rows">
+                <label for="rows">每页</label>
+                <input
+                  type="number"
+                  class="input"
+                  placeholder
+                  v-model="pageInfo.rows"
+                  @change="getList"
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </el-card>
       </div>
     </div>
 
@@ -392,7 +429,7 @@ export default {
     },
 
     // 取得代码类型列表
-    getCodeTypeMap (field) {
+    getCodeTypeMap  (field) {
       return this.$store.state.cache.codeInfo[field.codeType]
     },
 
@@ -588,8 +625,7 @@ export default {
     },
 
     // 改变页码
-    pageChange (val) {
-      const num = val - this.pageInfo.page
+    pageChange (num) {
       if (typeof (this.pageInfo.page) === 'string') {
         this.pageInfo.page = parseInt(this.pageInfo.page)
       }
@@ -734,9 +770,5 @@ export default {
   .button {
     margin-right: 5px;
   }
-}
-
-.demo-form-inline {
-  width: auto;
 }
 </style>

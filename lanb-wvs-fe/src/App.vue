@@ -21,6 +21,7 @@ import '@/assets/scss/input.scss'
 import '@/assets/scss/color.scss'
 import '@/assets/scss/dialog.scss'
 import '@/assets/scss/tag.scss'
+import '@/assets/fonts/iconfont.css'
 export default {
   name: 'App',
 
@@ -61,7 +62,7 @@ export default {
 </script>
 
 <style>
-@import url(//at.alicdn.com/t/font_727264_9qv3whkrw6.css);
+/* @import url(//at.alicdn.com/t/font_727264_9qv3whkrw6.css); */
 #app {
   height: 100vh;
   display: flex;
