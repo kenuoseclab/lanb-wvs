@@ -1,74 +1,39 @@
 <template>
   <div>
-    <!-- 模态框 -->
-    <div class="modal" :style="{transform: transform}" ref="modal">
-      <transition name="bounce" @after-enter="afterEnter">
-        <div v-if="isModal" class="modal__inner panel">
-          <!-- <h1 class="panel__title--border">{{ actionTitle }}</h1> -->
-          <h1>{{ actionTitle }}</h1>
-          <div class="panel__body">
-            <form class="form modal__body">
-              <template v-for="(field, index) in fields">
-                <div v-show="!field.hidden" :key="index" class="form__block">
-                  <label class="input-label" :for="field.field">{{field.name}}</label>
-                  <!-- 判断是否包含下拉 -->
-                  <template v-if="field.type === 'select'">
-                    <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
-                      <option value>请选择{{ field.name }}</option>
-                      <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                        <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
-                      </template>
-                    </select>
-                  </template>
-                  <!-- 是否为日期类型 -->
-                  <template v-else-if="field.type === 'date'">
-                    <datepiacker
-                      style="margin-top: 8px; margin-right: 8px;"
-                      :key="index"
-                      :day.sync="editForm[field.field]"
-                    ></datepiacker>
-                  </template>
-                  <!-- 文本区域 -->
-                  <template v-else-if="field.type === 'textarea'">
-                    <textarea
-                      style="height: 100px;"
-                      class="input"
-                      v-model="editForm[field.field]"
-                      :placeholder="field.name"
-                    ></textarea>
-                  </template>
-                  <!-- 密码 -->
-                  <template v-else-if="field.type === 'password'">
-                    <input
-                      autocomplete="off"
-                      class="input"
-                      type="password"
-                      v-model="editForm[field.field]"
-                      :placeholder="field.name"
-                    />
-                  </template>
-                  <!-- 输入框 -->
-                  <template v-else>
-                    <input
-                      autocomplete="off"
-                      class="input"
-                      type="text"
-                      v-model="editForm[field.field]"
-                      :placeholder="field.name"
-                    />
-                  </template>
-                </div>
+
+    <el-dialog title="编辑表单" :visible.sync="isModal">
+      <el-form inline="true"
+            :model="editForm"
+          >
+        <el-form-item v-for="(field, index) in fields" :key="index" :label="field.name" :label-width="formLabelWidth">
+
+          <template v-if="field.type === 'select'">
+            <el-select clearable v-model="editForm[field.field]">
+              <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
               </template>
-            </form>
-          </div>
-          <div class="button-group">
-            <a @click="postForm" class="button">确定</a>
-            <a @click="isModal = false" class="button">取消</a>
-          </div>
-        </div>
-      </transition>
-    </div>
-    <div class="mask" v-if="isModal"></div>
+            </el-select>
+          </template>
+          <template v-else-if="field.type === 'date'">
+            <el-date-picker
+              v-model="editForm[field.field]"
+              type="datetime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择日期时间">
+            </el-date-picker>
+          </template>
+          <template v-else>
+            <el-input v-model="editForm[field.field]" :placeholder="field.name"></el-input>
+          </template>
+
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isModal = false">取 消</el-button>
+        <el-button type="primary" @click="postForm">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <!-- 提示框 -->
     <Dialog :show.sync="isDialog">{{ dialogMsg }}</Dialog>
@@ -95,13 +60,33 @@
             :model="form"
             class="demo-form-inline"
           >
-            <el-form-item v-for="(field, index) in fields" :key="index" :label="field.name">
-              <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
+
+            <el-form-item v-for="(field, index) in fields" :key="index" :label="field.name" :label-width="formLabelWidth">
+
+              <template v-if="field.type === 'select'">
+                <el-select clearable v-model="form[field.field]">
+                  <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                    <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
+                  </template>
+                </el-select>
+              </template>
+              <template v-else-if="field.type === 'date'">
+                <el-date-picker
+                  v-model="form[field.field]"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间">
+                </el-date-picker>
+              </template>
+              <template v-else>
+                <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
+              </template>
+
             </el-form-item>
-            <el-form-item>
+            <el-form-item label=" " :label-width="formLabelWidth">
               <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
             </el-form-item>
-            <el-form-item>
+            <el-form-item :label-width="formLabelWidth">
               <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
             </el-form-item>
           </el-form>
@@ -133,12 +118,13 @@
                 <thead>
                   <tr>
                     <th v-if="checkbox.show" style="text-align: center;">
-                      <input
+                      <!-- <input
                         v-model="checkbox.checked"
                         @click="selectToggle"
                         class="checkbox"
                         type="checkbox"
-                      />
+                      /> -->
+                      <el-checkbox v-model="checkbox.checked" @change="selectToggle"></el-checkbox>
                     </th>
 
                     <template v-for="(field, index) in fields">
@@ -150,7 +136,7 @@
                 <tbody>
                   <tr :key="index" v-for="(row, index) in rows">
                     <td v-if="checkbox.show" style="text-align: center;">
-                      <input v-model="row.checked" class="checkbox" type="checkbox" />
+                      <el-checkbox v-model="row.checked" :key="index"></el-checkbox>
                     </td>
                     <template v-for="(field, fieldIndex) in fields">
                       <td v-if="!field.hidden" :key="fieldIndex" :width="field.width">
@@ -321,7 +307,8 @@ export default {
         offsetLeft: '0px',
         text: '',
         show: false
-      }
+      },
+      formLabelWidth: '120px'
     }
   },
 
@@ -358,6 +345,11 @@ export default {
   },
 
   methods: {
+
+    handleSizeChange (val) {
+      this.pageInfo.rows = val
+      this.getList()
+    },
 
     getElementLeft (element) {
       var actualLeft = element.offsetLeft
@@ -476,7 +468,7 @@ export default {
     selectToggle () {
       for (let i = 0; i < this.rows.length; i++) {
         const row = this.rows[i]
-        row.checked = !this.checkbox.checked
+        row.checked = this.checkbox.checked
       }
     },
 
@@ -555,11 +547,12 @@ export default {
     },
 
     // 初始化checkbox
-    initCheckbox () {
-      for (let i = 0; i < this.rows.length; i++) {
-        const row = this.rows[i]
+    initCheckbox (rows) {
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i]
         row.checked = false
       }
+      return rows
     },
 
     // 查询
@@ -576,13 +569,12 @@ export default {
       this
         .$post(this.baseURL + this.api.query, tmpParam)
         .then(data => {
-          this.rows = data.rows
+          this.rows = this.initCheckbox(data.rows)
           this.total = data.total
 
           // 强制刷新dom,防止checkbox出现问题
           this.$nextTick(() => {
             this.show = true
-            this.initCheckbox()
           })
         })
     },
