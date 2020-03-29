@@ -1,5 +1,6 @@
 package com.colodoo.manager.scan.scanResult.action;
 
+import com.colodoo.framework.base.abs.BaseAction;
 import com.colodoo.manager.scan.scanResult.model.PieChartVO;
 import com.colodoo.manager.scan.scanResult.model.ScanResult;
 import com.colodoo.manager.scan.scanResult.model.ScanResultVO;
@@ -24,7 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/scanResult")
 @CrossOrigin
-public class ScanResultAction {
+public class ScanResultAction extends BaseAction {
 
     @Autowired
     ScanResultService scanResultService;
@@ -122,6 +123,7 @@ public class ScanResultAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody ScanResultVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
+        model.setCreateUserId(this.getUserId());
         PageInfo<ScanResult> info = scanResultService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());

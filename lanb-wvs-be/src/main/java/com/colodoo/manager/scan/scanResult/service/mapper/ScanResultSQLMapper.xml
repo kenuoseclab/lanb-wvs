@@ -55,7 +55,7 @@
 			count(1) as count
 			,b.asset_id as assetId
 			,b.asset_name as item
-			,round((count(1) / c.totalCount), 2) as percent
+			,round(round((count(1) / c.totalCount), 4) * 100, 2) as percent
 		from scan_result a
 		left join asset b on a.asset_id = b.asset_id,
 		(select count(1) as totalCount from scan_result where scan_result = '1' and create_user_id = #{createUserId}) c

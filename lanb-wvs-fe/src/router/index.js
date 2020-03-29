@@ -18,18 +18,20 @@ export default new Router({
     },
     {
       path: '/main',
-      name: 'Main',
+      name: 'main',
       redirect: '/main/dashboard',
       component: Index,
       children: [
         // 首页
         {
+          name: 'dashboard',
           path: 'dashboard',
           components: {
             content: require('@/views/dashboard/Dashboard').default
           }
         },
         {
+          name: 'blankPage',
           path: '*',
           components: {
             content: require('@/views/common/BlankPage.vue').default
@@ -55,22 +57,22 @@ export default new Router({
 
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: require('@/views/Login').default
     },
     {
       path: '/index-ice',
-      name: 'IndexIce',
+      name: 'indexIce',
       component: require('@/views/style/IndexIce.vue').default
     },
     {
       path: '/index-zui',
-      name: 'IndexZui',
+      name: 'indexZui',
       component: Index
     },
     {
       path: '*',
-      name: 'BlankPage',
+      name: 'blankPage',
       component: require('@/views/common/BlankPage.vue').default
       // component: IndexZui,
       // children: [

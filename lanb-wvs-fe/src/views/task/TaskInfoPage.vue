@@ -47,7 +47,7 @@
 <script>
 export default {
 
-  name: 'task-info-page',
+  name: 'taskInfoPage',
 
   data () {
     return {

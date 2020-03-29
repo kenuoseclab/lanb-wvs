@@ -86,18 +86,20 @@ export default {
           title: '关联漏洞',
           icon: 'icon-guanlian',
           click: () => {
-            this.$dialog({
-              text: '暂未开发'
-            }).display()
+            this.$alert('暂未开发', '提示', {
+              confirmButtonText: '确定'
+            })
           }
         },
         {
           title: '关联资产',
           icon: 'icon-guanlian',
           click: () => {
-            this.$dialog({
-              text: '暂未开发'
-            }).display()
+            this.$message({
+              message: '暂未开发',
+              showClose: true,
+              type: 'warning'
+            })
           }
         },
         {
@@ -133,9 +135,11 @@ export default {
                   }
                 })
             } else {
-              this.$dialog({
-                text: '请选择一个任务'
-              }).display()
+              this.$message({
+                message: '请选择一个任务',
+                showClose: true,
+                type: 'warning'
+              })
             }
           }
         }

@@ -227,6 +227,52 @@ export default {
           this.freshLoading = false
         }, 300)
       })
+    },
+
+    routeNameParse (str, splitStr) {
+      return str.replace(/\B([A-Z])/g, splitStr + '$1').toLowerCase()
+    },
+
+    routerWatch () {
+      const name = this.routeNameParse(this.$route.name, '-')
+      for (let index = 0; index < this.subMenus.length; index++) {
+        const element = this.subMenus[index]
+        element.checked = false
+      }
+
+      for (let index = 0; index < this.menus.length; index++) {
+        const element = this.menus[index]
+        element.checked = false
+      }
+
+      var isChecked = false
+      // 根据当前组件名匹配子菜单
+      // 匹配到则设置
+      for (let index = 0; index < this.subMenus.length; index++) {
+        const subMenu = this.subMenus[index]
+        if (subMenu.id === name) {
+          subMenu.checked = true
+          isChecked = true
+        }
+      }
+      // 匹配不到则查询根目录
+      if (!isChecked) {
+        for (let index = 0; index < this.menus.length; index++) {
+          const menu = this.menus[index]
+          const children = menu.children
+          if (children !== null) {
+            for (let subIndex = 0; subIndex < children.length; subIndex++) {
+              const subMenu = children[subIndex]
+              if (subMenu.id === name) {
+                subMenu.checked = true
+                menu.checked = true
+                // 设置子菜单
+                this.subMenus = children
+              }
+            }
+          }
+        }
+      }
     }
   },
 
@@ -244,6 +290,11 @@ export default {
 
   components: {
     Loading
+  },
+
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'routerWatch'
   }
 }
 

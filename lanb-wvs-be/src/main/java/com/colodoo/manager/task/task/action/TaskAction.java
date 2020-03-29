@@ -1,5 +1,6 @@
 package com.colodoo.manager.task.task.action;
 
+import com.colodoo.framework.base.abs.BaseAction;
 import com.colodoo.manager.task.task.model.CreateTaskVO;
 import com.colodoo.manager.task.task.model.DashboardVO;
 import com.colodoo.manager.task.task.model.Task;
@@ -32,7 +33,7 @@ import java.util.List;
 @RequestMapping(value = "/task")
 @CrossOrigin
 @Slf4j
-public class TaskAction {
+public class TaskAction extends BaseAction {
 
 	@Autowired
 	TaskService taskService;
@@ -151,6 +152,8 @@ public class TaskAction {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 		PageInfo<TaskVO> info;
 		try {
+			// 设置只能查询本人创建的任务
+			model.setCreateUserId(this.getUserId());
 			info = taskService.query(model.getPage(), model);
 			rspMap.put(Contants.TABLE_ROWS, info.getList());
 			rspMap.put(Contants.TABLE_TOTAL, info.getTotal());

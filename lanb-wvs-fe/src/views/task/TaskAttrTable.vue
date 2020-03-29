@@ -56,9 +56,9 @@ export default {
           title: '任务属性配置',
           icon: 'icon-shezhi',
           click: () => {
-            this.$dialog({
-              text: '暂未开发'
-            }).display()
+            this.$alert('暂未开发', '提示', {
+              confirmButtonText: '确定'
+            })
           }
         }
       ]

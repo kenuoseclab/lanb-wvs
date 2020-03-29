@@ -81,6 +81,7 @@
 
 <script>
 export default {
+  name: 'scriptPage',
   data () {
     return {
       isModal: false,

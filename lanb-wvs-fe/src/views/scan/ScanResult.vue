@@ -33,7 +33,8 @@ export default {
         {
           field: 'scanResult',
           name: '扫描结果',
-          codeType: 'scanResult'
+          codeType: 'scanResult',
+          type: 'select'
         },
         {
           field: 'createTime',

@@ -39,7 +39,7 @@
     <Dialog :show.sync="isDialog">{{ dialogMsg }}</Dialog>
 
     <!-- 删除确认框 -->
-    <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog>
+    <!-- <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog> -->
 
     <!-- 文字提示框 -->
     <!-- <input
@@ -111,7 +111,7 @@
             </template>
           </div>
 
-          <div v-show="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 50vh;"></div>
+          <div v-show="!show" v-loading="!show" style="background-color: #f9f9f9; margin: 0px 8px; height: 550px;"></div>
           <transition name="fade">
             <div v-show="show" style="padding: 0px 8px;">
               <table class="table">
@@ -177,13 +177,13 @@
     </div>
 
     <!-- loading -->
-    <loading
+    <!-- <loading
       :active="!show"
       :can-cancel="loading.canCancel"
       :on-cancel="loading.onCancel"
       :color="loading.color"
       :opacity="loading.opacity"
-    ></loading>
+    ></loading> -->
   </div>
 </template>
 
@@ -493,15 +493,19 @@ export default {
     deleteHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        this.dialogMsg = '请选择一行数据!'
-        this.isDialog = true
+        this.$message({
+          message: '请选中一行数据',
+          showClose: true,
+          type: 'warning'
+        })
         return
       }
 
-      // 弹出一个删除确认框
-      this.deleteAction.isDialog = true
-
-      this.deleteAction.ok = () => {
+      this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
         this.show = false
         const row = rows[0]
         delete row.checked
@@ -509,16 +513,19 @@ export default {
           .$post(this.baseURL + this.api.delete, row)
           .then(data => {
             if (data.success) {
-              this.dialogMsg = '删除成功'
-              this.isDialog = true
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
               this.deleteAction.isDialog = false
               this.checkbox.checked = false
               this.show = true
               this.getList()
             } else {
-              this.dialogMsg = data.msg
-              this.isDialog = true
-              this.deleteAction.isDialog = false
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              })
               this.getList()
             }
           })
@@ -527,14 +534,22 @@ export default {
               path: '/login'
             })
           })
-      }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
 
     updateHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        this.dialogMsg = '请选中一行数据!'
-        this.isDialog = true
+        this.$message({
+          message: '请选中一行数据',
+          showClose: true,
+          type: 'warning'
+        })
         return
       }
       /**

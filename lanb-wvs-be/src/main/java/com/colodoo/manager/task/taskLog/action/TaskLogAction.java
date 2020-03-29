@@ -1,5 +1,6 @@
 package com.colodoo.manager.task.taskLog.action;
 
+import com.colodoo.framework.base.abs.BaseAction;
 import com.colodoo.manager.task.taskLog.model.TaskLog;
 import com.colodoo.manager.task.taskLog.model.TaskLogVO;
 import com.colodoo.manager.task.taskLog.service.TaskLogService;
@@ -23,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/taskLog")
 @CrossOrigin
-public class TaskLogAction {
+public class TaskLogAction extends BaseAction {
 
     @Autowired
     TaskLogService taskLogService;
@@ -121,6 +122,8 @@ public class TaskLogAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody TaskLogVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
+        // 设置只能查询本人创建的任务
+        model.setCreateUserId(this.getUserId());
         PageInfo<TaskLog> info = taskLogService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());

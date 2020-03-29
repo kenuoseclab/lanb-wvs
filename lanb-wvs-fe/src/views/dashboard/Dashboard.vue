@@ -80,7 +80,7 @@
             <i class="iconfont icon-tubiao"></i>
             待处理漏洞
           </h1>
-          <div id="echart1" v-loading="chartData.length === 0" style="height: 350px; width: 100%;"></div>
+          <div id="echart1" v-loading="isTodoBugCountLoading" style="height: 350px; width: 100%;"></div>
         </div>
       </div>
       <div class="col-6">
@@ -90,7 +90,7 @@
             资产漏洞数
           </h1>
           <template>
-            <div id="echart2" v-loading="chart2Data.length === 0" style="height: 350px; width: 100%;"></div>
+            <div id="echart2" v-loading="isAssetbugsCountLoading" style="height: 350px; width: 100%;"></div>
           </template>
         </div>
       </div>
@@ -114,8 +114,10 @@ export default {
         reportCount: 0,
         isLoading: true
       },
-      chartData: [],
-      chart2Data: []
+      isTodoBugCountLoading: true,
+      todoBugCount: [],
+      chart2Data: [],
+      isAssetbugsCountLoading: true
     }
   },
 
@@ -147,7 +149,8 @@ export default {
     this
       .$post('/api/scanResult/getTodoBugCount', {})
       .then(data => {
-        this.chartData = data
+        this.todoBugCount = data
+        this.isTodoBugCountLoading = false
         this.renderTodoBugCount()
       })
       .catch(() => {
@@ -164,6 +167,7 @@ export default {
         .$post('/api/scanResult/getAssetbugsCount', {})
         .then(data => {
           this.chart2Data = data
+          this.isAssetbugsCountLoading = false
           this.renderAssetBugsCount()
         })
         .catch(() => {
@@ -174,7 +178,7 @@ export default {
     },
 
     renderTodoBugCount () {
-      var data = this.chartData
+      var data = this.todoBugCount
       var totalCount = 0
       for (let index = 0; index < data.length; index++) {
         const element = data[index]
@@ -238,7 +242,7 @@ export default {
       chart.source(data, {
         percent: {
           formatter: function formatter (val) {
-            val = val * 100 + '%'
+            val = val + '%'
             return val
           }
         }
