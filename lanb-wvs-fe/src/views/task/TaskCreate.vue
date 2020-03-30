@@ -2,114 +2,117 @@
   <div>
     <div class="row">
       <div class="col-6">
-        <div class="panel" style="height: 600px;">
-          <h1>新建扫描任务</h1>
-          <div class="panel__body">
-            <form class="form">
-              <div class="form__block">
-                <label class="input-label" for="taskName">任务名</label>
-                <input v-model="form.taskName" class="input" placeholder="请输入任务名" />
-                <a class="edit-btn" @click="generateTaskName">
-                  <!-- <i class="iconfont icon-addNew"></i> -->
-                  生成
-                </a>
-              </div>
-              <div class="form__block">
-                <label class="input-label" for="任务周期">任务周期</label>
-                <select v-model="form.cycle" class="input">
-                  <option value>请选择任务周期</option>
-                  <option value="0">仅一次</option>
-                  <option value="1">每日扫描任务</option>
-                  <option value="2">每周扫描任务</option>
-                  <option value="3">每月扫描任务</option>
-                  <option value="4">自定义周期</option>
-                </select>
-                <a class="edit-btn">
-                  <!-- <i class="iconfont icon-addNew"></i> -->
-                  自定义
-                </a>
-              </div>
-              <div class="form__block">
-                <label class="input-label" for="资产列表">资产列表</label>
-                <input hidden class="input" v-model="form.assets" placeholder="请选择资产列表" />
-                <el-tag
-                  v-for="asset in form.assetArr"
-                  :key="asset"
-                  type="info"
-                  effect="plain"
-                >{{asset.assetName}}</el-tag>
-                <el-button class="button-new-tag" size="small" @click="isModal = true">+ 选择</el-button>
-              </div>
-              <div class="form__block">
-                <label class="input-label" for="漏洞列表">漏洞列表</label>
-                <input hidden class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
-                <el-tag
-                  v-for="bug in form.bugArr"
-                  :key="bug"
-                  type="info"
-                  effect="plain"
-                >{{bug.bugName}}</el-tag>
-                <el-button class="button-new-tag" size="small" @click="isModalBug = true">+ 选择</el-button>
-              </div>
-              <div class="form__block">
-                <label class="input-label" for="扫描方式">扫描方式</label>
-                <select v-model="form.sacnType" class="input">
-                  <option value>请选择扫描方式</option>
-                  <option value="1">基础扫描</option>
-                  <option value="2">组合扫描</option>
-                  <option value="3">自定义扫描</option>
-                </select>
-              </div>
-              <div class="form__block">
-                <label class="input-label" for="报表模板">报表模板</label>
-                <select v-model="form.reportTemplate" class="input">
-                  <option value>请选择报表模板</option>
-                  <option value="0">基础模板</option>
-                  <option value="1">自定义扫描1</option>
-                  <option value="2">自定义扫描2</option>
-                  <option value="3">自定义扫描3</option>
-                </select>
-              </div>
+        <el-card shadow="never" style="min-height: 600px;">
+          <div slot="header" class="clearfix">
+            <span>新建扫描任务</span>
+          </div>
+          <el-form :model="form" label-width="80px">
+            <el-form-item label="任务名">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <el-input v-model="form.taskName" placeholder="请输入任务名"></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-link type="primary" @click="generateTaskName">生成</el-link>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="任务周期">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <el-select v-model="form.cycle" clearable>
+                    <el-option value="0" label="仅一次"></el-option>
+                    <el-option value="1" label="每日扫描任务"></el-option>
+                    <el-option value="2" label="每周扫描任务"></el-option>
+                    <el-option value="3" label="每月扫描任务"></el-option>
+                    <el-option value="4" label="自定义周期"></el-option>
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="资产列表">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <input hidden class="input" v-model="form.assets" placeholder="请选择资产列表" />
+                  <el-tag
+                    v-for="asset in form.assetArr"
+                    :key="asset"
+                    type="info"
+                    effect="plain"
+                  >{{asset.assetName}}</el-tag>
+                  <el-button size="small" @click="isModal = true">+ 选择</el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="漏洞列表">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <input hidden class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
+                  <el-tag
+                    v-for="bug in form.bugArr"
+                    :key="bug"
+                    type="info"
+                    effect="plain"
+                  >{{bug.bugName}}</el-tag>
+                  <el-button size="small" @click="isModalBug = true">+ 选择</el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
 
-              <div class="form__block">
-                <label class="input-label" for="desc">任务描述</label>
-                <textarea
-                  v-model="form.desc"
-                  style="height: 150px; width: 60%;"
-                  class="input"
-                  placeholder="请输入任务描述"
-                ></textarea>
-              </div>
-              <!-- <div class="form__block" style="margin-top: 32px;">
-                <a class="button" @click="createTask">新建任务</a>
-                <a class="button">重置</a>
-              </div>-->
-            </form>
-          </div>
-          <div class="button-group">
-            <a class="button" @click="createTask">新建任务</a>
-            <a class="button">重置</a>
-          </div>
-        </div>
+            <el-form-item label="扫描方式">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <el-select v-model="form.sacnType" clearable>
+                    <el-option value="1" label="基础扫描"></el-option>
+                    <el-option value="2" label="组合扫描"></el-option>
+                    <el-option value="3" label="自定义扫描"></el-option>
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-form-item>
+
+            <el-form-item label="报表模板">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <el-select v-model="form.reportTemplate" clearable>
+                    <el-option value="0" label="基础模板"></el-option>
+                    <el-option value="1" label="自定义扫描1"></el-option>
+                    <el-option value="2" label="自定义扫描2"></el-option>
+                    <el-option value="3" label="自定义扫描3"></el-option>
+                  </el-select>
+                </el-col>
+              </el-row>
+            </el-form-item>
+
+            <el-form-item label="任务描述">
+              <el-row :gutter="12">
+                <el-col :span="12">
+                  <el-input type="textarea" :rows="1" v-model="form.desc" placeholder="请输入任务描述"></el-input>
+                </el-col>
+              </el-row>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" icon="el-icon-plus" @click="createTask">创建</el-button>
+              <el-button icon="el-icon-refresh" @click="form = defaultForm">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
       </div>
 
       <div class="col-6">
-        <div class="panel" style="height: 600px;">
-          <h1>扫描历史</h1>
-          <div class="panel__body">
-            <ul class="list">
-              <template v-for="(hisTask, index) in hisTaskList">
-                <li :key="index">{{ hisTask.createTime }}&nbsp;创建任务&nbsp;{{ hisTask.taskName }}</li>
-              </template>
-            </ul>
+        <el-card shadow="never" style="height: 600px;">
+          <div slot="header" class="clearfix">
+            <span>扫描历史</span>
           </div>
-        </div>
+          <ul class="list">
+            <template v-for="(hisTask, index) in hisTaskList">
+              <li :key="index">{{ hisTask.createTime }}&nbsp;创建任务&nbsp;{{ hisTask.taskName }}</li>
+            </template>
+          </ul>
+        </el-card>
       </div>
     </div>
-
-    <!-- 提示框开始 -->
-    <Dialog :show.sync="dialog.show" :ok="dialog.ok">{{ dialog.text }}</Dialog>
-    <!-- 提示框结束 -->
 
     <!-- 弹出窗开始 -->
     <div class="modal">
@@ -156,16 +159,16 @@ export default {
   data () {
     return {
 
-      dialog: {
-        show: false,
-        title: '提示',
-        text: '是否跳转到列表页面?',
-        ok: () => {
-          this.dialog.show = false
-          this.$router.push({
-            path: '/task/task-table'
-          })
-        }
+      defaultForm: {
+        taskName: '',
+        bugs: '',
+        bugArr: [],
+        assets: '',
+        assetArr: [],
+        cycle: '0',
+        sacnType: '1',
+        reportTemplate: '0',
+        desc: ''
       },
 
       form: {
@@ -269,18 +272,30 @@ export default {
         .$post('/api/task/execCreateTask', this.form)
         .then(data => {
           if (data.success) {
-            this.dialog.text = '是否跳转到列表页面?'
-            this.dialog.show = true
+            this.$confirm('是否跳转到列表页面?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success'
+            }).then(() => {
+              this.$router.push({
+                path: '/task/task-table'
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消跳转'
+              })
+            })
+
             this.getHisTaskList()
           } else {
-            this.dialog.text = data.msg
-            this.dialog.show = true
+            this.$message({
+              type: 'error',
+              message: data.msg
+            })
           }
         })
         .catch(() => {
-          // this.$router.push({
-          //   path: '/login'
-          // })
         })
     },
 

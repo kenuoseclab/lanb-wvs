@@ -515,6 +515,7 @@ export default {
             if (data.success) {
               this.$message({
                 type: 'success',
+                showClose: true,
                 message: '删除成功!'
               })
               this.deleteAction.isDialog = false
