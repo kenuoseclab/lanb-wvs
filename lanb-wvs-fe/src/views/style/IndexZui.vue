@@ -46,9 +46,9 @@
                 <li>
                   <i class="iconfont icon-qunliao"></i>QQ群:82667033
                 </li>
-                <router-link class="exit-btn" tag="li" to="/login">
+                <li class="exit-btn" @click="logout">
                   <i class="iconfont icon-tuichu"></i>退出系统
-                </router-link>
+                </li>
               </ul>
             </div>
           </div>
@@ -84,14 +84,6 @@
       </div>
       <div class="main">
         <div class="main-container">
-          <!-- 左侧选项卡 -->
-          <!-- <ul class="left-tabs">
-            <li class="tab-item tab-item--active">首页</li>
-            <li class="tab-item">用户管理</li>
-            <li class="tab-item">系统设置</li>
-            <li class="tab-item">角色管理</li>
-            <li class="tab-item">日志管理</li>
-          </ul>-->
 
           <!-- 采用组件切换的模式 -->
           <template v-if="!isRouter">
@@ -163,6 +155,23 @@ export default {
   },
 
   methods: {
+
+    logout () {
+      this.$confirm('是否登出用户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$router.push({
+          path: '/login'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消登出'
+        })
+      })
+    },
 
     roleSetting () {
       this.$alert('暂未开发', '角色选择', {
