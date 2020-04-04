@@ -1,19 +1,25 @@
 <template>
-  <div class="panel">
-    <h1>{{title}}</h1>
-    <div class="panel__bdoy" style="padding-left: 16px;">
-      <form class="form">
-        <div v-for="(field, index) in fields" :key="index" class="form__block">
-          <label class="input-label" :for="field.name">{{ field.name }}</label>
-          <input class="input" v-model="data[field.field]" :placeholder="'请输入' + field.name">
-        </div>
-        <div class="form__block">
-          <a class="button" @click="submit">保存</a>
-          <!-- <a class="button">重置</a> -->
-        </div>
-      </form>
+  <el-card shadow="never" style="margin-bottom: 16px;">
+    <div slot="header">
+      <span>{{ title }}</span>
     </div>
-  </div>
+
+    <el-col :span="12">
+      <el-form label-width="auto" size="medium" label-position="right">
+        <el-form-item
+          v-for="(field, index) in fields"
+          :key="index"
+          :label="field.name"
+          label-width="80px"
+        >
+          <el-input v-model="data[field.field]" :placeholder="'请输入' + field.name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submit">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-col>
+  </el-card>
 </template>
 
 <script>
@@ -42,7 +48,7 @@ export default {
     },
 
     submit: {
-      default: function () {},
+      default: function () { },
       type: Function
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="编辑表单" :visible.sync="isModal">
+    <el-dialog :title="actionTitle" :visible.sync="isModal">
       <el-form :inline="true" :model="editForm">
         <el-form-item
           v-for="(field, index) in fields"
@@ -31,15 +31,9 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="isModal = false">取 消</el-button>
-        <el-button type="primary" @click="postForm">确 定</el-button>
+        <el-button :loading="false" type="primary" @click="postForm">确 定</el-button>
       </div>
     </el-dialog>
-
-    <!-- 提示框 -->
-    <Dialog :show.sync="isDialog">{{ dialogMsg }}</Dialog>
-
-    <!-- 删除确认框 -->
-    <!-- <Dialog :show.sync="deleteAction.isDialog" :ok="deleteAction.ok">{{ deleteAction.dialogMsg }}</Dialog> -->
 
     <!-- 文字提示框 -->
     <!-- <input
@@ -290,7 +284,6 @@ export default {
       editForm: null,
       form: null,
       show: false,
-      isDialog: false,
       day: '',
       loading: {
         canCancel: true,
@@ -300,7 +293,6 @@ export default {
         opacity: 0,
         color: 'rgb(0, 123, 255)'
       },
-      dialogMsg: '操作成功',
 
       // 删除操作确认框
       deleteAction: {
@@ -437,19 +429,20 @@ export default {
           .$post(this.baseURL + this.api.save, tmpParam)
           .then(data => {
             if (data.success) {
-              this.dialogMsg = '保存成功'
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: '保存成功',
+                type: 'success'
+              })
               this.isModal = false
               this.getList()
             } else {
-              this.dialogMsg = data.msg
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: data.msg,
+                type: 'error'
+              })
             }
-          })
-          .catch(() => {
-            this.$router.push({
-              path: '/login'
-            })
           })
       } else if (this.action === 'update') {
         this
@@ -457,18 +450,19 @@ export default {
           .then(data => {
             if (data.success) {
               this.isModal = false
-              this.dialogMsg = '更新成功'
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: '更新成功',
+                type: 'success'
+              })
               this.getList()
             } else {
-              this.dialogMsg = data.msg
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: data.msg,
+                type: 'error'
+              })
             }
-          })
-          .catch(() => {
-            this.$router.push({
-              path: '/login'
-            })
           })
       }
     },
@@ -544,11 +538,6 @@ export default {
               this.getList()
             }
           })
-          .catch(() => {
-            this.$router.push({
-              path: '/login'
-            })
-          })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -571,6 +560,12 @@ export default {
        * 对象拷贝,防止改动到表格内容
        */
       const tmpRow = JSON.parse(JSON.stringify(rows[0]))
+
+      // 遍历对象转字符串
+      for (let key in tmpRow) {
+        tmpRow[key] = tmpRow[key] + ''
+      }
+
       this.editForm = tmpRow
       this.isModal = true
       this.action = 'update'

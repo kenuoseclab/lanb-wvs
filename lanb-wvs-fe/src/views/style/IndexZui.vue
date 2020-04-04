@@ -13,6 +13,7 @@
             :class="{'nav-bar__item': true, 'nav-bar__item--selected': item.checked}"
             @click.stop="menuCallback(item)"
           >{{item.text}}</li>
+          <!-- <li class="nav-bar__item" style="font-size: 16px;">...</li> -->
         </ul>
         <div class="header-bar">
           <a
@@ -84,7 +85,6 @@
       </div>
       <div class="main">
         <div class="main-container">
-
           <!-- 采用组件切换的模式 -->
           <template v-if="!isRouter">
             <keep-alive>
@@ -252,6 +252,15 @@ export default {
       for (let index = 0; index < this.menus.length; index++) {
         const element = this.menus[index]
         element.checked = false
+      }
+
+      for (let index = 0; index < this.menus.length; index++) {
+        const element = this.menus[index]
+        // 根目录匹配到则设置
+        if (name === element.id) {
+          element.checked = true
+          return
+        }
       }
 
       var isChecked = false

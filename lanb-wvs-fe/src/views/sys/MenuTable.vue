@@ -6,12 +6,20 @@
           <div class="panel">
             <h1>菜单列表</h1>
             <div class="panel__body">
+              <div class="buttons" style="margin-bottom: 16px;">
+                <el-button @click="append()">新增</el-button>
+              </div>
+
+              <el-input style="margin-bottom:8px;" placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
+
               <el-tree
+                ref="tree"
                 :data="data"
                 node-key="id"
                 default-expand-all
                 :expand-on-click-node="false"
                 @node-click="nodeClick"
+                :filter-node-method="filterNode"
               >
                 <span class="custom-tree-node" slot-scope="{ node, data }">
                   <span>{{ node.label }}</span>
@@ -78,7 +86,15 @@ export default {
         menuUrl: '',
         sort: '',
         field: ''
-      }
+      },
+
+      filterText: ''
+    }
+  },
+
+  watch: {
+    filterText (val) {
+      this.$refs.tree.filter(val)
     }
   },
 
@@ -87,6 +103,11 @@ export default {
   },
 
   methods: {
+
+    filterNode (value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
 
     submit () {
       this.$post(this.baseURL + '/' + this.action, this.formData).then(data => {
@@ -121,21 +142,27 @@ export default {
 
     append (data) {
       this.action = 'save'
-      const itemData = data.attributes
-      const menuId = itemData.menuId
-      this.formData = {
-        menuId: '',
-        menuName: '',
-        parentMenuId: menuId,
-        menuUrl: '',
-        sort: '',
-        field: ''
+      if (data === undefined) {
+        this.formData = {
+          menuId: '',
+          menuName: '',
+          parentMenuId: '',
+          menuUrl: '',
+          sort: '',
+          field: ''
+        }
+      } else {
+        const itemData = data.attributes
+        const menuId = itemData.menuId
+        this.formData = {
+          menuId: '',
+          menuName: '',
+          parentMenuId: menuId,
+          menuUrl: '',
+          sort: '',
+          field: ''
+        }
       }
-      // const newChild = { id: id++, label: '新增菜单', children: [] }
-      // if (!data.children) {
-      //   this.$set(data, 'children', [])
-      // }
-      // data.children.push(newChild)
     },
 
     remove (node, data) {

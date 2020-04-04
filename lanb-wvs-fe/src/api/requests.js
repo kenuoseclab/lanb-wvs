@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 import router from '../router'
+import {Message} from 'element-ui'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = ''
@@ -17,7 +18,10 @@ axios.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      alert(error.response.data.msg)
+      Message({
+        type: 'error',
+        message: error.response.data.msg
+      })
       router.push({
         path: '/login'
       })

@@ -28,11 +28,11 @@
       </div>
     </form>
 
-    <p style="z-index: 10001; color: #fff; margin-top: 35px;">
+    <!-- <p style="z-index: 10001; color: #fff; margin-top: 35px;">
       基于
       <a style="color: #fff" href="https://github.com/lanb-code/">LANB WEB</a>
       框架开发
-    </p>
+    </p> -->
   </div>
 </template>
 
@@ -76,8 +76,10 @@ export default {
           })
         } else {
           this.$message.error(data.msg)
+          this.loading = false
         }
       }).catch(error => {
+        this.$message.error('登录超时')
         console.log(error)
         this.loading = false
       })

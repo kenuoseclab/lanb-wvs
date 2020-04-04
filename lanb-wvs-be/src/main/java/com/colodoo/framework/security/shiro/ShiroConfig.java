@@ -49,6 +49,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/poc/**", "anon");
 		// 用户，需要角色权限 “user”
 		filterChainDefinitionMap.put("/menu/**", "roles[user]");
+		filterChainDefinitionMap.put("/bug/**", "roles[user]");
+		filterChainDefinitionMap.put("/task**/**", "roles[user]");
 
 		// 管理员，需要角色权限“admin”
 		filterChainDefinitionMap.put("/user/**", "roles[admin]");
