@@ -20,9 +20,9 @@
             ></el-input>
           </div>
 
-          <div class="btn-group">
-            <el-button type="primary" @click="login" :loading="loading">登录</el-button>
-            <el-button @click="reset">重置</el-button>
+          <div class="form__block">
+            <el-button type="primary" style="width:100%;" @click="login" :loading="loading">立即登录</el-button>
+            <!-- <el-button @click="reset">重置</el-button> -->
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@ export default {
   box-shadow: 1px 1px 10px rgba(0, 21, 41, 0.08);
   margin-bottom: 0px !important;
   z-index: 1000;
-  height: 300px;
+  // height: 300px;
   min-height: 300px;
   overflow: hidden;
 
@@ -165,7 +165,7 @@ export default {
 }
 
 .form__block {
-  margin-top: 12px;
+  margin-top: 24px;
   position: relative;
 
   .input-icon {

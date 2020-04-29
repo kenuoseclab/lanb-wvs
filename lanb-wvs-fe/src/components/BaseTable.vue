@@ -30,8 +30,8 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="isModal = false">取 消</el-button>
         <el-button :loading="false" type="primary" @click="postForm">确 定</el-button>
+        <el-button @click="isModal = false">取 消</el-button>
       </div>
     </el-dialog>
 
