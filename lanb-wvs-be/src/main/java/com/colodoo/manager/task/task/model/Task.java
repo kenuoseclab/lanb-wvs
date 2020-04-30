@@ -199,4 +199,22 @@ public class Task implements Serializable {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+	public Task(String taskId, String taskName, String desc, String status, Date createTime, String createUserId,
+			Date updateTime, String updateUserId, String remark) {
+		super();
+		this.taskId = taskId;
+		this.taskName = taskName;
+		this.desc = desc;
+		this.status = status;
+		this.createTime = createTime;
+		this.createUserId = createUserId;
+		this.updateTime = updateTime;
+		this.updateUserId = updateUserId;
+		this.remark = remark;
+	}
+
+	public Task() {
+		super();
+	}
 }

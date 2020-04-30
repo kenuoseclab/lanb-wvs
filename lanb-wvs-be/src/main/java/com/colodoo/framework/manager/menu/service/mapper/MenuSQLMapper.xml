@@ -18,13 +18,13 @@
 				     a.`menu_id` = #{menuId} and
 				</if>
 				<if test="menuName != null and menuName !=''">
-				     a.`menu_name` = #{menuName} and
+				     a.`menu_name` like CONCAT(CONCAT('%', #{menuName}), '%') and
 				</if>
 				<if test="parentMenuId != null and parentMenuId !=''">
 				     a.`parent_menu_id` = #{parentMenuId} and
 				</if>
 				<if test="menuUrl != null and menuUrl !=''">
-				     a.`menu_url` = #{menuUrl} and
+					 a.`menu_url` like CONCAT(CONCAT('%', #{menuUrl}), '%') and
 				</if>
 				<if test="sort != null and sort !=''">
 				     a.`sort` = #{sort} and

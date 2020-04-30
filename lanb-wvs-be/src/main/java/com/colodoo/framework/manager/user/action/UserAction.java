@@ -10,10 +10,13 @@ import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.utils.Contants;
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +33,8 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Api(description = "用户管理")
 public class UserAction {
 
 	@Autowired
@@ -38,6 +42,7 @@ public class UserAction {
 
 	@RequestMapping(value = "/loginCheck")
 	@ResponseBody
+	@ApiOperation(value = "登陆验证",notes = "验证登陆信息")
 	public Msg loginCheck(@RequestBody User model, HttpServletRequest request) {
 		Msg msg = new Msg();
 		HttpSession session = request.getSession();
@@ -46,20 +51,16 @@ public class UserAction {
 			// 已经登录
 			if (sessionObject != null && sessionObject.getUser() != null) {
 				msg.setSuccess(true);
-				model.setPassword(null);
-				model.setUserName(sessionObject.getUser().getUserName());
-				msg.setData(model);
+				msg.setData(sessionObject);
 				msg.setMsg(Contants.LOGINED);
 			} else {
 				// 登录成功
 				msg = userService.loginCheck(model, request);
 				if (msg.isSuccess()) {
 					Subject subject = SecurityUtils.getSubject();
-					UsernamePasswordToken token = new UsernamePasswordToken(model.getUserName(), model.getPassword());
+					UsernamePasswordToken token = new UsernamePasswordToken(model.getUserId(), model.getPassword());
 					subject.login(token);
 					msg.setMsg(Contants.LOGIN_SUCCESS);
-					model.setPassword(null);
-					msg.setData(model);
 				} else {// 登录失败
 					msg.setSuccess(false);
 					msg.setMsg(Contants.LOGIN_FAIL);

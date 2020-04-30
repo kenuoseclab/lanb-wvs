@@ -1,27 +1,30 @@
-input, select {
-  outline: none;
+input,
+select {
+    outline: none;
 }
 
 .input-label {
-  display: inline-block;
-  font-weight: bold;
-  width: 80px;
-  max-width: 120px
+    display: inline-block;
+    // font-weight: bold;
+    width: 80px;
+    max-width: 120px
 }
 
 .input {
-  border: 0.5px solid #c4c6cf;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 12px;
-  border-radius: 3px;
-  transition: all 0.5s;
+    border: 1px solid #c4c6cf;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 12px;
+    border-radius: 3px;
+    transition: all 0.5s;
+    vertical-align: middle;
+    outline: none;
 }
 
 .input:hover {
-  border-color: #a0a2ad;
+    border-color: #a0a2ad;
 }
 
 .input:focus {
-  border-color: #3080fe;
+    border-color: #3080fe;
 }

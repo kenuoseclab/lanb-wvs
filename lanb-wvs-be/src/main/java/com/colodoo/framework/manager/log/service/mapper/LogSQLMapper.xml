@@ -25,11 +25,13 @@
 				<if test="logContent != null and logContent !=''">
 				     a.`log_content` = #{logContent} and
 				</if>
-				<if test="createTime != null and createTime !=''">
+				<if test="createTime != null">
 				     a.`create_time` = #{createTime} and
 				</if>
 			</trim>
 		</where>
+
+		order by `create_time` desc
 
 	</select>
 

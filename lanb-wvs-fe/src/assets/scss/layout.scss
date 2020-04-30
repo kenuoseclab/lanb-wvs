@@ -50,6 +50,8 @@ main .main__right {
 /* flex栅栏布局 */
 .row {
   display: flex;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .row .col {
@@ -83,7 +85,7 @@ main .main__right {
 
 .row .col-3 {
   flex: 0 0 25%;
-  padding-left: 16px;
+  // padding-left: 16px;
 }
 
 .row-wrap {
@@ -91,7 +93,7 @@ main .main__right {
   flex-wrap: wrap;
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
@@ -122,4 +124,4 @@ main .main__right {
 ::-webkit-scrollbar-track:hover {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, .4);
   background-color: rgba(0, 0, 0, .01);
-} */
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.manager.task.taskLog.service.mapper.TaskLogSQLMapper">
+
+	<select id="getTaskLogList" resultType="com.colodoo.manager.task.taskLog.model.TaskLog" parameterType="com.colodoo.manager.task.taskLog.model.TaskLogVO">
+		select
+			a.`task_log_id` as `taskLogId`,
+			a.`task_id` as `taskId`,
+			a.`task_log_status` as `taskLogStatus`,
+			a.`create_time` as `createTime`,
+			a.`create_user_id` as `createUserId`,
+			a.`finished_time` as `finishedTime`,
+			a.`remark` as `remark`
+		from
+		    task_log a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="taskLogId != null and taskLogId !=''">
+					a.`task_log_id` like CONCAT(CONCAT('%', #{taskLogId}), '%') and
+				</if>
+				<if test="taskId != null and taskId !=''">
+					a.`task_id` like CONCAT(CONCAT('%', #{taskId}), '%') and
+				</if>
+				<if test="taskLogStatus != null and taskLogStatus !=''">
+					a.`task_log_status` like CONCAT(CONCAT('%', #{taskLogStatus}), '%') and
+				</if>
+				<if test="createTime != null">
+					a.`create_time` = #{createTime} and
+				</if>
+				<if test="createUserId != null and createUserId !=''">
+					a.`create_user_id` like CONCAT(CONCAT('%', #{createUserId}), '%') and
+				</if>
+				<if test="finishedTime != null">
+					a.`finished_time` = #{finishedTime} and
+				</if>
+				<if test="remark != null and remark !=''">
+					a.`remark` like CONCAT(CONCAT('%', #{remark}), '%') and
+				</if>
+			</trim>
+		</where>
+
+		order by `create_time` desc
+
+	</select>
+
+</mapper>

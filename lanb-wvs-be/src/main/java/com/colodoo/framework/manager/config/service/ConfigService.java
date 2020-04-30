@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.colodoo.framework.manager.config.service.mapper.ConfigSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,8 +37,7 @@ public class ConfigService extends BaseService<Config> {
     public int saveConfig(Config model) {
         int ret = Contants.CODE_FAILED;
         model.setConfigId(uuid());
-        // model.setCreateDate(new Date());
-        // model.setLastDate(new Date());
+        model.setCreateDate(new Date());
         try {
             ret = this.insert(model);
         } catch (DAOException e) {

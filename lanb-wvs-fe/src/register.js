@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import './components/dialog/index.js'
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
@@ -40,7 +41,7 @@ requireComponent.keys().forEach(fileName => {
 // 注册页面组件
 const requirePage = require.context(
   // 其组件目录的相对路径
-  './page',
+  './views',
   // 是否查询其子目录
   false,
   // 匹配基础组件文件名的正则表达式

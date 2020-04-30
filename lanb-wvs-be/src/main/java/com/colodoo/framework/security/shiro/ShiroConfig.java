@@ -45,9 +45,19 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/user/logout", "anon");
 		filterChainDefinitionMap.put("/user/loginCheck", "anon");
 		filterChainDefinitionMap.put("/user/register", "anon");
+		// 开放POC测试接口
+		filterChainDefinitionMap.put("/poc/**", "anon");
 		// 用户，需要角色权限 “user”
 		filterChainDefinitionMap.put("/menu/**", "roles[user]");
+		filterChainDefinitionMap.put("/bug/**", "roles[user]");
+		filterChainDefinitionMap.put("/task**/**", "roles[user]");
+
+		// 管理员，需要角色权限“admin”
 		filterChainDefinitionMap.put("/user/**", "roles[admin]");
+		filterChainDefinitionMap.put("/role/**", "roles[admin]");
+		filterChainDefinitionMap.put("/creater/**", "roles[admin]");
+		filterChainDefinitionMap.put("/config/**", "roles[admin]");
+
 		// 动态载入权限
 		// ...
 		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截

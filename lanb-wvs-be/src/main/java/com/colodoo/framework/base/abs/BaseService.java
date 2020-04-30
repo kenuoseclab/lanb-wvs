@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -300,7 +301,7 @@ public abstract class BaseService<M> {
      *
      * @return
      */
-    private ApplicationContext getApplicationContext() {
+    public ApplicationContext getApplicationContext() {
         return SpringContextsUtil.getApplicationContext();
     }
 
@@ -360,6 +361,12 @@ public abstract class BaseService<M> {
     /*取当前会话对象*/
     public SessionObject getSessionObject() {
     	return (SessionObject) session.getAttribute(Contants.SESSION_OBJECT_KEY);
+    }
+
+    /*检验是否登陆*/
+    public boolean isLogin() {
+        SessionObject sessionObject = this.getSessionObject();
+        return sessionObject != null && sessionObject.getUser() != null;
     }
 
 }

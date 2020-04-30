@@ -1,179 +1,193 @@
 <template>
   <div>
-    <!-- 模态框 -->
-    <div class="modal">
-      <transition name="bounce">
-        <div v-if="isModal" class="modal__inner panel">
-          <h1>编辑表单</h1>
-          <form class="form modal__body">
-            <template v-for="(field, index) in fields">
-              <div v-show="!field.hidden" :key="index" class="form__block">
-                <label class="input-label" :for="field.field">{{field.name}}</label>
-                <!-- 判断是否包含下拉 -->
-                <template v-if="field.type === 'select'">
-                  <select class="input" v-model="editForm[field.field]" :placeholder="field.name">
-                    <option value>请选择{{ field.name }}</option>
-                    <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                      <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
-                    </template>
-                  </select>
-                </template>
-                <!-- 是否为日期类型 -->
-                <template v-else-if="field.type === 'date'">
-                  <datepiacker
-                    style="margin-top: 8px; margin-right: 8px;"
-                    :key="index"
-                    :day.sync="editForm[field.field]"
-                  ></datepiacker>
-                </template>
-                <!-- 文本区域 -->
-                <template v-else-if="field.type === 'textarea'">
-                  <textarea
-                    style="height: 100px;"
-                    class="input"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  ></textarea>
-                </template>
-                <!-- 密码 -->
-                <template v-else-if="field.type === 'password'">
-                  <input
-                    class="input"
-                    type="password"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  >
-                </template>
-                <!-- 输入框 -->
-                <template v-else>
-                  <input
-                    class="input"
-                    type="text"
-                    v-model="editForm[field.field]"
-                    :placeholder="field.name"
-                  >
-                </template>
-              </div>
-            </template>
-          </form>
-          <div class="button-group">
-            <a @click="postForm" class="button">确定</a>
-            <a @click="isModal = false" class="button">取消</a>
-          </div>
-        </div>
-      </transition>
-    </div>
-
-    <!-- 提示框 -->
-    <div class="dialog" v-show="isDialog">
-      <div class="dialog__inner">
-        <h1>提示</h1>
-        <div class="dialog__body">操作成功</div>
-        <div class="button-group">
-          <a @click="isDialog = false" class="button">确定</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <form class="form">
-        <template v-for="(field, index) in fields">
-          <!-- 是否为下拉 -->
+    <el-dialog :title="actionTitle" :visible.sync="isModal">
+      <el-form :inline="true" :model="editForm">
+        <el-form-item
+          v-for="(field, index) in fields"
+          :key="index"
+          :label="field.name"
+          :label-width="formLabelWidth"
+        >
           <template v-if="field.type === 'select'">
-            <select
-              :key="index"
-              class="input"
-              v-model="form[field.field]"
-              :placeholder="field.name"
-            >
-              <option value>请选择{{ field.name }}</option>
+            <el-select clearable v-model="editForm[field.field]">
               <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                <option :value="codeType.value" v-bind:key="index">{{ codeType.name }}</option>
+                <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
               </template>
-            </select>
+            </el-select>
           </template>
-          <!-- 是否为日期类型 -->
           <template v-else-if="field.type === 'date'">
-            <datepiacker
-              style="margin-top: 8px; margin-right: 8px;"
-              :key="index"
-              :day.sync="form[field.field]"
-            ></datepiacker>
+            <el-date-picker
+              v-model="editForm[field.field]"
+              type="datetime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择日期时间"
+            ></el-date-picker>
           </template>
-          <!-- 否则输入框 -->
           <template v-else>
-            <input :key="index" class="input" v-model="form[field.field]" :placeholder="field.name">
+            <el-input v-model="editForm[field.field]" :placeholder="field.name"></el-input>
           </template>
-        </template>
-        <a @click="search" class="button">查询</a>
-        <a @click="formReset" class="button">重置</a>
-      </form>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button :loading="false" type="primary" @click="postForm">确 定</el-button>
+        <el-button @click="isModal = false">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 文字提示框 -->
+    <!-- <input
+      class="input"
+      v-model="input.text"
+      v-show="input.show"
+      :style="'z-index: 9999; transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
+    />-->
+
+    <div class="row" @click="input.show = false">
+      <div class="col-12">
+        <el-card shadow="never" v-if="isSearch" style="margin-bottom: 16px;">
+          <el-form
+            label-width="auto"
+            size="medium"
+            label-position="right"
+            :inline="true"
+            :model="form"
+            class="demo-form-inline"
+          >
+            <el-form-item
+              v-for="(field, index) in fields"
+              :key="index"
+              :label="field.name"
+              :label-width="formLabelWidth"
+            >
+              <template v-if="field.type === 'select'">
+                <el-select clearable v-model="form[field.field]">
+                  <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                    <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
+                  </template>
+                </el-select>
+              </template>
+              <template v-else-if="field.type === 'date'">
+                <el-date-picker
+                  v-model="form[field.field]"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间"
+                ></el-date-picker>
+              </template>
+              <template v-else>
+                <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
+              </template>
+            </el-form-item>
+            <el-form-item label=" " :label-width="formLabelWidth">
+              <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+            </el-form-item>
+            <el-form-item :label-width="formLabelWidth">
+              <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </div>
     </div>
 
-    <div class="panel">
-      <div class="tool-bar">
-        <a @click="saveHandle" class="button">新增</a>
-        <a @click="deleteHandle" class="button">删除</a>
-        <a @click="updateHandle" class="button">修改</a>
-
-        <template v-for="(btn, index) in btns">
-          <a :key="index" @click="btnClick(btn)" class="button">{{ btn.title }}</a>
-        </template>
-
-      </div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th v-if="checkbox.show">
-              <input
-                v-model="checkbox.checked"
-                @click="selectToggle"
-                class="checkbox"
-                type="checkbox"
-              >
-            </th>
-
-            <template v-for="(field, index) in fields">
-              <th v-show="!field.hidden" :key="index">{{field.name}}</th>
-            </template>
-          </tr>
-        </thead>
-
-        <transition name="fade">
-          <tbody v-show="show">
-            <tr :key="index" v-for="(row, index) in rows">
-              <td v-if="checkbox.show">
-                <input v-model="row.checked" class="checkbox" type="checkbox">
-              </td>
-              <template v-for="(field, fieldIndex) in fields">
-                <td v-if="!field.hidden" @click="row.checked = true" :key="fieldIndex">{{cellFormatter(field, row)}}</td>
+    <div class="row">
+      <div class="col-12">
+        <el-card shadow="never">
+          <div>
+            <div class="tool-bar" v-if="isToolbar">
+              <template v-if="isDefaultBtn">
+                <el-button type="primary" icon="el-icon-plus" @click="saveHandle">新增</el-button>
+                <el-button type="primary" icon="el-icon-edit" @click="updateHandle">修改</el-button>
+                <el-button type="primary" icon="el-icon-delete" @click="deleteHandle">删除</el-button>
               </template>
-            </tr>
-          </tbody>
-        </transition>
-      </table>
 
-      <div class="pagination">
-        <a @click="pageChange(-1)" class="button">上一页</a>
-        <input type="number" v-model="pageInfo.page" @change="getList" class="input">
-        <a @click="pageChange(1)" class="button">下一页</a>
+              <template v-for="(btn, index) in btns">
+                <el-button :key="index" type="primary" @click="btnClick(btn)">{{btn.title}}</el-button>
+              </template>
+            </div>
 
-        <div class="rows">
-          <label for="rows">每页</label>
-          <input type="number" class="input" placeholder v-model="pageInfo.rows" @change="getList">
-        </div>
+            <div
+              v-show="!show"
+              v-loading="!show"
+              style="background-color: #f9f9f9; margin: 0px 8px; height: 550px;"
+            ></div>
+            <transition name="fade">
+              <div v-show="show" style="padding: 0px 8px;">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th v-if="checkbox.show" style="text-align: center;">
+                        <!-- <input
+                        v-model="checkbox.checked"
+                        @click="selectToggle"
+                        class="checkbox"
+                        type="checkbox"
+                        />-->
+                        <el-checkbox v-model="checkbox.checked" @change="selectToggle"></el-checkbox>
+                      </th>
+
+                      <template v-for="(field, index) in fields">
+                        <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
+                      </template>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr :key="index" v-for="(row, index) in rows">
+                      <td v-if="checkbox.show" style="text-align: center;">
+                        <el-checkbox v-model="row.checked" :key="index"></el-checkbox>
+                      </td>
+                      <template v-for="(field, fieldIndex) in fields">
+                        <td
+                          @dblclick="cellDbclick($event, row)"
+                          v-if="!field.hidden"
+                          :key="fieldIndex"
+                          :width="field.width"
+                        >
+                          <template v-if="field.formatter != null">
+                            <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
+                          </template>
+                          <template v-else>
+                            <div
+                              @dblclick="cellDbclick($event, row)"
+                              :title="cellFormatter(field, row)"
+                            >{{cellFormatter(field, row)}}</div>
+                          </template>
+                        </td>
+                      </template>
+                    </tr>
+                    <tr v-if="rows.length === 0">
+                      <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </transition>
+
+            <div class="pagination">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="getList"
+                :current-page="pageInfo.page"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="pageInfo.rows"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="this.total"
+              ></el-pagination>
+            </div>
+          </div>
+        </el-card>
       </div>
     </div>
 
     <!-- loading -->
-    <loading
+    <!-- <loading
       :active="!show"
       :can-cancel="loading.canCancel"
       :on-cancel="loading.onCancel"
       :color="loading.color"
       :opacity="loading.opacity"
-    ></loading>
+    ></loading>-->
   </div>
 </template>
 
@@ -185,6 +199,24 @@ export default {
   name: 'baseTable',
 
   props: {
+
+    // 条件
+    where: {
+      type: Object,
+      default: null
+    },
+
+    // 是否显示搜索条件
+    isSearch: {
+      type: Boolean,
+      default: true
+    },
+
+    // 是否显示工具栏
+    isToolbar: {
+      type: Boolean,
+      default: true
+    },
 
     // 字段配置
     fields: {
@@ -225,6 +257,13 @@ export default {
       default: () => {
         return []
       }
+    },
+
+    isDefaultBtn: {
+      type: Boolean,
+      default: () => {
+        return true
+      }
     }
   },
 
@@ -245,7 +284,6 @@ export default {
       editForm: null,
       form: null,
       show: false,
-      isDialog: false,
       day: '',
       loading: {
         canCancel: true,
@@ -254,7 +292,25 @@ export default {
         },
         opacity: 0,
         color: 'rgb(0, 123, 255)'
-      }
+      },
+
+      // 删除操作确认框
+      deleteAction: {
+        isDialog: false,
+        dialogMsg: '确认删除该行?',
+        ok: () => {
+
+        }
+      },
+
+      transform: '',
+      input: {
+        offsetTop: '0px',
+        offsetLeft: '0px',
+        text: '',
+        show: false
+      },
+      formLabelWidth: '120px'
     }
   },
 
@@ -264,10 +320,74 @@ export default {
         return parseInt(this.total / this.pageInfo.rows)
       }
       return parseInt(this.total / this.pageInfo.rows) + 1
+    },
+
+    actionTitle () {
+      if (this.action === 'save') {
+        return '新增表单'
+      } else if (this.action === 'update') {
+        return '编辑表单'
+      }
+      return '表单'
+    },
+
+    noDataColspan () {
+      let colspan = 0
+      for (let index = 0; index < this.fields.length; index++) {
+        const field = this.fields[index]
+        if (!field.hidden) {
+          colspan++
+        }
+      }
+      if (this.checkbox.show) {
+        colspan++
+      }
+      return colspan
     }
   },
 
   methods: {
+
+    handleSizeChange (val) {
+      this.pageInfo.rows = val
+      this.getList()
+    },
+
+    getElementLeft (element) {
+      var actualLeft = element.offsetLeft
+      var current = element.offsetParent
+      while (current !== null) {
+        actualLeft += (current.offsetLeft + current.clientLeft)
+        current = current.offsetParent
+      }
+      return actualLeft
+    },
+
+    getElementTop (element) {
+      var actualTop = element.offsetTop
+      var current = element.offsetParent
+      while (current !== null) {
+        actualTop += (current.offsetTop + current.clientTop)
+        current = current.offsetParent
+      }
+      return actualTop
+    },
+
+    // 单元格双击事件
+    cellDbclick (event, row) {
+      // this.input.show = true
+      // let offsetTop = this.getElementTop(event.srcElement) + 'px'
+      // let offsetLeft = this.getElementLeft(event.srcElement) + 'px'
+      // let text = event.target.innerText
+
+      // this.input.offsetTop = offsetTop
+      // this.input.offsetLeft = offsetLeft
+      // this.input.text = text
+
+      this.initCheckbox(this.rows)
+      row.checked = true
+      this.updateHandle()
+    },
 
     // 取得代码类型列表
     getCodeTypeMap (field) {
@@ -309,17 +429,20 @@ export default {
           .$post(this.baseURL + this.api.save, tmpParam)
           .then(data => {
             if (data.success) {
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: '保存成功',
+                type: 'success'
+              })
               this.isModal = false
               this.getList()
             } else {
-              alert(data.msg)
+              this.$message({
+                showClose: true,
+                message: data.msg,
+                type: 'error'
+              })
             }
-          })
-          .catch(() => {
-            // this.$router.push({
-            //   path: '/login'
-            // })
           })
       } else if (this.action === 'update') {
         this
@@ -327,16 +450,19 @@ export default {
           .then(data => {
             if (data.success) {
               this.isModal = false
-              this.isDialog = true
+              this.$message({
+                showClose: true,
+                message: '更新成功',
+                type: 'success'
+              })
               this.getList()
             } else {
-              alert(data.msg)
+              this.$message({
+                showClose: true,
+                message: data.msg,
+                type: 'error'
+              })
             }
-          })
-          .catch(() => {
-            // this.$router.push({
-            //   path: '/login'
-            // })
           })
       }
     },
@@ -350,7 +476,7 @@ export default {
     selectToggle () {
       for (let i = 0; i < this.rows.length; i++) {
         const row = this.rows[i]
-        row.checked = !this.checkbox.checked
+        row.checked = this.checkbox.checked
       }
     },
 
@@ -375,52 +501,83 @@ export default {
     deleteHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        alert('请选择一行数据!')
+        this.$message({
+          message: '请选中一行数据',
+          showClose: true,
+          type: 'warning'
+        })
         return
       }
-      this.show = false
-      const row = rows[0]
-      delete row.checked
-      this
-        .$post(this.baseURL + this.api.delete, row)
-        .then(data => {
-          if (data.success) {
-            this.isDialog = true
-            this.checkbox.checked = false
-            this.show = true
-            this.getList()
-          } else {
-            alert(data.msg)
-          }
+
+      this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.show = false
+        const row = rows[0]
+        delete row.checked
+        this
+          .$post(this.baseURL + this.api.delete, row)
+          .then(data => {
+            if (data.success) {
+              this.$message({
+                type: 'success',
+                showClose: true,
+                message: '删除成功!'
+              })
+              this.deleteAction.isDialog = false
+              this.checkbox.checked = false
+              this.show = true
+              this.getList()
+            } else {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              })
+              this.getList()
+            }
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         })
-        .catch(() => {
-          // this.$router.push({
-          //   path: '/login'
-          // })
-        })
+      })
     },
 
     updateHandle () {
       const rows = this.getSelectedRows()
       if (rows.length !== 1) {
-        alert('请选中一行数据!')
+        this.$message({
+          message: '请选中一行数据',
+          showClose: true,
+          type: 'warning'
+        })
         return
       }
       /**
        * 对象拷贝,防止改动到表格内容
        */
       const tmpRow = JSON.parse(JSON.stringify(rows[0]))
+
+      // 遍历对象转字符串
+      for (let key in tmpRow) {
+        tmpRow[key] = tmpRow[key] + ''
+      }
+
       this.editForm = tmpRow
       this.isModal = true
       this.action = 'update'
     },
 
     // 初始化checkbox
-    initCheckbox () {
-      for (let i = 0; i < this.rows.length; i++) {
-        const row = this.rows[i]
+    initCheckbox (rows) {
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i]
         row.checked = false
       }
+      return rows
     },
 
     // 查询
@@ -437,18 +594,19 @@ export default {
       this
         .$post(this.baseURL + this.api.query, tmpParam)
         .then(data => {
-          this.rows = data.rows
+          this.rows = this.initCheckbox(data.rows)
           this.total = data.total
+
           // 强制刷新dom,防止checkbox出现问题
           this.$nextTick(() => {
             this.show = true
-            this.initCheckbox()
           })
         })
     },
 
     // 改变页码
-    pageChange (num) {
+    pageChange (val) {
+      const num = val - this.pageInfo.page
       if (typeof (this.pageInfo.page) === 'string') {
         this.pageInfo.page = parseInt(this.pageInfo.page)
       }
@@ -486,7 +644,56 @@ export default {
     // 按钮点击事件
     btnClick (btn) {
       if (typeof btn.click !== 'undefined') {
-        btn.click(this.getSelectedRows())
+        btn.click(this.getSelectedRows(), this)
+      }
+    },
+
+    keydownHandle (event) {
+      var e = event || window.e
+      var keyCode = e.keyCode || e.which
+      switch (keyCode) {
+        case 13:
+          this.getList()
+          break
+      }
+    },
+
+    afterEnter () {
+      const modal = this.$refs.modal
+      const width = modal.offsetWidth
+      const height = modal.offsetHeight
+      // 如果不是是偶数,则加0.5px
+      if (width % 2 !== 0) {
+        this.transformX = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformX = '-50%'
+      }
+
+      if (height % 2 !== 0) {
+        this.transformY = 'calc(-50% + 0.5px)'
+      } else {
+        this.transformY = '-50%'
+      }
+
+      this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
+    },
+
+    // 初始化where条件存在情况
+    initWhereForm () {
+      if (this.where != null) {
+        for (const whereKey in this.where) {
+          if (this.where.hasOwnProperty(whereKey)) {
+            const whereItem = this.where[whereKey]
+            // 遍历条件,满足则填充
+            for (const formKey in this.form) {
+              if (this.form.hasOwnProperty(formKey)) {
+                if (whereKey === formKey) {
+                  this.form[formKey] = whereItem
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -495,6 +702,13 @@ export default {
     this.initEditForm()
     this.initSearchForm()
     this.getList()
+    document.addEventListener('keydown', this.keydownHandle)
+    // where条件初始化存在情况
+    this.initWhereForm()
+  },
+
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.keydownHandle)
   },
 
   watch: {
@@ -518,9 +732,9 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .form .input {
-  margin-top: 8px;
+  // margin-top: 8px;
   margin-right: 8px;
 }
 
@@ -531,5 +745,15 @@ export default {
 
 .pagination .rows {
   float: right;
+}
+
+.tool-bar {
+  .button {
+    margin-right: 5px;
+  }
+}
+
+.demo-form-inline {
+  width: auto;
 }
 </style>

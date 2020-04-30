@@ -1,6 +1,7 @@
 .color--green {
   background: rgb(88, 202, 154);
   color: rgb(255, 255, 255);
+  border: 1px solid rgb(88, 202, 154);
 }
 
 .color--red {
@@ -16,4 +17,10 @@
 .color--blue {
   background: rgb(68, 126, 255);
   color: rgb(255, 255, 255);
+}
+
+.color--white {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
 }

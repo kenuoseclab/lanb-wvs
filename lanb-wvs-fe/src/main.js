@@ -5,21 +5,24 @@ import App from './App'
 import router from './router'
 import './register.js'
 import store from './store'
-import { post, fetch, patch, put } from './api/requests'
+import './api/requests'
+// iviewui
+// import ViewUI from 'view-design'
+// import 'view-design/dist/styles/iview.css'
+// Vue.use(ViewUI)
+// elementui
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-Vue.prototype.$post = post
-Vue.prototype.$fetch = fetch
-Vue.prototype.$patch = patch
-Vue.prototype.$put = put
-
+// 问题处理
 Vue.config.errorHandler = function (err, vm, info) {
   console.log(err)
   console.log(vm)
   console.log(info)
 }
-
 Vue.config.warnHandler = function (msg, vm, trace) {
   console.log(msg)
   console.log(vm)
@@ -29,6 +32,7 @@ Vue.config.warnHandler = function (msg, vm, trace) {
     // router.push('/404')
   }
 }
+// 问题处理
 
 /* eslint-disable no-new */
 new Vue({

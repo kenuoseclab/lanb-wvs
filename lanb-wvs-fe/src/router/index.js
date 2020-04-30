@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexZui from '@/page/IndexZui'
+import Index from '@/views/style/IndexZui'
 import SystemRouter from './modules/system'
 import BugRouter from './modules/bug'
 import TaskRouter from './modules/task'
 import AssetRouter from './modules/asset'
 import ScriptRouter from './modules/script'
+import ScanRouter from './modules/scan'
 
 Vue.use(Router)
 
@@ -17,21 +18,23 @@ export default new Router({
     },
     {
       path: '/main',
-      name: 'Main',
+      name: 'main',
       redirect: '/main/dashboard',
-      component: IndexZui,
+      component: Index,
       children: [
         // 首页
         {
+          name: 'dashboard',
           path: 'dashboard',
           components: {
-            content: require('@/page/Dashboard').default
+            content: require('@/views/dashboard/Dashboard').default
           }
         },
         {
+          name: 'blankPage',
           path: '*',
           components: {
-            content: require('@/page/page/BlankPage.vue').default
+            content: require('@/views/common/BlankPage.vue').default
           }
         }
       ]
@@ -49,26 +52,37 @@ export default new Router({
     AssetRouter,
     // 脚本管理
     ScriptRouter,
+    // 扫描管理
+    ScanRouter,
 
     {
       path: '/login',
-      name: 'Login',
-      component: require('@/page/Login').default
+      name: 'login',
+      component: require('@/views/Login').default
     },
     {
       path: '/index-ice',
-      name: 'IndexIce',
-      component: require('@/page/IndexIce.vue').default
+      name: 'indexIce',
+      component: require('@/views/style/IndexIce.vue').default
     },
     {
       path: '/index-zui',
-      name: 'IndexZui',
-      component: require('@/page/IndexZui.vue').default
+      name: 'indexZui',
+      component: Index
     },
     {
       path: '*',
-      name: 'BlankPage',
-      component: require('@/page/page/BlankPage.vue').default
+      name: 'blankPage',
+      component: require('@/views/common/BlankPage.vue').default
+      // component: IndexZui,
+      // children: [
+      //   {
+      //     path: '',
+      //     components: {
+      //       content: require('@/views/common/BlankPage.vue').default
+      //     }
+      //   }
+      // ]
     }
   ]
 })

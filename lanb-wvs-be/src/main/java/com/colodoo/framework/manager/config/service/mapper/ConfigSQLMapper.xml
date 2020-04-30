@@ -26,7 +26,7 @@
 				<if test="sortNo != null and sortNo !=''">
 				     a.`sort_no` = #{sortNo} and
 				</if>
-				<if test="createDate != null and createDate !=''">
+				<if test="createDate != null">
 				     a.`create_date` = #{createDate} and
 				</if>
 				<if test="remark != null and remark !=''">

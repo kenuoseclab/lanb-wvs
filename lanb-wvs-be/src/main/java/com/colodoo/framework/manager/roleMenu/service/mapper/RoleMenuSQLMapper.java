@@ -13,6 +13,6 @@ import com.colodoo.framework.manager.roleMenu.model.RoleMenu;
  */
 public interface RoleMenuSQLMapper {
 	
-	public List<RoleMenu> getRoleMenuList(RoleMenuVO model) throws DAOException;
+	public List<RoleMenuVO> getRoleMenuList(RoleMenuVO model) throws DAOException;
 
 }

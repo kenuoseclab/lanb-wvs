@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block;">
+  <div style="display: inline-block; position: relative;">
     <div class="mask" @click="show = !show" v-show="show"></div>
     <input
       type="text"
@@ -7,10 +7,10 @@
       :placeholder="placeholder"
       autocomplete="off"
       ref="datetime__input"
-      readonly
       v-model="day"
       @click="focus"
-    >
+    />
+    <i class="iconfont icon-date" @click="focus"></i>
     <div class="datetime" v-show="show">
       <div class="datetime__title" ref="datetime__title">
         <span>
@@ -101,7 +101,7 @@ export default {
     },
     selectDay: function (date) {
       if (!this.isThisMonth(date)) return
-      this.$emit('update:day', df(date, 'YYYY-MM-DD'))
+      this.$emit('update:day', df(date, 'YYYY-MM-DD') + ' 00:00:00')
       this.show = false
     },
     isThisMonth (date) {
@@ -131,7 +131,14 @@ export default {
   },
   created () {
     this.initData()
+  },
+
+  watch: {
+    'day': function (newVal, oldVal) {
+      this.$emit('update:day', newVal)
+    }
   }
+
 }
 </script>
 
@@ -139,20 +146,19 @@ export default {
 .mask {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0);
   z-index: 1000;
 }
 .datetime {
-  position: absolute;
+  position: fixed;
   z-index: 1001;
   border: 1px solid #c4c6cf;
 }
 .datetime__input {
   transition: all 0.5s;
-  cursor: pointer;
 }
 /* .datetime__input:hover {
   border-color: #a0a2ad;
@@ -211,5 +217,15 @@ table.tup-table {
 .icon-fanhui:hover {
   background-color: #ffffff;
   cursor: pointer;
+}
+
+.icon-date {
+  display: inline-block;
+  position: absolute;
+  right: 8px;
+  top: 0px;
+  height: 35px;
+  width: 16px;
+  line-height: 35px;
 }
 </style>

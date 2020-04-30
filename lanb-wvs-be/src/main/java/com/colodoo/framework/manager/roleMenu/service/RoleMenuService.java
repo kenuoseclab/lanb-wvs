@@ -1,6 +1,8 @@
 package com.colodoo.framework.manager.roleMenu.service;
 
+import com.alibaba.fastjson.JSON;
 import com.colodoo.framework.base.abs.BaseService;
+import com.colodoo.framework.exception.AppException;
 import com.colodoo.framework.exception.DAOException;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.roleMenu.model.RoleMenu;
@@ -9,11 +11,13 @@ import com.colodoo.framework.easyui.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.springframework.stereotype.Service;
 import com.colodoo.framework.manager.roleMenu.service.mapper.RoleMenuSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author colodoo
@@ -26,6 +30,35 @@ public class RoleMenuService extends BaseService<RoleMenu> {
 
 	@Autowired
 	RoleMenuSQLMapper sqlMapper;
+	@Autowired
+    ShiroFilterFactoryBean shiroFilter;
+
+    /**
+     * 加载所有角色权限到shiro
+     * @return
+     */
+	public Map loadRoleMenu() throws AppException {
+	    Map<String, String> roleMenuMap = new HashMap<String, String>();
+        List<RoleMenuVO> RoleMenus = null;
+        // shiroFilter.setFilterChainDefinitionMap();
+        // 查找所有角色权限
+        try {
+           RoleMenus = sqlMapper.getRoleMenuList(new RoleMenuVO());
+            System.out.println(JSON.toJSONString(RoleMenus));
+        } catch (DAOException e) {
+            throw new AppException("查询角色菜单出错!");
+        }
+        // 遍历组装权限
+        if (RoleMenus == null) {
+            return roleMenuMap;
+        }
+        for (RoleMenu roleMenu : RoleMenus) {
+            String menuId = roleMenu.getMenuId();
+            String roleId = roleMenu.getRoleId();
+        }
+
+        return roleMenuMap;
+    }
 
     /**
     * 新增数据
@@ -99,8 +132,8 @@ public class RoleMenuService extends BaseService<RoleMenu> {
     *
     * @return
     */
-    public List<RoleMenu> query(RoleMenuVO model) {
-        List<RoleMenu> list = null;
+    public List<RoleMenuVO> query(RoleMenuVO model) {
+        List<RoleMenuVO> list = null;
         try {
             list = sqlMapper.getRoleMenuList(model);
         } catch (DAOException e) {
@@ -115,16 +148,16 @@ public class RoleMenuService extends BaseService<RoleMenu> {
     * @param page
     * @return
     */
-    public PageInfo<RoleMenu> query(Page page, RoleMenuVO model) {
-        PageInfo<RoleMenu> pageInfo;
-        List<RoleMenu> list = null;
+    public PageInfo<RoleMenuVO> query(Page page, RoleMenuVO model) {
+        PageInfo<RoleMenuVO> pageInfo;
+        List<RoleMenuVO> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
         try {
             list = sqlMapper.getRoleMenuList(model);
         } catch (DAOException e) {
             log.error(e.getMsg());
         }
-        pageInfo = new PageInfo<RoleMenu>(list);
+        pageInfo = new PageInfo<RoleMenuVO>(list);
         return pageInfo;
     }
 }

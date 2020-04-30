@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
 * @author colodoo
-* @date 2019-4-25 16:16:53
+* @date 2019-9-3 15:44:00
 * @description 
 */
 @Service
@@ -101,11 +101,7 @@ public class TaskAttrService extends BaseService<TaskAttr> {
     */
     public List<TaskAttr> query(TaskAttrVO model) {
         List<TaskAttr> list = null;
-        try {
-            list = sqlMapper.getTaskAttrList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getTaskAttrList(model);
         return list;
     }
 
@@ -119,11 +115,7 @@ public class TaskAttrService extends BaseService<TaskAttr> {
         PageInfo<TaskAttr> pageInfo;
         List<TaskAttr> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = sqlMapper.getTaskAttrList(model);
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
+        list = sqlMapper.getTaskAttrList(model);
         pageInfo = new PageInfo<TaskAttr>(list);
         return pageInfo;
     }

@@ -146,12 +146,14 @@ public class MenuService extends BaseService<Menu> {
         for (Menu menu : menus) {
             Tree tree = new Tree();
             tree.setText(menu.getMenuName());
+            tree.setTitle(menu.getMenuName());
+            tree.setLabel(menu.getMenuName());
             tree.setId(menu.getMenuId());
             tree.setChecked(false);
             tree.setState("close");
             HashMap<String, String> attr = new HashMap<String, String>();
             attr.put("menuUrl", menu.getMenuUrl());
-            tree.setAttributes(attr);
+            tree.setAttributes(menu);
             List tempList = getTreeMenu(tree.getId());
             if(tempList.size() != 0) {
                 tree.setChildren(tempList);

@@ -1,14 +1,15 @@
-import IndexZui from '@/page/IndexZui'
+import IndexZui from '@/views/style/IndexZui'
 
 const scriptRouter = {
   path: '/script',
-  name: 'Script',
+  name: 'script',
   component: IndexZui,
   children: [
     {
+      name: 'scriptPage',
       path: 'script-page',
       components: {
-        content: require('@/page/script/ScriptPage').default
+        content: require('@/views/script/ScriptPage').default
       }
     }
   ]

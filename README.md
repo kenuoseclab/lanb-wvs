@@ -17,17 +17,33 @@
 - 驻场人员
 - 安全团队管理
 
-## 展示
+## 基础展示
 
 ### 首页
-![首页](./IMG/dashboard.png)
+![首页](./IMG/zcgcs/dashboard.png)
 
 ### 基础表格
 ![基础表格](./IMG/table.png)
 
-## 关于我们
+## 驻场工程师
+
+### 首页
+![驻场工程师首页](./IMG/zcgcs/dashboard.png)
+
+### 创建任务
+![创建任务](./IMG/zcgcs/new_task.png)
+
+### 资产维护
+![资产维护](./IMG/zcgcs/asset.png)
+
+### 安全管理员
+
+![首页](./IMG/zcgcs/dashboard.png)
+
+## 基础展示
+
+## 反馈交流
 对本项目有兴趣者，欢迎加群讨论：
 
-* QQ群：82667033 
+![QQ群：82667033 ](./IMG/qrcode.png)
 * QQ：425343603
-
