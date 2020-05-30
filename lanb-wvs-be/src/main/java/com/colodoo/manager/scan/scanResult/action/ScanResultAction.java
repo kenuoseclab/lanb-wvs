@@ -123,7 +123,7 @@ public class ScanResultAction extends BaseAction {
     @ResponseBody
     public Map<String, Object> queryPage(@RequestBody ScanResultVO model) {
         Map<String, Object> rspMap = new HashMap<String, Object>();
-        model.setCreateUserId(this.getBaseService().getUserId());
+        model.setCreateUserId(this.getUserId());
         PageInfo<ScanResult> info = scanResultService.query(model.getPage(), model);
         rspMap.put(Contants.TABLE_ROWS, info.getList());
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
