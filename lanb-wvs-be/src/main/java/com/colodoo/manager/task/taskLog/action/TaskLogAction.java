@@ -31,7 +31,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 新增数据
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -50,7 +50,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 删除数据
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -69,7 +69,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 更新数据
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -88,7 +88,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 根据id查找单条数据
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -102,7 +102,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 查找列表
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */
@@ -114,7 +114,7 @@ public class TaskLogAction extends BaseAction {
 
 	/**
 	 * 查找分页列表
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 */

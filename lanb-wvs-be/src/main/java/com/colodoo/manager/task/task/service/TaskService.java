@@ -308,9 +308,6 @@ public class TaskService extends BaseService<Task> {
         if (taskId == null || "".equals(taskId)) {
             throw new AppException("任务编号为空!");
         }
-        if (!this.isLogin()) {
-            throw new AppException("当前用户未登录!");
-        }
 
         // 获取用户名,用于分组
         String userId = this.getSessionObject().getUser().getUserId();
