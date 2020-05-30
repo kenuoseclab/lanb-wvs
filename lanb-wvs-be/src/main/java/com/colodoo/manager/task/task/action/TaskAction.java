@@ -153,7 +153,7 @@ public class TaskAction extends BaseAction {
 		PageInfo<TaskVO> info;
 		try {
 			// 设置只能查询本人创建的任务
-			model.setCreateUserId(this.getUserId());
+			model.setCreateUserId(this.getBaseService().getUserId());
 			info = taskService.query(model.getPage(), model);
 			rspMap.put(Contants.TABLE_ROWS, info.getList());
 			rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
