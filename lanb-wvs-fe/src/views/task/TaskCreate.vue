@@ -114,41 +114,21 @@
       </div>
     </div>
 
-    <!-- 弹出窗开始 -->
-    <div class="modal">
-      <transition name="bounce">
-        <div v-if="isModal" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="panel__title--border">选择</h1>
-          <div class="panel__body">
-            <baseTable ref="assetModal" :fields="fields" baseURL="/api/asset"></baseTable>
-          </div>
-          <div class="button-group">
-            <a class="button" @click="assetModalClick">确定</a>
-            <a @click="isModal = false" class="button">取消</a>
-          </div>
-        </div>
-      </transition>
-    </div>
-    <div class="mask" v-if="isModal"></div>
-    <!-- 弹出框结束 -->
+    <el-dialog title="资产列表"  width="70%" :visible.sync="isModal">
+      <baseTable :isToolbar="false" ref="assetModal" :fields="fields" baseURL="/api/asset"></baseTable>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="assetModalClick">确定</el-button>
+        <el-button type="primary" @click="isModal = false">取消</el-button>
+      </div>
+    </el-dialog>
 
-    <!-- 弹出窗开始 -->
-    <div class="modal">
-      <transition name="bounce">
-        <div v-if="isModalBug" class="modal__inner panel" style="width: 900px; height: 600px;">
-          <h1 class="panel__title--border">选择</h1>
-          <div class="panel__body">
-            <baseTable ref="bugModal" :fields="bugFileds" baseURL="/api/bug"></baseTable>
-          </div>
-          <div class="button-group">
-            <a class="button" @click="bugModalClick">确定</a>
-            <a @click="isModalBug = false" class="button">取消</a>
-          </div>
-        </div>
-      </transition>
-    </div>
-    <div class="mask" v-if="isModalBug"></div>
-    <!-- 弹出框结束 -->
+    <el-dialog title="漏洞列表" width="70%" :visible.sync="isModalBug">
+      <baseTable :isToolbar="false" ref="bugModal" :fields="bugFileds" baseURL="/api/bug"></baseTable>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="bugModalClick">确定</el-button>
+        <el-button type="primary" @click="isModalBug = false">取消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 

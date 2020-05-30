@@ -1,5 +1,5 @@
 <template>
-  <baseTable :fields="fields" :baseURL="baseURL" :where="where" :btns="btns"></baseTable>
+  <baseTable :fields="fields" :baseURL="baseURL" :query="query" :btns="btns"></baseTable>
 </template>
 
 <script>
@@ -50,7 +50,7 @@ export default {
         }
       ],
 
-      where: null,
+      query: null,
 
       btns: [
         {
@@ -63,12 +63,12 @@ export default {
   created () {
     const taskId = this.$route.query.taskId
     if (taskId !== null && typeof (taskId) !== 'undefined') {
-      this.where.taskId = taskId
+      this.query.taskId = taskId
     }
 
     const taskLogId = this.$route.query.taskLogId
     if (taskLogId !== null && typeof (taskLogId) !== 'undefined') {
-      this.where = {
+      this.query = {
         taskLogId: taskLogId
       }
     }

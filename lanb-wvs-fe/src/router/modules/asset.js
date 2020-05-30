@@ -11,13 +11,6 @@ const assetRouter = {
       components: {
         content: require('@/views/asset/AssetTable').default
       }
-    },
-    {
-      name: 'blankPage',
-      path: '*',
-      components: {
-        content: require('@/views/common/BlankPage.vue').default
-      }
     }
   ]
 }

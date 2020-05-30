@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 编辑表单 -->
     <el-dialog :title="actionTitle" :visible.sync="isModal">
       <el-form :inline="true" :model="editForm">
         <el-form-item
@@ -43,142 +44,148 @@
       :style="'z-index: 9999; transition: none; position: fixed; ' + 'top: ' + input.offsetTop + '; left: ' + input.offsetLeft"
     />-->
 
-    <div class="row" @click="input.show = false">
-      <div class="col-12">
-        <el-card shadow="never" v-if="isSearch" style="margin-bottom: 16px;">
-          <el-form
-            label-width="auto"
-            size="medium"
-            label-position="right"
-            :inline="true"
-            :model="form"
-            class="demo-form-inline"
-          >
-            <el-form-item
-              v-for="(field, index) in fields"
-              :key="index"
-              :label="field.name"
-              :label-width="formLabelWidth"
-            >
-              <template v-if="field.type === 'select'">
-                <el-select clearable v-model="form[field.field]">
-                  <template v-for="(codeType, index) in getCodeTypeMap(field)">
-                    <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
+    <!-- 搜索表单 -->
+    <el-card shadow="never" v-if="isSearch" style="margin-bottom: 16px;">
+      <div slot="header" class="clearfix">
+        <span>搜索条件</span>
+        <!-- <el-button
+          @click="searchShowInner = !searchShowInner"
+          icon="el-icon-arrow-up"
+          style="float: right; padding: 3px 0"
+          type="text"
+        ></el-button> -->
+      </div>
+      <el-form
+        v-show="searchShowInner"
+        label-width="auto"
+        size="small"
+        label-position="right"
+        :inline="true"
+        :model="form"
+        class="demo-form-inline"
+      >
+        <el-form-item
+          v-for="(field, index) in fields"
+          :key="index"
+          :label="field.name"
+          :label-width="formLabelWidth"
+        >
+          <template v-if="field.type === 'select'">
+            <el-select clearable v-model="form[field.field]">
+              <template v-for="(codeType, index) in getCodeTypeMap(field)">
+                <el-option :value="codeType.value" :key="index" :label="codeType.name"></el-option>
+              </template>
+            </el-select>
+          </template>
+          <template v-else-if="field.type === 'date'">
+            <el-date-picker
+              v-model="form[field.field]"
+              type="datetime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              placeholder="选择日期时间"
+            ></el-date-picker>
+          </template>
+          <template v-else>
+            <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label=" " :label-width="formLabelWidth">
+          <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
+          <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
+        </el-form-item>
+        <!-- <el-form-item :label-width="formLabelWidth">
+          <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
+        </el-form-item> -->
+      </el-form>
+    </el-card>
+
+    <!-- 表格 -->
+    <el-card shadow="never">
+      <div>
+        <!-- 工具栏 -->
+        <div class="tool-bar" v-if="isToolbar">
+          <template v-if="isDefaultBtn">
+            <el-button type="primary" icon="el-icon-plus" @click="saveHandle">新增</el-button>
+            <el-button type="primary" icon="el-icon-edit" @click="updateHandle">修改</el-button>
+            <el-button type="primary" icon="el-icon-delete" @click="deleteHandle">删除</el-button>
+          </template>
+
+          <template v-for="(btn, index) in btns">
+            <el-button :key="index" type="primary" @click="btnClick(btn)">{{btn.title}}</el-button>
+          </template>
+        </div>
+
+        <div
+          v-show="!show"
+          v-loading="!show"
+          style="background-color: #f9f9f9; margin: 0px 8px; height: 550px;"
+        ></div>
+        <transition name="fade">
+          <div v-show="show" style="padding: 0px 8px;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th v-if="checkbox.show" style="text-align: center;">
+                    <!-- <input
+                    v-model="checkbox.checked"
+                    @click="selectToggle"
+                    class="checkbox"
+                    type="checkbox"
+                    />-->
+                    <el-checkbox v-model="checkbox.checked" @change="selectToggle"></el-checkbox>
+                  </th>
+
+                  <template v-for="(field, index) in fields">
+                    <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
                   </template>
-                </el-select>
-              </template>
-              <template v-else-if="field.type === 'date'">
-                <el-date-picker
-                  v-model="form[field.field]"
-                  type="datetime"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  placeholder="选择日期时间"
-                ></el-date-picker>
-              </template>
-              <template v-else>
-                <el-input v-model="form[field.field]" :placeholder="field.name"></el-input>
-              </template>
-            </el-form-item>
-            <el-form-item label=" " :label-width="formLabelWidth">
-              <el-button type="primary" icon="el-icon-search" @click="search">查询</el-button>
-            </el-form-item>
-            <el-form-item :label-width="formLabelWidth">
-              <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </div>
-    </div>
+                </tr>
+              </thead>
 
-    <div class="row">
-      <div class="col-12">
-        <el-card shadow="never">
-          <div>
-            <div class="tool-bar" v-if="isToolbar">
-              <template v-if="isDefaultBtn">
-                <el-button type="primary" icon="el-icon-plus" @click="saveHandle">新增</el-button>
-                <el-button type="primary" icon="el-icon-edit" @click="updateHandle">修改</el-button>
-                <el-button type="primary" icon="el-icon-delete" @click="deleteHandle">删除</el-button>
-              </template>
-
-              <template v-for="(btn, index) in btns">
-                <el-button :key="index" type="primary" @click="btnClick(btn)">{{btn.title}}</el-button>
-              </template>
-            </div>
-
-            <div
-              v-show="!show"
-              v-loading="!show"
-              style="background-color: #f9f9f9; margin: 0px 8px; height: 550px;"
-            ></div>
-            <transition name="fade">
-              <div v-show="show" style="padding: 0px 8px;">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th v-if="checkbox.show" style="text-align: center;">
-                        <!-- <input
-                        v-model="checkbox.checked"
-                        @click="selectToggle"
-                        class="checkbox"
-                        type="checkbox"
-                        />-->
-                        <el-checkbox v-model="checkbox.checked" @change="selectToggle"></el-checkbox>
-                      </th>
-
-                      <template v-for="(field, index) in fields">
-                        <th v-show="!field.hidden" :key="index" :width="field.width">{{field.name}}</th>
+              <tbody>
+                <tr :key="index" v-for="(row, index) in rows">
+                  <td v-if="checkbox.show" style="text-align: center;">
+                    <el-checkbox v-model="row.checked" :key="index"></el-checkbox>
+                  </td>
+                  <template v-for="(field, fieldIndex) in fields">
+                    <td
+                      @dblclick="cellDbclick($event, row)"
+                      v-if="!field.hidden"
+                      :key="fieldIndex"
+                      :width="field.width"
+                    >
+                      <template v-if="field.formatter != null">
+                        <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
                       </template>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr :key="index" v-for="(row, index) in rows">
-                      <td v-if="checkbox.show" style="text-align: center;">
-                        <el-checkbox v-model="row.checked" :key="index"></el-checkbox>
-                      </td>
-                      <template v-for="(field, fieldIndex) in fields">
-                        <td
+                      <template v-else>
+                        <div
                           @dblclick="cellDbclick($event, row)"
-                          v-if="!field.hidden"
-                          :key="fieldIndex"
-                          :width="field.width"
-                        >
-                          <template v-if="field.formatter != null">
-                            <div v-html="field.formatter(cellFormatter(field, row), row)"></div>
-                          </template>
-                          <template v-else>
-                            <div
-                              @dblclick="cellDbclick($event, row)"
-                              :title="cellFormatter(field, row)"
-                            >{{cellFormatter(field, row)}}</div>
-                          </template>
-                        </td>
+                          :title="cellFormatter(field, row)"
+                        >{{cellFormatter(field, row)}}</div>
                       </template>
-                    </tr>
-                    <tr v-if="rows.length === 0">
-                      <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </transition>
-
-            <div class="pagination">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="getList"
-                :current-page="pageInfo.page"
-                :page-sizes="[10, 20, 30, 40]"
-                :page-size="pageInfo.rows"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="this.total"
-              ></el-pagination>
-            </div>
+                    </td>
+                  </template>
+                </tr>
+                <tr v-if="rows.length === 0">
+                  <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </el-card>
+        </transition>
+
+        <div class="pagination">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="getList"
+            :current-page="pageInfo.page"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="pageInfo.rows"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="this.total"
+          ></el-pagination>
+        </div>
       </div>
-    </div>
+    </el-card>
 
     <!-- loading -->
     <!-- <loading
@@ -201,7 +208,7 @@ export default {
   props: {
 
     // 条件
-    where: {
+    query: {
       type: Object,
       default: null
     },
@@ -269,6 +276,8 @@ export default {
 
   data () {
     return {
+
+      searchShowInner: true,
       rows: [],
       pageInfo: {
         page: 1,
@@ -310,7 +319,7 @@ export default {
         text: '',
         show: false
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '100px'
     }
   },
 
@@ -678,17 +687,17 @@ export default {
       this.transform = 'translate(' + this.transformX + ',' + this.transformY + ')'
     },
 
-    // 初始化where条件存在情况
-    initWhereForm () {
-      if (this.where != null) {
-        for (const whereKey in this.where) {
-          if (this.where.hasOwnProperty(whereKey)) {
-            const whereItem = this.where[whereKey]
+    // 初始化query条件存在情况
+    initQueryForm () {
+      if (this.query != null) {
+        for (const queryKey in this.query) {
+          if (this.query.hasOwnProperty(queryKey)) {
+            const queryItem = this.query[queryKey]
             // 遍历条件,满足则填充
             for (const formKey in this.form) {
               if (this.form.hasOwnProperty(formKey)) {
-                if (whereKey === formKey) {
-                  this.form[formKey] = whereItem
+                if (queryKey === formKey) {
+                  this.form[formKey] = queryItem
                 }
               }
             }
@@ -703,8 +712,8 @@ export default {
     this.initSearchForm()
     this.getList()
     document.addEventListener('keydown', this.keydownHandle)
-    // where条件初始化存在情况
-    this.initWhereForm()
+    // query条件初始化存在情况
+    this.initQueryForm()
   },
 
   beforeDestroy () {
@@ -755,5 +764,23 @@ export default {
 
 .demo-form-inline {
   width: auto;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: 190px;
+}
+
+.el-select {
+  width: 190px;
+}
+
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+  margin-bottom: 16px;
+}
+
+.el-form-item__label {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 </style>

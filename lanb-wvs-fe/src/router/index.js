@@ -29,13 +29,6 @@ export default new Router({
           components: {
             content: require('@/views/dashboard/Dashboard').default
           }
-        },
-        {
-          name: 'blankPage',
-          path: '*',
-          components: {
-            content: require('@/views/common/BlankPage.vue').default
-          }
         }
       ]
     },
