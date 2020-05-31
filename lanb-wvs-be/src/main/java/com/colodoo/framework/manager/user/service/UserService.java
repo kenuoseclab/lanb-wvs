@@ -5,6 +5,8 @@ import com.colodoo.framework.common.Msg;
 import com.colodoo.framework.common.SessionObject;
 import com.colodoo.framework.manager.log.model.Log;
 import com.colodoo.framework.manager.log.service.LogService;
+import com.colodoo.framework.manager.roleMenu.model.RoleMenuVO;
+import com.colodoo.framework.manager.roleMenu.service.RoleMenuService;
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
 import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
 import com.colodoo.framework.manager.roleUser.service.RoleUserMapper;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService extends BaseService<User> {
@@ -39,6 +42,8 @@ public class UserService extends BaseService<User> {
 	HttpSession session;
 	@Autowired
 	LogService logService;
+	@Autowired
+	RoleMenuService roleMenuService;
 
 	public int save(User model) {
 		model.setUserId(model.getUserId());
@@ -96,6 +101,22 @@ public class UserService extends BaseService<User> {
 			roleUserExample.createCriteria().andUserIdEqualTo(user.getUserId());
 			List<RoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
 			sessionObject.setRoleUsers(roleUsers);
+
+			Map<String, List> roleMenu = new HashMap<String, List>();
+			// 找出所有的角色
+			for (RoleUser roleUser : roleUsers) {
+				String roleId = roleUser.getRoleId();
+				// 通过角色找出所有角色相应的权限菜单
+				System.out.println(roleId);
+				RoleMenuVO roleMenuVO = new RoleMenuVO();
+				roleMenuVO.setRoleId(roleId);
+				List<RoleMenuVO> roleMenus = roleMenuService.query(roleMenuVO);
+				roleMenu.put(roleId, roleMenus);
+			}
+			// 超级用户除外
+			// TODO
+			sessionObject.setRoleMenu(roleMenu);
+
 			session.setAttribute(Contants.SESSION_OBJECT_KEY, sessionObject);
 			log.setLogSource(RequestUtils.getRemoteAddress(request));
 			log.setLogType("LOGIN_SUCCESS");

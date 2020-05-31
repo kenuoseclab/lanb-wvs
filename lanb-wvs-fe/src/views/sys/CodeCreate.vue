@@ -18,15 +18,10 @@
               <label class="input-label" for="数据表名">数据表名</label>
               <input class="input" v-model="form.tableName" name="tableName" placeholder="请输入数据表名" />
             </div>
-            <!-- <div class="form__block">
-              <a class="button" @click="create">生成</a>
-              <a class="button">重置</a>
-            </div>-->
           </form>
         </div>
         <div class="button-group">
-          <a class="button" @click="create">生成</a>
-          <a class="button">重置</a>
+          <el-button type="primary" @click="create" size="small">生成</el-button>
         </div>
       </div>
     </div>

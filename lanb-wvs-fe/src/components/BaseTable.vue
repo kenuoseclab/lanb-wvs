@@ -246,22 +246,13 @@ export default {
     // 字段配置
     fields: {
       type: Array,
-      default: () => [{
-        field: 'testId',
-        name: '测试ID'
-      }, {
-        field: 'testName',
-        name: '测试名'
-      }, {
-        field: 'createTime',
-        name: '创建时间'
-      }]
+      default: () => []
     },
 
     // 模块基础地址
     baseURL: {
       type: String,
-      default: '/api/test'
+      default: ''
     },
 
     api: {
@@ -726,14 +717,6 @@ export default {
         }
       }
     }
-  },
-
-  mounted () {
-    // 强制刷新dom,防止checkbox出现问题
-    // this.$nextTick(() => {
-    //   this.show = true
-    // })
-    console.log(this.fields)
   },
 
   created () {

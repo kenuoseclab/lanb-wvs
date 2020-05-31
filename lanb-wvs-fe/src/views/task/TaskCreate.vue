@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <span>新建扫描任务</span>
           </div>
-          <el-form :model="form" label-width="80px">
+          <el-form :model="form" label-width="80px" size="small">
             <el-form-item label="任务名">
               <el-row :gutter="12">
                 <el-col :span="12">

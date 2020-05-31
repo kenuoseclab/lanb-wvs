@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colodoo.framework.manager.roleUser.service.mapper.RoleUserSQLMapper">
+
+	<select id="getRoleUserList" resultType="com.colodoo.framework.manager.roleUser.model.RoleUser" parameterType="com.colodoo.framework.manager.roleUser.model.RoleUserVO">
+		select
+			a.`role_user_id` as `roleUserId`,
+			a.`role_id` as `roleId`,
+			a.`user_id` as `userId`,
+			a.`create_time` as `createTime`
+		from
+		    role_user a
+		<where>
+			<trim suffixOverrides="and">
+				<if test="roleUserId != null and roleUserId !=''">
+					a.`role_user_id` like CONCAT(CONCAT('%', #{roleUserId}), '%') and
+				</if>
+				<if test="roleId != null and roleId !=''">
+					a.`role_id` like CONCAT(CONCAT('%', #{roleId}), '%') and
+				</if>
+				<if test="userId != null and userId !=''">
+					a.`user_id` like CONCAT(CONCAT('%', #{userId}), '%') and
+				</if>
+				<if test="createTime != null">
+					a.`create_time` = #{createTime} and
+				</if>
+			</trim>
+		</where>
+
+	</select>
+
+</mapper>

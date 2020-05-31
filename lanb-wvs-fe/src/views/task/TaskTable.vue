@@ -1,12 +1,6 @@
 <template>
   <div>
     <baseTable :fields="fields" :baseURL="baseURL" :btns="btns"></baseTable>
-
-    <!-- 任务信息 -->
-    <!-- <Modal :show.sync="taskInfo.show" title="任务信息" width="95%">
-      <TaskInfoPage></TaskInfoPage>
-    </Modal> -->
-
     <el-dialog title="任务信息"  width="95%" :visible.sync="taskInfo.show">
       <TaskInfoPage></TaskInfoPage>
     </el-dialog>
