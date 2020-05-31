@@ -2,37 +2,37 @@ package com.colodoo.framework.manager.roleUser.service;
 
 import com.colodoo.framework.base.abs.BaseService;
 import com.colodoo.framework.exception.DAOException;
-import com.colodoo.framework.manager.roleUser.model.RoleUserVO;
 import com.colodoo.framework.utils.Contants;
 import com.colodoo.framework.manager.roleUser.model.RoleUser;
+import com.colodoo.framework.manager.roleUser.model.RoleUserVO;
 import com.colodoo.framework.easyui.Page;
-import com.colodoo.framework.manager.roleUser.model.RoleUserExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.colodoo.framework.manager.roleUser.service.mapper.RoleUserSQLMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
- * @author colodoo
- * @date 2018-8-28 17:42:38
- * @description
- */
+* @author colodoo
+* @date 2020-5-31 20:43:36
+* @description 
+*/
 @Service
 @Slf4j
 public class RoleUserService extends BaseService<RoleUser> {
 
-    @Autowired
-    RoleUserMapper roleUserMapper;
+	@Autowired
+	RoleUserSQLMapper sqlMapper;
 
     /**
-     * 新增数据
-     *
-     * @param model
-     * @return
-     */
+    * 新增数据
+    *
+    * @param model
+    * @return
+    */
     public int saveRoleUser(RoleUser model) {
         int ret = Contants.CODE_FAILED;
         model.setRoleUserId(uuid());
@@ -47,11 +47,11 @@ public class RoleUserService extends BaseService<RoleUser> {
     }
 
     /**
-     * 删除数据
-     *
-     * @param model
-     * @return
-     */
+    * 删除数据
+    *
+    * @param model
+    * @return
+    */
     public int deleteRoleUser(RoleUser model) {
         int ret = Contants.CODE_FAILED;
         try {
@@ -63,11 +63,11 @@ public class RoleUserService extends BaseService<RoleUser> {
     }
 
     /**
-     * 更新数据
-     *
-     * @param model
-     * @return
-     */
+    * 更新数据
+    *
+    * @param model
+    * @return
+    */
     public int updateRoleUser(RoleUser model) {
         int ret = Contants.CODE_FAILED;
         try {
@@ -79,11 +79,11 @@ public class RoleUserService extends BaseService<RoleUser> {
     }
 
     /**
-     * 根据id查找单条数据
-     *
-     * @param model
-     * @return
-     */
+    * 根据id查找单条数据
+    *
+    * @param model
+    * @return
+    */
     public RoleUser queryById(RoleUser model) {
         RoleUser roleUser = null;
         try {
@@ -95,33 +95,28 @@ public class RoleUserService extends BaseService<RoleUser> {
     }
 
     /**
-     * 查找列表
-     *
-     * @return
-     */
-    public List<RoleUserVO> query() {
-        List<RoleUserVO> list = null;
-        // list = this.select("select", null);
-        list = roleUserMapper.select();
+    * 查找列表
+    *
+    * @return
+    */
+    public List<RoleUser> query(RoleUserVO model) {
+        List<RoleUser> list = null;
+        list = sqlMapper.getRoleUserList(model);
         return list;
     }
 
     /**
-     * 查找分页列表
-     *
-     * @param page
-     * @return
-     */
-    public PageInfo query(Page page) {
-        PageInfo pageInfo;
+    * 查找分页列表
+    *
+    * @param page
+    * @return
+    */
+    public PageInfo<RoleUser> query(Page page, RoleUserVO model) {
+        PageInfo<RoleUser> pageInfo;
         List<RoleUser> list = null;
         PageHelper.startPage(page.getPage(), page.getRows());
-        try {
-            list = this.find();
-        } catch (DAOException e) {
-            log.error(e.getMsg());
-        }
-        pageInfo = new PageInfo(list);
+        list = sqlMapper.getRoleUserList(model);
+        pageInfo = new PageInfo<RoleUser>(list);
         return pageInfo;
     }
 }

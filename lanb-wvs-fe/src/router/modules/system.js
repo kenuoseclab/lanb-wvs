@@ -38,14 +38,6 @@ const sysRouter = {
         content: require('@/views/sys/CodeInfoTable').default
       }
     },
-    // 代码信息管理
-    {
-      name: 'configTable',
-      path: 'config-table',
-      components: {
-        content: require('@/views/sys/ConfigTable').default
-      }
-    },
     // 角色管理
     {
       name: 'roleTable',

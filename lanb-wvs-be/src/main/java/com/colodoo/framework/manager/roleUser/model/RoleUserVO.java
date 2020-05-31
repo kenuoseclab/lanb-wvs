@@ -1,10 +1,14 @@
 package com.colodoo.framework.manager.roleUser.model;
 
+import com.colodoo.framework.easyui.Page;
+import lombok.Data;
+
 /**
  * @author colodoo
  * @date 2018/8/30 15:34
  * @description
  */
+@Data
 public class RoleUserVO extends RoleUser {
 
     //角色名
@@ -12,19 +16,6 @@ public class RoleUserVO extends RoleUser {
     //用户名
     private String userName;
 
-    public String getRoleName() {
-        return roleName;
-    }
+    private Page page;
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }

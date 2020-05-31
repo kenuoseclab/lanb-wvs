@@ -20,8 +20,8 @@
             <textarea placeholder="请输入自定义脚本" rows="5" style="resize:none; width: 30%; padding: 8px;"></textarea>
           </div>-->
           <div class="form__block">
-            <a class="button">保存</a>
-            <a class="button" @click="resetForm">重置</a>
+            <el-button type="primary">保存</el-button>
+            <el-button type="primary"  @click="resetForm">重置</el-button>
           </div>
         </form>
       </div>
