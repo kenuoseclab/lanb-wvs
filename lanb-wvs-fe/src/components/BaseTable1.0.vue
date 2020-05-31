@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <!-- 编辑表单 -->
     <el-dialog :title="actionTitle" :visible.sync="isModal">
       <el-form :inline="true" :model="editForm">
@@ -53,7 +54,7 @@
           icon="el-icon-arrow-up"
           style="float: right; padding: 3px 0"
           type="text"
-        ></el-button>-->
+        ></el-button> -->
       </div>
       <el-form
         v-show="searchShowInner"
@@ -103,7 +104,7 @@
         </el-form-item>
         <!-- <el-form-item :label-width="formLabelWidth">
           <el-button @click="formReset" icon="el-icon-refresh">重置</el-button>
-        </el-form-item>-->
+        </el-form-item> -->
       </el-form>
     </el-card>
 
@@ -124,6 +125,7 @@
 
           <!-- 工具栏插槽 -->
           <slot name="toolbar"></slot>
+
         </div>
 
         <div
@@ -133,7 +135,6 @@
         ></div>
         <transition name="fade">
           <div v-show="show" style="padding: 0px 8px;">
-            <slot></slot>
             <table class="table">
               <thead>
                 <tr>
@@ -165,23 +166,18 @@
                       :key="fieldIndex"
                       :width="field.width"
                     >
-                      <template v-if="isFieldSolt(field.field)">
-                        <slot :name="field.field" :row="row"></slot>
+                      <template v-if="field.formatter != null">
+                        <span v-html="field.formatter(cellFormatter(field, row), row)"></span>
                       </template>
                       <template v-else>
-                        <template v-if="field.formatter != null">
-                          <span v-html="field.formatter(cellFormatter(field, row), row)"></span>
-                        </template>
-                        <template v-else>
-                          <span
-                            @dblclick="cellDbclick($event, row)"
-                            :title="cellFormatter(field, row)"
-                          >{{cellFormatter(field, row)}}</span>
-                        </template>
+                        <span
+                          @dblclick="cellDbclick($event, row)"
+                          :title="cellFormatter(field, row)"
+                        >{{cellFormatter(field, row)}}</span>
                       </template>
+                      <slot :name="field.field" :row="row" ></slot>
                     </td>
                   </template>
-                  <!-- <slot v-if="$scopedSlots[field] !== null" :name="field.field" :row="row" ></slot> -->
                 </tr>
                 <tr v-if="rows.length === 0">
                   <td :colspan="noDataColspan" style="text-align: center;">没有数据</td>
@@ -374,10 +370,6 @@ export default {
   },
 
   methods: {
-    isFieldSolt (field) {
-      return (typeof this.$scopedSlots[field]) !== 'undefined'
-    },
-
     handleSizeChange (val) {
       this.pageInfo.rows = val
       this.getList()
@@ -728,14 +720,6 @@ export default {
     }
   },
 
-  mounted () {
-    // 强制刷新dom,防止checkbox出现问题
-    // this.$nextTick(() => {
-    //   this.show = true
-    // })
-    console.log(this.fields)
-  },
-
   created () {
     this.initEditForm()
     this.initSearchForm()
@@ -795,8 +779,7 @@ export default {
   width: auto;
 }
 
-.el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: 190px;
 }
 
@@ -804,8 +787,7 @@ export default {
   width: 190px;
 }
 
-.el-form-item--mini.el-form-item,
-.el-form-item--small.el-form-item {
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
   margin-bottom: 16px;
 }
 

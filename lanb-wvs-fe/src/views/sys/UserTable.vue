@@ -1,6 +1,12 @@
 <template>
   <div>
-    <baseTable :fields="fields" baseURL="/api/user" :api="api" :btns="btns"></baseTable>
+    <base-table :fields="fields" baseURL="/api/user" :api="api" :btns="btns">
+      <base-table-column field="tryCount" name="尝试次数"></base-table-column>
+
+      <template slot="tryCount" slot-scope="data">
+        <el-tag>{{ data.row.tryCount }}</el-tag>
+      </template>
+    </base-table>
     <Modal :show.sync="isModal">
       <baseTable :fields="roleFiled" baseURL="/api/role"></baseTable>
     </Modal>

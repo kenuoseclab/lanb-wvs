@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import kebabCase from 'lodash/kebabCase'
 import './components/dialog/index.js'
 
 const requireComponent = require.context(
@@ -16,7 +17,6 @@ const requireComponent = require.context(
 requireComponent.keys().forEach(fileName => {
   // 获取组件配置
   const componentConfig = requireComponent(fileName)
-
   // 获取组件的 PascalCase 命名
   const componentName = upperFirst(
     camelCase(
@@ -27,10 +27,16 @@ requireComponent.keys().forEach(fileName => {
         .replace(/\.\w+$/, '')
     )
   )
-
   // 全局注册组件
   Vue.component(
     componentName,
+    // 如果这个组件选项是通过 `export default` 导出的，
+    // 那么就会优先使用 `.default`，
+    // 否则回退到使用模块的根。
+    componentConfig.default || componentConfig
+  )
+  Vue.component(
+    kebabCase(componentName),
     // 如果这个组件选项是通过 `export default` 导出的，
     // 那么就会优先使用 `.default`，
     // 否则回退到使用模块的根。
@@ -66,6 +72,13 @@ requirePage.keys().forEach(fileName => {
   // 全局注册组件
   Vue.component(
     componentName,
+    // 如果这个组件选项是通过 `export default` 导出的，
+    // 那么就会优先使用 `.default`，
+    // 否则回退到使用模块的根。
+    componentConfig.default || componentConfig
+  )
+  Vue.component(
+    kebabCase(componentName),
     // 如果这个组件选项是通过 `export default` 导出的，
     // 那么就会优先使用 `.default`，
     // 否则回退到使用模块的根。
