@@ -1,10 +1,9 @@
 <template>
   <div>
     <baseTable :fields="fields" :baseURL="baseURL" :btns="btns"></baseTable>
-    <el-dialog title="任务信息"  width="95%" :visible.sync="taskInfo.show">
+    <el-dialog title="任务信息" width="95%" :visible.sync="taskInfo.show">
       <TaskInfoPage></TaskInfoPage>
     </el-dialog>
-
   </div>
 </template>
 
@@ -112,10 +111,24 @@ export default {
           title: '开始任务',
           icon: 'icon-saomiao',
           click: (rows, handle) => {
-            this.dialog = this.$dialog({
-              text: '开始任务成功!是否跳转到任务日志?',
-              ok: this.startTaskOk
+            // this.dialog = this.$dialog({
+            //   text: '开始任务成功!是否跳转到任务日志?',
+            //   ok: this.startTaskOk
+            // })
+
+            this.$confirm('开始任务成功!是否跳转到任务日志?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success'
+            }).then(() => {
+              this.startTaskOk()
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消跳转'
+              })
             })
+
             if (rows.length === 1) {
               const row = rows[0]
               this
@@ -149,7 +162,6 @@ export default {
   methods: {
 
     startTaskOk () {
-      this.dialog.close()
       this.$router.push({
         path: '/task/task-log-table',
         query: this.taskLogQuery
