@@ -10,19 +10,7 @@
     <el-dialog title="编辑" :visible.sync="editUserShow" width="70%" :close-on-click-modal="false">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="基础信息" name="baseInfo">
-          <el-card>
-            <el-form :inline="true" size="small" label-position="right">
-              <el-form-item label="测试" label-width="200px">
-                <el-input></el-input>
-              </el-form-item>
-              <el-form-item label="测试" label-width="200px">
-                <el-input></el-input>
-              </el-form-item>
-              <el-form-item label="测试" label-width="200px">
-                <el-input></el-input>
-              </el-form-item>
-            </el-form>
-          </el-card>
+          <base-form :fields="fields" :data="row"></base-form>
         </el-tab-pane>
 
         <el-tab-pane label="角色设置" name="roleSetting">
@@ -166,28 +154,27 @@ export default {
     editUser (row) {
       this.editUserShow = true
       this.row = row
+      this.activeName = 'baseInfo'
+      this.handleClick()
+    },
 
+    handleClick () {
       this
         .$post('/api/role/query', {})
         .then(data => {
           this.roleList = data
-
           this
             .$post('/api/roleUser/query', {
               userId: this.row.userId
             })
             .then(data => {
-              console.log(data)
+              this.checkedRoles = []
               for (let index = 0; index < data.length; index++) {
                 const role = data[index]
                 this.checkedRoles.push(role.roleId)
               }
             })
         })
-    },
-
-    handleClick () {
-
     }
   }
 }

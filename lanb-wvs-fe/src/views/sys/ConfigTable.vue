@@ -27,7 +27,7 @@ export default {
         {
           field: 'createDate',
           name: '创建时间',
-          type: 'date'
+          type: 'time'
         },
         {
           field: 'sortNo',

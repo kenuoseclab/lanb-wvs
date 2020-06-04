@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 import router from '../router'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = ''
@@ -9,11 +9,6 @@ axios.defaults.baseURL = ''
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    // if (response.data.errCode === 2) {
-    //   router.push({
-    //     path: '/login'
-    //   })
-    // }
     return response
   },
   error => {
