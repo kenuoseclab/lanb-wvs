@@ -61,7 +61,7 @@
 		(select count(1) as totalCount from scan_result where scan_result = '1' and create_user_id = #{createUserId}) c
 		where a.scan_result = '1'
 					and a.create_user_id = #{createUserId}
-		group by b.asset_id, b.asset_name
+		group by b.asset_id, b.asset_name, c.totalCount
 	</select>
 
 
@@ -76,7 +76,7 @@
 			(select count(1) as totalCount from scan_result where scan_result = '1' and create_user_id = #{createUserId}) c
 			where a.scan_result = '1'
 			and a.create_user_id = #{createUserId}
-			group by b.bug_id, b.bug_name
+			group by b.bug_id, b.bug_name, c.totalCount
 	</select>
 
 </mapper>
