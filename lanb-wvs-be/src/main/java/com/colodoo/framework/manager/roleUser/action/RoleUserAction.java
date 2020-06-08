@@ -126,4 +126,21 @@ public class RoleUserAction {
         rspMap.put(Contants.TABLE_TOTAL, info.getTotal());
         return rspMap;
     }
+
+    /**
+     * 设置用户角色
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/setRoles")
+    @ResponseBody
+    public Map<String, Object> setRoles(@RequestBody RoleUserVO model) {
+        Map<String, Object> rspMap = new HashMap<String, Object>();
+
+        String roleIds = model.getRoleId();
+
+        return rspMap;
+
+    }
 }

@@ -36,7 +36,7 @@
                   <input hidden class="input" v-model="form.assets" placeholder="请选择资产列表" />
                   <el-tag
                     v-for="asset in form.assetArr"
-                    :key="asset"
+                    :key="asset.assetId"
                     type="info"
                     effect="plain"
                   >{{asset.assetName}}</el-tag>
@@ -50,7 +50,7 @@
                   <input hidden class="input" v-model="form.bugs" placeholder="请选择漏洞列表" />
                   <el-tag
                     v-for="bug in form.bugArr"
-                    :key="bug"
+                    :key="bug.bugId"
                     type="info"
                     effect="plain"
                   >{{bug.bugName}}</el-tag>

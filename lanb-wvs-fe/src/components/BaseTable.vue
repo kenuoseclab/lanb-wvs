@@ -195,9 +195,9 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="getList"
-            :current-page="pageInfo.page"
+            :current-page.sync="pageInfo.page"
             :page-sizes="[10, 20, 30, 40]"
-            :page-size="pageInfo.rows"
+            :page-size.sync="pageInfo.rows"
             layout="total, sizes, prev, pager, next, jumper"
             :total="this.total"
           ></el-pagination>
@@ -224,6 +224,12 @@ export default {
   name: 'baseTable',
 
   props: {
+
+    // 是否默认双击事件
+    isDefaultDbclick: {
+      type: Boolean,
+      default: false
+    },
 
     // 条件
     query: {
@@ -404,6 +410,10 @@ export default {
       // this.input.offsetTop = offsetTop
       // this.input.offsetLeft = offsetLeft
       // this.input.text = text
+
+      if (!this.isDefaultDbclick) {
+        return
+      }
 
       this.initCheckbox(this.rows)
       row.checked = true

@@ -56,6 +56,7 @@ public class UserService extends BaseService<User> {
 		return userMapper.deleteByPrimaryKey(model.getUserId());
 	}
 
+	@Override
 	public int update(User model) {
 		return userMapper.updateByPrimaryKey(model);
 	}
@@ -107,7 +108,6 @@ public class UserService extends BaseService<User> {
 			for (RoleUser roleUser : roleUsers) {
 				String roleId = roleUser.getRoleId();
 				// 通过角色找出所有角色相应的权限菜单
-				System.out.println(roleId);
 				RoleMenuVO roleMenuVO = new RoleMenuVO();
 				roleMenuVO.setRoleId(roleId);
 				List<RoleMenuVO> roleMenus = roleMenuService.query(roleMenuVO);
