@@ -423,7 +423,7 @@ export default {
 }
 
 .main .main-container {
-  padding: 16px;
+  padding: 32px;
 }
 
 /* reset */

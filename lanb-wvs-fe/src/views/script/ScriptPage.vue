@@ -1,7 +1,25 @@
 <template>
   <div>
-    <div class="panel">
-      <h1>配置脚本管理</h1>
+    <el-card shadow="never">
+      <el-form label-width="auto" size="small" label-position="right" :inline="true">
+        <el-form-item label="脚本名称" label-width="80px">
+          <el-input v-model="scriptName" placeholder="请输入脚本名称"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <el-form label-width="auto" size="small" label-position="right">
+        <el-form-item label="脚本内容" label-width="80px">
+          <codemirror v-model="scriptContent" :options="cmOptions"></codemirror>
+        </el-form-item>
+        <el-form-item label label-width="80px">
+          <el-button size="small" type="primary" @click="addScript">保 存</el-button>
+          <el-button size="small" type="primary">重 置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+
+    <!-- <el-card shadow="never">
+      <span>配置脚本管理</span>
 
       <div class="panel__body">
         <form class="form">
@@ -15,19 +33,15 @@
             <input class="input" placeholder="请输入头部" />
             <label class="add-btn" @click="isModal = true">+</label>
           </div>
-          <!-- <div class="form__block">
-            <label class="input-label" for="自定义脚本">自定义脚本</label>
-            <textarea placeholder="请输入自定义脚本" rows="5" style="resize:none; width: 30%; padding: 8px;"></textarea>
-          </div>-->
           <div class="form__block">
             <el-button type="primary">保存</el-button>
-            <el-button type="primary"  @click="resetForm">重置</el-button>
+            <el-button type="primary" @click="resetForm">重置</el-button>
           </div>
         </form>
       </div>
-    </div>
+    </el-card>-->
 
-    <div class="modal" v-show="isModal">
+    <!-- <div class="modal" v-show="isModal">
       <div class="modal__inner panel">
         <h1>编辑参数</h1>
         <form class="form modal__body">
@@ -49,37 +63,17 @@
         </form>
       </div>
       <div class="mask"></div>
-    </div>
-
-    <div class="panel">
-      <h1>自定义脚本代码</h1>
-
-      <div class="panel__body">
-        <form class="form">
-          <div class="form__block">
-            <label class="input-label" for="脚本名称">脚本名称</label>
-            <input class="input" placeholder="请输入脚本名称" />
-          </div>
-          <div class="form__block">
-            <label style="margin-bottom: 16px;" class="input-label" for="脚本内容">脚本内容</label>
-            <textarea
-              style="width: 80%; height: 300px;"
-              class="input"
-              v-model="scriptContent"
-              placeholder="请输入脚本内容..."
-            ></textarea>
-          </div>
-          <div class="form__block">
-            <a class="button">保存</a>
-            <a class="button">重置</a>
-          </div>
-        </form>
-      </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/python/python.js'
+import 'codemirror/theme/base16-light.css'
+import dedent from 'dedent'
+
 export default {
   name: 'scriptPage',
   data () {
@@ -89,11 +83,52 @@ export default {
         key: '',
         value: ''
       }],
-      scriptContent: ''
+      scriptName: '',
+      scriptContent: dedent`
+      def poc(c):
+        return True
+      `,
+
+      cmOptions: {
+        tabSize: 2,
+        mode: 'text/x-python',
+        theme: 'base16-light',
+        lineNumbers: true,
+        line: true
+      }
+
     }
   },
 
+  components: {
+    codemirror
+  },
+
   methods: {
+
+    addScript () {
+      this.$post('/api/script/save', {
+        scriptName: this.scriptName,
+        scriptContent: this.scriptContent,
+        scriptTpye: 'python'
+      }).then(data => {
+        if (data.success) {
+          this.$message({
+            showClose: true,
+            message: '保存成功',
+            type: 'success'
+          })
+          this.isModal = false
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.msg,
+            type: 'error'
+          })
+        }
+      })
+    },
+
     addAttr () {
       this.attrs.push({
         key: '',
@@ -138,5 +173,11 @@ export default {
   background: rgba(0, 0, 0, 0.1);
   border-color: rgba(0, 0, 0, 0.1);
   color: #ffffff;
+}
+
+.vue-codemirror {
+  font-size: 9px;
+  line-height: 20px;
+  border: 1px solid #dcdfe6;
 }
 </style>

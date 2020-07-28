@@ -11,6 +11,13 @@ const scriptRouter = {
       components: {
         content: require('@/views/script/ScriptPage').default
       }
+    },
+    {
+      name: 'scriptTable',
+      path: 'script-table',
+      components: {
+        content: require('@/views/script/ScriptTable').default
+      }
     }
   ]
 }

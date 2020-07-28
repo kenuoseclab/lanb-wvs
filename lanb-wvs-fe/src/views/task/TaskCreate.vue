@@ -279,27 +279,58 @@ export default {
         })
     },
 
+    getIds (array, field) {
+      const resultArr = []
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index]
+        resultArr.push(element[field])
+      }
+      return resultArr.join(',')
+    },
+
+    getArr (array, field) {
+      const resultArr = []
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index]
+        resultArr.push(element[field])
+      }
+      return resultArr
+    },
+
+    unique (oldArr, newArr, key) {
+      if (oldArr.length === 0) {
+        return newArr
+      }
+      const tmpOldArr = oldArr
+      for (let i = 0; i < newArr.length; i++) {
+        const newElment = newArr[i]
+        for (let j = 0; j < tmpOldArr.length; j++) {
+          const oldElement = tmpOldArr[j]
+          if (newElment[key] === oldElement[key]) {
+            break
+          }
+          if (j === tmpOldArr.length - 1) {
+            oldArr.push(newElment)
+          }
+        }
+      }
+      console.log(oldArr)
+      return oldArr
+    },
+
     assetModalClick () {
       const assetModal = this.$refs.assetModal
       const selectedRowArr = assetModal.getSelectedRows()
-      this.form.assetArr = selectedRowArr
-      const resultArr = []
-      for (let i = 0; i < selectedRowArr.length; i++) {
-        resultArr.push(selectedRowArr[i].assetId)
-      }
-      this.form.assets = resultArr.join(',')
+      this.form.assetArr = this.unique(this.form.assetArr, selectedRowArr, 'assetId')
+      this.form.assets = this.getIds(this.form.assetArr, 'assetId')
       this.isModal = false
     },
 
     bugModalClick () {
       const bugModal = this.$refs.bugModal
       const selectedRowArr = bugModal.getSelectedRows()
-      const resultArr = []
-      for (let i = 0; i < selectedRowArr.length; i++) {
-        resultArr.push(selectedRowArr[i].bugId)
-      }
-      this.form.bugs = resultArr.join(',')
-      this.form.bugArr = selectedRowArr
+      this.form.bugArr = this.unique(this.form.bugArr, selectedRowArr, 'bugId')
+      this.form.bugs = this.getIds(this.form.bugArr, 'bugId')
       this.isModalBug = false
     },
 
