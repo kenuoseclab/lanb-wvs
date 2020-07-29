@@ -19,13 +19,28 @@
 
 ## docker部署
 
+### 前提
+安装好docker和docker-compose服务  
+
 根目录下执行命令
 
-``
+```shell
+# Windows
 docker-compose run --build
-``
+# 查看IP地址
+ipconfig
 
-访问应用 http://IP:80/
+# Centos7
+# 正常启动
+docker-compose up
+# 后台执行启动
+docker-compose up -d
+# 查看ip地址
+ip a
+
+```
+
+访问应用 http://IP地址:80/
 
 ## 基础展示
 
