@@ -183,14 +183,6 @@ public class TaskService extends BaseService<Task> {
             // 测试查询任务
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
-            // 测试,新建一个任务
-//			CronTrigger trigger = null;
-//			JobDetail jobDetail = JobBuilder.newJob(JobClass.class).withIdentity("DEFAULT", "DEFAULT").build();
-//			// jobDetail.getJobDataMap().put("scheduleJob", scheduleJob);
-//			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
-//			trigger = TriggerBuilder.newTrigger().withIdentity("DEFAULT", "DEFAULT").withSchedule(scheduleBuilder).build();
-//			scheduler.scheduleJob(jobDetail, trigger);
-
             for (String groupName : scheduler.getJobGroupNames()) {
                 for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
                     String jobName = jobKey.getName();

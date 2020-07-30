@@ -1,4 +1,5 @@
-/target/
+/target/*
+!/target/*.jar
 /.idea
 /.settings
 /logs

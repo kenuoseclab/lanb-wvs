@@ -2,14 +2,21 @@ package com.colodoo.jobs.scan;
 
 import com.alibaba.fastjson.JSON;
 import com.colodoo.framework.common.SessionObject;
+import com.colodoo.jobs.plugin.JythonUtils;
+import com.colodoo.manager.bug.service.BugService;
 import com.colodoo.manager.scan.scanResult.model.ScanResult;
 import com.colodoo.manager.scan.scanResult.service.ScanResultService;
+import com.colodoo.manager.script.model.Script;
+import com.colodoo.manager.script.model.ScriptVO;
+import com.colodoo.manager.script.service.ScriptService;
 import com.colodoo.manager.task.taskAttr.model.TaskAttr;
 import com.colodoo.manager.task.taskLog.model.TaskLog;
 import com.colodoo.manager.task.taskLog.service.TaskLogService;
 import com.colodoo.manager.task.taskLogDet.model.TaskLogDet;
 import com.colodoo.manager.task.taskLogDet.service.TaskLogDetService;
 import lombok.extern.slf4j.Slf4j;
+import org.python.core.PyFunction;
+import org.python.util.PythonInterpreter;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -22,6 +29,10 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author colodoo
+ * 基础扫描任务
+ */
 @Component
 @Slf4j
 public class SimpleScanJob implements Job {
@@ -32,6 +43,10 @@ public class SimpleScanJob implements Job {
     TaskLogDetService taskLogDetService;
     @Autowired
     ScanResultService scanResultService;
+    @Autowired
+    ScriptService scriptService;
+    @Autowired
+    BugService bugService;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -46,7 +61,7 @@ public class SimpleScanJob implements Job {
         String userId = sessionObject.getUser().getUserId();
 
         try {
-           log.info(JSON.toJSONString(task));
+            log.info(JSON.toJSONString(task));
 
             // 扫描总数
             int totalCount = 0;
@@ -71,9 +86,14 @@ public class SimpleScanJob implements Job {
                     // 取漏洞列表
                     // ...
                     // 取漏洞脚本
-                    // ...
+                    ScriptVO scriptVO = new ScriptVO();
+                    scriptVO.setBugId(bugId);
+                    List<Script> scripts = scriptService.query(scriptVO);
                     // 根据脚本扫描
-                    // ...
+                    for (Script script : scripts) {
+                        boolean isWeak = this.execPython(script.getScriptContent());
+                        System.out.println(isWeak);
+                    }
                     // 插入一条任务日志详情
                     TaskLogDet taskLogDet = new TaskLogDet();
                     taskLogDet.setTaskLogDetKey("bugId");
@@ -86,7 +106,7 @@ public class SimpleScanJob implements Job {
                     ScanResult scanResult = new ScanResult();
                     scanResult.setBugId(bugId);
                     scanResult.setTaskLogId(taskLog.getTaskLogId());
-                    int randomStatus = (int)(Math.random()*(2-0));
+                    int randomStatus = (int) (Math.random() * (2 - 0));
                     scanResult.setScanResult(String.valueOf(randomStatus));
                     scanResult.setCreateUserId(userId);
                     scanResult.setAssetId(assetId);
@@ -119,6 +139,19 @@ public class SimpleScanJob implements Job {
             taskLogService.updateTaskLog(taskLog);
         }
 
+    }
+
+    public boolean execPython(String content) {
+        PythonInterpreter interp = JythonUtils.jythonInit();
+        //文件名
+        interp = JythonUtils.loadPythonExec(interp, content);
+        //函数名
+        String functionName = "poc";
+        PyFunction func = JythonUtils.loadPythonFunc(interp, functionName);
+        //执行有参方法，返回String
+        String paramName = "c";
+        Boolean result = JythonUtils.execFuncToBoolean(func, paramName);
+        return result;
     }
 
 }
